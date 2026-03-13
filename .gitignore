@@ -1,0 +1,26 @@
+# Unity generated folders
+KeyGame/[Ll]ibrary/
+KeyGame/[Tt]emp/
+KeyGame/[Oo]bj/
+KeyGame/[Bb]uild/
+KeyGame/[Bb]uilds/
+KeyGame/[Ll]ogs/
+KeyGame/[Uu]ser[Ss]ettings/
+
+# Unity package cache and local artifacts
+KeyGame/Library/PackageCache/
+KeyGame/MemoryCaptures/
+KeyGame/Recordings/
+
+# IDE and OS files
+KeyGame/.vs/
+KeyGame/.idea/
+KeyGame/*.csproj
+KeyGame/*.sln
+KeyGame/*.user
+KeyGame/*.tmp
+KeyGame/.DS_Store
+Thumbs.db
+
+# Plastic SCM metadata
+KeyGame/.plastic/
