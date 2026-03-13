@@ -16,12 +16,22 @@ public sealed class PrototypePlayerController : MonoBehaviour
     // 接地判定で参照するレイヤー。
     [SerializeField] private LayerMask groundMask = ~0;
 
-    // 足元判定をどれだけ下方向へ伸ばすか。
-    [SerializeField] private float groundCheckDistance = 0.08f;
+    // 足元の接地判定をどれだけ下方向へ広げるか。
+    [SerializeField] private float groundCheckDistance = 0.12f;
+
+    // 接地していた直後の猶予時間。段差や着地直後の入力抜けを減らす。
+    [SerializeField] private float coyoteTime = 0.08f;
+
+    // ジャンプ入力を短時間だけ保持する時間。着地フレーム前後の取りこぼしを減らす。
+    [SerializeField] private float jumpBufferTime = 0.1f;
+
+    private readonly Collider2D[] _groundHits = new Collider2D[4];
 
     private Rigidbody2D _rigidbody2D;
     private BoxCollider2D _collider2D;
     private float _moveInput;
+    private float _coyoteTimer;
+    private float _jumpBufferTimer;
 
     private void OnEnable()
     {
@@ -50,10 +60,32 @@ public sealed class PrototypePlayerController : MonoBehaviour
         // 入力は Update で取得し、FixedUpdate で使う値だけを保持する。
         _moveInput = ReadHorizontalInput();
 
-        // 多重ジャンプを避けるため、接地中のみジャンプ開始を許可する。
-        if (ReadJumpPressed() && IsGrounded())
+        // ジャンプ入力は少しだけ保持し、着地直後でも反応しやすくする。
+        if (ReadJumpPressed())
+        {
+            _jumpBufferTimer = jumpBufferTime;
+        }
+        else
+        {
+            _jumpBufferTimer = Mathf.Max(0f, _jumpBufferTimer - Time.deltaTime);
+        }
+
+        // 接地中は猶予時間を毎フレーム更新し、空中では減衰させる。
+        if (IsGrounded())
+        {
+            _coyoteTimer = coyoteTime;
+        }
+        else
+        {
+            _coyoteTimer = Mathf.Max(0f, _coyoteTimer - Time.deltaTime);
+        }
+
+        // 入力保持時間と接地猶予の両方が残っている間だけジャンプを発動する。
+        if (_jumpBufferTimer > 0f && _coyoteTimer > 0f)
         {
             _rigidbody2D.linearVelocity = new Vector2(_rigidbody2D.linearVelocity.x, jumpForce);
+            _jumpBufferTimer = 0f;
+            _coyoteTimer = 0f;
         }
     }
 
@@ -84,18 +116,27 @@ public sealed class PrototypePlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        // コライダー下端から短い BoxCast を飛ばし、地面との接触を判定する。
+        // プレイヤーの足元に薄い判定を置き、地面との重なりを直接調べる。
         var bounds = _collider2D.bounds;
-        var origin = new Vector2(bounds.center.x, bounds.min.y);
-        var hit = Physics2D.BoxCast(
-            origin,
-            new Vector2(bounds.size.x * 0.9f, 0.05f),
-            0f,
-            Vector2.down,
-            groundCheckDistance,
-            groundMask);
+        var checkCenter = new Vector2(bounds.center.x, bounds.min.y - groundCheckDistance * 0.5f);
+        var checkSize = new Vector2(bounds.size.x * 0.8f, groundCheckDistance);
 
-        return hit.collider != null && hit.collider.gameObject != gameObject;
+        var hitCount = Physics2D.OverlapBox(checkCenter, checkSize, 0f, new ContactFilter2D
+        {
+            useLayerMask = true,
+            layerMask = groundMask,
+            useTriggers = false,
+        }, _groundHits);
+
+        for (var i = 0; i < hitCount; i++)
+        {
+            if (_groundHits[i] != null && _groundHits[i] != _collider2D)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static float ReadHorizontalInput()
