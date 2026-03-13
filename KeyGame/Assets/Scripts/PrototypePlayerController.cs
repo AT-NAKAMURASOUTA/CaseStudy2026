@@ -1,26 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/// <summary>
-/// プロトタイプ用プレイヤーの移動と基本セットアップを担当する。
-/// シーン上の位置やスケールは手作業で調整できるようにしつつ、
-/// 表示と物理挙動に必要なコンポーネントだけを補完する方針にしている。
-/// </summary>
+// プロトタイプ用プレイヤーの移動と、最低限の見た目・物理設定を管理する。
 [ExecuteAlways]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class PrototypePlayerController : MonoBehaviour
 {
-    // 水平方向の移動速度。プロトタイプでは微調整しやすいように Inspector から変更できる。
+    // 水平方向の移動速度。
     [SerializeField] private float moveSpeed = 6f;
 
-    // ジャンプ時に与える上向き速度。Rigidbody2D の速度を直接更新して挙動を単純化する。
+    // ジャンプ開始時に与える上向き速度。
     [SerializeField] private float jumpForce = 9f;
 
-    // 接地判定に使うレイヤー。既定値ではすべてのレイヤーを対象にする。
+    // 接地判定で参照するレイヤー。
     [SerializeField] private LayerMask groundMask = ~0;
 
-    // 足元判定の余白。値を大きくしすぎると壁や段差を地面と誤認しやすくなる。
+    // 足元判定をどれだけ下方向へ伸ばすか。
     [SerializeField] private float groundCheckDistance = 0.08f;
 
     private Rigidbody2D _rigidbody2D;
@@ -51,10 +47,10 @@ public sealed class PrototypePlayerController : MonoBehaviour
             return;
         }
 
-        // 入力は Update で読み取り、物理更新に使う値だけを保持する。
+        // 入力は Update で取得し、FixedUpdate で使う値だけを保持する。
         _moveInput = ReadHorizontalInput();
 
-        // ジャンプ開始は接地中のみ許可し、多重ジャンプが混ざらないようにする。
+        // 多重ジャンプを避けるため、接地中のみジャンプ開始を許可する。
         if (ReadJumpPressed() && IsGrounded())
         {
             _rigidbody2D.linearVelocity = new Vector2(_rigidbody2D.linearVelocity.x, jumpForce);
@@ -68,13 +64,13 @@ public sealed class PrototypePlayerController : MonoBehaviour
             return;
         }
 
-        // 水平方向だけを制御し、垂直方向の速度は重力やジャンプ処理に任せる。
+        // 垂直方向の速度は重力とジャンプに任せ、水平方向だけを更新する。
         _rigidbody2D.linearVelocity = new Vector2(_moveInput * moveSpeed, _rigidbody2D.linearVelocity.y);
     }
 
     private void EnsureComponents()
     {
-        // プレイヤーの見た目と物理設定を最低限ここでそろえる。
+        // 手動でオブジェクトを編集しても壊れないよう、必須設定だけを補完する。
         var renderer = GetOrAddComponent<SpriteRenderer>();
         renderer.sprite = Resources.Load<Sprite>("PrototypeSquare");
         renderer.color = new Color(0.16f, 0.67f, 0.89f);
@@ -88,35 +84,56 @@ public sealed class PrototypePlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        // 自身のコライダー下端から短い BoxCast を飛ばし、地面との接触を判定する。
+        // コライダー下端から短い BoxCast を飛ばし、地面との接触を判定する。
         var bounds = _collider2D.bounds;
         var origin = new Vector2(bounds.center.x, bounds.min.y);
-        var hit = Physics2D.BoxCast(origin, new Vector2(bounds.size.x * 0.9f, 0.05f), 0f, Vector2.down, groundCheckDistance, groundMask);
+        var hit = Physics2D.BoxCast(
+            origin,
+            new Vector2(bounds.size.x * 0.9f, 0.05f),
+            0f,
+            Vector2.down,
+            groundCheckDistance,
+            groundMask);
+
         return hit.collider != null && hit.collider.gameObject != gameObject;
     }
 
     private static float ReadHorizontalInput()
     {
+        // New Input System が使える場合はそちらを優先する。
         if (Keyboard.current != null)
         {
-            var leftPressed = Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed;
-            var rightPressed = Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed;
+            var leftPressed = Keyboard.current.leftArrowKey.isPressed;
+            var rightPressed = Keyboard.current.rightArrowKey.isPressed;
             return (rightPressed ? 1f : 0f) - (leftPressed ? 1f : 0f);
         }
 
-        return Input.GetAxisRaw("Horizontal");
+        // フォールバックとして旧 Input Manager にも対応しておく。
+        var horizontal = 0f;
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            horizontal -= 1f;
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            horizontal += 1f;
+        }
+
+        return horizontal;
     }
 
     private static bool ReadJumpPressed()
     {
+        // アルファベット生成で A-Z を使うため、ジャンプは Space と上矢印に限定する。
         if (Keyboard.current != null)
         {
             return Keyboard.current.spaceKey.wasPressedThisFrame
-                || Keyboard.current.wKey.wasPressedThisFrame
                 || Keyboard.current.upArrowKey.wasPressedThisFrame;
         }
 
-        return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
+        return Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow);
     }
 
     private T GetOrAddComponent<T>() where T : Component

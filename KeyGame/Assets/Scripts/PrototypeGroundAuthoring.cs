@@ -1,9 +1,6 @@
 using UnityEngine;
 
-/// <summary>
-/// プロトタイプ用の地面オブジェクトに、最低限必要な見た目と当たり判定を付与する。
-/// 地面のサイズや位置はシーン上で調整したいので、ここでは見た目と collider の存在だけを保証する。
-/// </summary>
+// プロトタイプ用の地面に、共通の見た目と当たり判定を付与する。
 [ExecuteAlways]
 public sealed class PrototypeGroundAuthoring : MonoBehaviour
 {
@@ -30,7 +27,7 @@ public sealed class PrototypeGroundAuthoring : MonoBehaviour
         renderer.color = new Color(0.19f, 0.24f, 0.31f);
         renderer.sortingOrder = 0;
 
-        // 見た目と当たり判定の形状を一致させるため、BoxCollider2D を必須にする。
+        // 見た目と当たり判定の形を合わせるため、BoxCollider2D を必須にする。
         GetOrAddComponent<BoxCollider2D>();
     }
 
