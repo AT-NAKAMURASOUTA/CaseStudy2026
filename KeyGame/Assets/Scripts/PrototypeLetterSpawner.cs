@@ -14,13 +14,16 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
     [SerializeField] private float spawnHeightOffset = 0.2f;
 
     // 生成した文字スプライトの初期倍率。
-    [SerializeField] private float spawnedLetterScale = 1.2f;
+    [SerializeField] private float spawnedLetterScale = 0.8f;
+
+    // スプライト生成時の Pixels Per Unit。値を大きくすると同じ画像でも小さく表示される。
+    [SerializeField] private float spawnedLetterPixelsPerUnit = 192f;
 
     // 直近の移動方向。停止中も前回向いていた側に文字を出すため保持する。
     private float _facingDirection = 1f;
 
     // 一度読み込んだスプライトはキャッシュし、連続生成時の再読込を避ける。
-    private static readonly Dictionary<char, Sprite> LetterSpriteCache = new();
+    private static readonly Dictionary<string, Sprite> LetterSpriteCache = new();
 
     // New Input System 用のキーと文字の対応表。
     private static readonly (Key key, char letter)[] LetterKeyPairs =
@@ -75,7 +78,7 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
 
     private void SpawnLetter(char letter)
     {
-        var sprite = LoadLetterSprite(letter);
+        var sprite = LoadLetterSprite(letter, spawnedLetterPixelsPerUnit);
         if (sprite == null)
         {
             Debug.LogWarning($"Letter sprite not found for {letter}");
@@ -159,9 +162,10 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
         return false;
     }
 
-    private static Sprite LoadLetterSprite(char letter)
+    private static Sprite LoadLetterSprite(char letter, float pixelsPerUnit)
     {
-        if (LetterSpriteCache.TryGetValue(letter, out var cachedSprite))
+        var cacheKey = GetCacheKey(letter, pixelsPerUnit);
+        if (LetterSpriteCache.TryGetValue(cacheKey, out var cachedSprite))
         {
             return cachedSprite;
         }
@@ -183,9 +187,15 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
             texture,
             new Rect(0f, 0f, texture.width, texture.height),
             new Vector2(0.5f, 0.5f),
-            128f);
+            pixelsPerUnit);
 
-        LetterSpriteCache[letter] = sprite;
+        LetterSpriteCache[cacheKey] = sprite;
         return sprite;
+    }
+
+    private static string GetCacheKey(char letter, float pixelsPerUnit)
+    {
+        // PPU を変えたときに古いサイズのスプライトを再利用しないよう、キーに含める。
+        return $"{letter}:{pixelsPerUnit}";
     }
 }
