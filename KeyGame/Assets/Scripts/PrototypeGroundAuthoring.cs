@@ -4,6 +4,8 @@ using UnityEngine;
 [ExecuteAlways]
 public sealed class PrototypeGroundAuthoring : MonoBehaviour
 {
+    private const float GroundSpritePixelsPerUnit = 32f;
+
     private void Awake()
     {
         EnsureComponents();
@@ -21,9 +23,9 @@ public sealed class PrototypeGroundAuthoring : MonoBehaviour
 
     private void EnsureComponents()
     {
-        // 地面は共通の四角スプライトを使い、色だけを地面用に固定する。
+        // 地面は PrototypeAssets/Common の共通四角画像を使う。
         var renderer = GetOrAddComponent<SpriteRenderer>();
-        renderer.sprite = Resources.Load<Sprite>("PrototypeSquare");
+        renderer.sprite = PrototypeAssetLoader.LoadSprite("Common/PrototypeSquare.png", GroundSpritePixelsPerUnit);
         renderer.color = new Color(0.19f, 0.24f, 0.31f);
         renderer.sortingOrder = 0;
 

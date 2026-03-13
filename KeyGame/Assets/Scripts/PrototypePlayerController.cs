@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class PrototypePlayerController : MonoBehaviour
 {
+    private const float PlayerSpritePixelsPerUnit = 32f;
+
     // 水平方向の移動速度。
     [SerializeField] private float moveSpeed = 6f;
 
@@ -22,7 +24,7 @@ public sealed class PrototypePlayerController : MonoBehaviour
     // 接地していた直後の猶予時間。段差や着地直後の入力抜けを減らす。
     [SerializeField] private float coyoteTime = 0.08f;
 
-    // ジャンプ入力を短時間だけ保持する時間。着地フレーム前後の取りこぼしを減らす。
+    // ジャンプ入力を短時間だけ保持する時間。着地前後の取りこぼしを減らす。
     [SerializeField] private float jumpBufferTime = 0.1f;
 
     private readonly Collider2D[] _groundHits = new Collider2D[4];
@@ -102,10 +104,10 @@ public sealed class PrototypePlayerController : MonoBehaviour
 
     private void EnsureComponents()
     {
-        // 手動でオブジェクトを編集しても壊れないよう、必須設定だけを補完する。
+        // プレイヤー画像も PrototypeAssets/Characters から読み込む。
         var renderer = GetOrAddComponent<SpriteRenderer>();
-        renderer.sprite = Resources.Load<Sprite>("PrototypeSquare");
-        renderer.color = new Color(0.16f, 0.67f, 0.89f);
+        renderer.sprite = PrototypeAssetLoader.LoadSprite("Characters/SamplePlayer/PlayerSquare.png", PlayerSpritePixelsPerUnit);
+        renderer.color = Color.white;
         renderer.sortingOrder = 5;
 
         _collider2D = GetOrAddComponent<BoxCollider2D>();

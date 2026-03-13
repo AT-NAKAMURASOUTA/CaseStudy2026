@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,9 +19,6 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
 
     // 直近の移動方向。停止中も前回向いていた側に文字を出すため保持する。
     private float _facingDirection = 1f;
-
-    // 一度読み込んだスプライトはキャッシュし、連続生成時の再読込を避ける。
-    private static readonly Dictionary<string, Sprite> LetterSpriteCache = new();
 
     // New Input System 用のキーと文字の対応表。
     private static readonly (Key key, char letter)[] LetterKeyPairs =
@@ -78,7 +73,7 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
 
     private void SpawnLetter(char letter)
     {
-        var sprite = LoadLetterSprite(letter, spawnedLetterPixelsPerUnit);
+        var sprite = PrototypeAssetLoader.LoadSprite($"Alphabet/SampleLetters/{letter}.png", spawnedLetterPixelsPerUnit);
         if (sprite == null)
         {
             Debug.LogWarning($"Letter sprite not found for {letter}");
@@ -160,42 +155,5 @@ public sealed class PrototypeLetterSpawner : MonoBehaviour
         }
 
         return false;
-    }
-
-    private static Sprite LoadLetterSprite(char letter, float pixelsPerUnit)
-    {
-        var cacheKey = GetCacheKey(letter, pixelsPerUnit);
-        if (LetterSpriteCache.TryGetValue(cacheKey, out var cachedSprite))
-        {
-            return cachedSprite;
-        }
-
-        // PrototypeAssets/Alphabet 内の PNG を読み込み、文字スプライトを生成する。
-        var path = Path.Combine(Application.dataPath, "PrototypeAssets", "Alphabet", $"{letter}.png");
-        if (!File.Exists(path))
-        {
-            return null;
-        }
-
-        var bytes = File.ReadAllBytes(path);
-        var texture = new Texture2D(2, 2, TextureFormat.ARGB32, false);
-        texture.filterMode = FilterMode.Point;
-        texture.wrapMode = TextureWrapMode.Clamp;
-        texture.LoadImage(bytes);
-
-        var sprite = Sprite.Create(
-            texture,
-            new Rect(0f, 0f, texture.width, texture.height),
-            new Vector2(0.5f, 0.5f),
-            pixelsPerUnit);
-
-        LetterSpriteCache[cacheKey] = sprite;
-        return sprite;
-    }
-
-    private static string GetCacheKey(char letter, float pixelsPerUnit)
-    {
-        // PPU を変えたときに古いサイズのスプライトを再利用しないよう、キーに含める。
-        return $"{letter}:{pixelsPerUnit}";
     }
 }
