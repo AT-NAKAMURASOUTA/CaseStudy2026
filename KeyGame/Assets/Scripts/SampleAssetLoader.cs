@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 
 // PrototypeAssets フォルダ配下の PNG を読み込み、実行時に使うスプライトへ変換する。
-public static class PrototypeAssetLoader
+public static class SampleAssetLoader
 {
     private const string PrototypeAssetsFolderName = "PrototypeAssets";
 

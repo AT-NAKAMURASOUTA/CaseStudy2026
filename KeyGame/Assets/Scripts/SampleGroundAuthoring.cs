@@ -1,8 +1,8 @@
 using UnityEngine;
 
-// プロトタイプ用の地面に、共通の見た目と当たり判定を付与する。
+// サンプル用の地面に、見た目と当たり判定を付与する。
 [ExecuteAlways]
-public sealed class PrototypeGroundAuthoring : MonoBehaviour
+public sealed class SampleGroundAuthoring : MonoBehaviour
 {
     private const float GroundSpritePixelsPerUnit = 32f;
 
@@ -23,13 +23,13 @@ public sealed class PrototypeGroundAuthoring : MonoBehaviour
 
     private void EnsureComponents()
     {
-        // 地面は PrototypeAssets/Common の共通四角画像を使う。
+        // 地面は 仮の四角画像を使う。
         var renderer = GetOrAddComponent<SpriteRenderer>();
-        renderer.sprite = PrototypeAssetLoader.LoadSprite("Common/PrototypeSquare.png", GroundSpritePixelsPerUnit);
+        renderer.sprite = SampleAssetLoader.LoadSprite("Common/PrototypeSquare.png", GroundSpritePixelsPerUnit);
         renderer.color = new Color(0.19f, 0.24f, 0.31f);
         renderer.sortingOrder = 0;
 
-        // 見た目と当たり判定の形を合わせるため、BoxCollider2D を必須にする。
+        // 見た目と当たり判定の形を合わせるため、BoxCollider2D
         GetOrAddComponent<BoxCollider2D>();
     }
 
