@@ -1,0 +1,20 @@
+# これが最上位のconfig設定だと教えています。
+root = true
+
+[*]
+# 改行コードを Linux/macOS と同じにしました。 (\n)
+end_of_line = lf
+# ファイルの最後に改行を入れる
+insert_final_newline = true
+
+[*.cs]
+# UTF-8 に固定
+charset = utf-8
+
+[*.shader]
+# UTF-8 に固定
+charset = utf-8
+
+[*.meta]
+# UTF-8 に固定
+charset = utf-8
