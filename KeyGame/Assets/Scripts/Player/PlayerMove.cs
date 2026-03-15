@@ -35,10 +35,9 @@ public sealed class PlayerMove : MonoBehaviour
     [Tooltip("地面判定レイヤー")]
     [SerializeField] private LayerMask m_GroundLayer;
     [Tooltip("地面との判定相対位置")]
-    [SerializeField] private Vector3 m_CheckPos;
+    [SerializeField] private Vector3 m_CheckPos = new Vector3(0.0f, -0.5f, 0.0f);
     [Tooltip("地面との判定半径")]
     [SerializeField] private float m_CheckRadius = 0.1f;
-
 
     // プライベート変数
     // コンポーネントのキャッシュ用変数
@@ -51,6 +50,8 @@ public sealed class PlayerMove : MonoBehaviour
 
     // 変数
     private int m_JumpCount;
+    // 前フレームの地面接触状態
+    private bool m_WasGrounded;
 
 
     // ------------------------------------------
@@ -96,31 +97,39 @@ public sealed class PlayerMove : MonoBehaviour
 
 
     // ------------------------------------------
-    // 更新
+    // 物理演算更新
     // ------------------------------------------
-    void Update()
+    void FixedUpdate()
     {
         // 移動処理
         m_Rigidbody2D.linearVelocity = new Vector2(m_MoveSpeed * m_MoveInput, m_Rigidbody2D.linearVelocity.y);
 
+        // 跳躍処理
         if (m_JumpInput)
         {
             if (m_JumpCount > 0)
             {
-                m_Rigidbody2D.AddForce(Vector2.up * m_JumpForce, ForceMode2D.Impulse);
-                m_JumpInput = false;
+                // ジャンプ処理
+                m_Rigidbody2D.linearVelocityY = m_JumpForce;
+
                 m_JumpCount--;
             }
+
+            // フラグ更新
+            m_JumpInput = false;
         }
 
-        // 地面との当たり判定
-        if (Physics2D.OverlapCircle(transform.position + m_CheckPos, m_CheckRadius, m_GroundLayer))
+        // 着地判定処理
+        bool isGrounded = Physics2D.OverlapCircle(transform.position + m_CheckPos, m_CheckRadius, m_GroundLayer);
+
+        if (isGrounded && !m_WasGrounded)
         {
             // 地面に接触している場合、跳躍回数をリセット
             m_JumpCount = m_MaxJumpCount;
-
-            Debug.Log("地面に接触しています。");
         }
+
+        // フラグ更新
+        m_WasGrounded = isGrounded;
     }
 
 
