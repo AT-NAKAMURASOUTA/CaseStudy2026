@@ -28,7 +28,7 @@ public sealed class PlayerMove : MonoBehaviour
     [SerializeField] private float m_MoveSpeed = 5f;
     [Tooltip("跳躍力")]
     [SerializeField] private float m_JumpForce = 5f;
-    [Tooltip("跳躍数")]
+    [Tooltip("最大跳躍数")]
     [SerializeField] private int m_MaxJumpCount = 1;
 
     [Header("地面との当たり判定設定")]
@@ -49,6 +49,7 @@ public sealed class PlayerMove : MonoBehaviour
     private bool m_JumpInput;
 
     // 変数
+    // 跳躍回数
     private int m_JumpCount;
     // 前フレームの地面接触状態
     private bool m_WasGrounded;
