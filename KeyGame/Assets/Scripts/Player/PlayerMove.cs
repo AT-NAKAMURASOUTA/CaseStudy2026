@@ -43,6 +43,9 @@ public sealed class PlayerMove : MonoBehaviour
     // コンポーネントのキャッシュ用変数
     private Rigidbody2D m_Rigidbody2D;
     private PlayerInput m_PlayerInput;
+    // アニメーション制御用変数
+    private Animator m_Animator;
+    private SpriteRenderer m_SpriteRenderer;
 
     // Input情報取得変数
     private float m_MoveInput;
@@ -63,6 +66,8 @@ public sealed class PlayerMove : MonoBehaviour
         // コンポーネントのキャッシュ
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_PlayerInput = GetComponent<PlayerInput>();
+        m_Animator = GetComponent<Animator>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
 
         // InputAction に関数を登録
         m_PlayerInput.actions["Move"].performed += MoveInput;
@@ -129,8 +134,35 @@ public sealed class PlayerMove : MonoBehaviour
             m_JumpCount = m_MaxJumpCount;
         }
 
+        // アニメーション制御
+        if (m_Animator != null)
+        {
+            // 移動しているか
+            m_Animator.SetBool("isWalking", m_MoveInput != 0);
+
+            // 地面にいるか
+            m_Animator.SetBool("isGrounded", isGrounded);
+        }
+
+        // 向きの反転処理
+        if (m_SpriteRenderer != null)
+        {
+            if (m_MoveInput < 0)
+            {
+                // 左向き
+                m_SpriteRenderer.flipX = true;
+            }
+            else if (m_MoveInput > 0)
+            {
+                // 右向き
+                m_SpriteRenderer.flipX = false;
+            }
+        }
+
         // フラグ更新
         m_WasGrounded = isGrounded;
+
+
     }
 
 
