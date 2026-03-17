@@ -498,6 +498,7 @@ GameObject:
   - component: {fileID: 890000011}
   - component: {fileID: 890000012}
   - component: {fileID: 890000013}
+  - component: {fileID: 890000017}
   - component: {fileID: 890000016}
   - component: {fileID: 890000015}
   - component: {fileID: 890000014}
@@ -550,7 +551,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890000010}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3e3f7bb80d34f239c829d3184126006, type: 3}
   m_Name: 
@@ -687,6 +688,48 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &890000017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890000010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98094f842b6e364a846b96b83c50061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forwardOffset: 1
+  upwardOffset: 0.5
+  alphabetScale: 0.6
+  alphabetSprites:
+  - {fileID: 354403392, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 822874187, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -505612565, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -2112475858, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 67718273, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1544095759, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1780520138, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 949672491, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1178457391, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1132685130, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 528485059, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 1070156875, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 1934093712, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 2103631025, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -900878127, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1000543117, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -843282842, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 638431254, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -857191977, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1773383498, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1368558674, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 1975361489, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -499955643, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1753508432, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -731150222, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: -1032122852, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
