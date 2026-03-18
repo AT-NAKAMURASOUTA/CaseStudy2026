@@ -490,6 +490,7 @@ GameObject:
   - component: {fileID: 2125447315}
   - component: {fileID: 2125447316}
   - component: {fileID: 2125447317}
+  - component: {fileID: 2125447318}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -750,9 +751,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98094f842b6e364a846b96b83c50061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardOffset: 1
+  forwardOffset: 1.2
   upwardOffset: 0.5
-  alphabetScale: 0.6
+  alphabetScale: 0.4
   alphabetSprites:
   - {fileID: 354403392, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
   - {fileID: 822874187, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
@@ -802,6 +803,34 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2125447318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125447309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fdce7f57d0f70440ae5016fe4adc526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRadius: 1.2
+  holdDistance: 0.9
+  holdHeight: 0.4
+  pickableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  pickableObjectName: Alphabet
+  throwSpeed: 7
+  throwTorque: 0.8
+  aimArrowLength: 1.8
+  aimArrowWidth: 0.05
+  aimArrowHeadLength: 0.28
+  aimArrowHeadAngle: 28
+  aimArrowForwardOffset: 0.5
+  aimArrowHeightOffset: 0
+  aimArrowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
