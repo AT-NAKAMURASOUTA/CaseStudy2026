@@ -204,6 +204,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
                 continue;
             }
 
+            // プレイヤーの後ろ側にある文字は拾わない
+            var toLetter = rb.worldCenterOfMass - (Vector2)transform.position;
+            if (toLetter.x * _facingSign < 0f)
+            {
+                continue;
+            }
+
             // 一番近いものを選ぶ
             var distance = Vector2.Distance(transform.position, rb.worldCenterOfMass);
             if (distance >= nearestDistance)
@@ -231,6 +238,10 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 手元に固定したいのでKinematicにする
         _heldLetter.bodyType = RigidbodyType2D.Kinematic;
         _holdState = HoldState.Holding;
+
+        // 持った瞬間に前方の持つ位置へ移動する
+        _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
+        _heldLetter.transform.rotation = Quaternion.identity;
 
         // プレイヤーとぶつからないようにする
         IgnoreHeldLetterCollisionWithPlayer();
@@ -272,6 +283,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         // 物理挙動を戻して投げられる状態にする
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
+        RestoreHeldLetterCollisionWithPlayer();
 
         // 決めた方向へ速度を与えて飛ばす
         _heldLetter.linearVelocity = aimDirection * throwSpeed;
@@ -304,6 +316,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         // その場に落とすためDynamicに戻す
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
+        RestoreHeldLetterCollisionWithPlayer();
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
 
@@ -405,6 +418,34 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
                 // 持っている文字がプレイヤーに当たらないようにする
                 Physics2D.IgnoreCollision(playerCollider, letterCollider, true);
+            }
+        }
+    }
+
+    private void RestoreHeldLetterCollisionWithPlayer()
+    {
+        if (_heldLetter == null || _playerColliders == null || _playerColliders.Length == 0)
+        {
+            return;
+        }
+
+        var letterColliders = _heldLetter.GetComponents<Collider2D>();
+
+        foreach (var playerCollider in _playerColliders)
+        {
+            if (playerCollider == null)
+            {
+                continue;
+            }
+
+            foreach (var letterCollider in letterColliders)
+            {
+                if (letterCollider == null)
+                {
+                    continue;
+                }
+
+                Physics2D.IgnoreCollision(playerCollider, letterCollider, false);
             }
         }
     }
