@@ -14,6 +14,11 @@ public class GenerateAlphabet : MonoBehaviour
     [SerializeField]
     private float alphabetScale = 1.0f;
 
+    [Header("このY座標を下回ると削除")]
+    [SerializeField]
+    private float destroyY = -10f;
+
+
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
     readonly private int NOKEY = -1;
@@ -49,6 +54,10 @@ public class GenerateAlphabet : MonoBehaviour
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
+        var destroyOnFall = go.AddComponent<DestroyOnFall>();
+        destroyOnFall.SetDestroyY(destroyY);
+
+
 
         var tf = go.transform;
         tf.position = transform.position + (new Vector3(facingDirection, 0.0f) * forwardOffset) + transform.up * upwardOffset;
