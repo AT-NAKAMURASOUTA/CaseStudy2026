@@ -18,6 +18,13 @@ public class GenerateAlphabet : MonoBehaviour
     [SerializeField]
     private float destroyY = -10f;
 
+    [Header("同時に出せる文字数")]
+    [SerializeField]
+    private int maxAlphabetCount = 3;
+
+    private int currentAlphabetCount = 0;
+
+
 
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
@@ -48,6 +55,12 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
+        if (currentAlphabetCount >= maxAlphabetCount)
+        {
+            return;
+        }
+
+
         //生成
         GameObject go = new GameObject("Alphabet");
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
@@ -56,6 +69,9 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<Rigidbody2D>();
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         destroyOnFall.SetDestroyY(destroyY);
+        destroyOnFall.SetOwner(this);
+        currentAlphabetCount++;
+
 
 
 
@@ -80,4 +96,10 @@ public class GenerateAlphabet : MonoBehaviour
         }
         return result;
     }
+
+    public void NotifyAlphabetDestroyed()
+    {
+        currentAlphabetCount = Mathf.Max(0, currentAlphabetCount - 1);
+    }
+
 }
