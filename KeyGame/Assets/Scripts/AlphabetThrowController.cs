@@ -39,6 +39,19 @@ public sealed class AlphabetThrowController : MonoBehaviour
     [SerializeField]
     private float throwTorque = 8f;
 
+    [Header("照準角度の下限")]
+    [SerializeField]
+    private float minAimAngle = 30f;
+
+    [Header("照準角度の上限")]
+    [SerializeField]
+    private float maxAimAngle = 90f;
+
+    [Header("照準角度の往復速度")]
+    [SerializeField]
+    private float aimSwingSpeed = 120f;
+
+
     [Header("矢印の長さ")]
     [SerializeField]
     private float aimArrowLength = 1.8f;
@@ -92,6 +105,14 @@ public sealed class AlphabetThrowController : MonoBehaviour
     // 矢印の先端部分
     private LineRenderer _aimHead;
 
+    // 現在の狙い角度
+    private float _currentAimAngle = 30f;
+
+    // 狙い角度の進行方向
+    // 1 で増加、-1 で減少
+    private float _aimAngleDirection = 1f;
+
+
     private void Awake()
     {
         // 最初に必要な参照を取っておく
@@ -114,8 +135,16 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 毎フレーム必要な処理
         UpdateFacingDirection();
         HandleMouseInput();
+
+        // 狙い中だけ角度を自動で往復させる
+        if (_holdState == HoldState.Aiming)
+        {
+            UpdateAimOscillation();
+        }
+
         UpdateHeldLetterPosition();
         UpdateAimArrow();
+
     }
 
     private void HandleMouseInput()
@@ -254,9 +283,34 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
+        // 照準開始時は下限角度からスタートする
+        _currentAimAngle = minAimAngle;
+        _aimAngleDirection = 1f;
+
         // 照準状態に入る
         _holdState = HoldState.Aiming;
     }
+
+    private void UpdateAimOscillation()
+    {
+        // 設定した速度で照準角度を往復させる
+        _currentAimAngle += aimSwingSpeed * _aimAngleDirection * Time.deltaTime;
+
+        // 上限に達したら折り返す
+        if (_currentAimAngle >= maxAimAngle)
+        {
+            _currentAimAngle = maxAimAngle;
+            _aimAngleDirection = -1f;
+        }
+        // 下限に達したら折り返す
+        else if (_currentAimAngle <= minAimAngle)
+        {
+            _currentAimAngle = minAimAngle;
+            _aimAngleDirection = 1f;
+        }
+    }
+
+
 
     private void UpdateHeldLetterPosition()
     {
@@ -343,30 +397,19 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector2 GetAimDirection()
     {
-        // 持っている文字の位置を基準に狙う
-        var basePosition =
-            _heldLetter != null
-                ? (Vector2)_heldLetter.transform.position
-                : (Vector2)transform.position;
+        // 現在の角度から狙い方向を作る
+        var radians = _currentAimAngle * Mathf.Deg2Rad;
+        var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 
-        var mousePosition = GetMouseWorldPosition();
-        var direction = mousePosition - basePosition;
-        var facingSign = _facingSign;
-
-        // マウスがほぼ同じ位置なら、向いている方向をそのまま使う
-        if (direction.sqrMagnitude < 0.0001f)
+        // 左向きのときはX方向を反転して前方へ向ける
+        if (_facingSign < 0f)
         {
-            return new Vector2(facingSign, 0f);
-        }
-
-        // 後ろ側にマウスがあっても、向いている側に補正する
-        if (direction.x * facingSign <= 0f)
-        {
-            direction.x = Mathf.Max(Mathf.Abs(direction.x), 0.1f) * facingSign;
+            direction.x *= -1f;
         }
 
         return direction.normalized;
     }
+
 
     private Vector3 GetHoldPosition(float distance, float height)
     {
