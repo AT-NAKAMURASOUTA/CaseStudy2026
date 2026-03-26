@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class GenerateAlphabet : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class GenerateAlphabet : MonoBehaviour
 
     private int currentAlphabetCount = 0;
 
-
+    [Header("残り文字数表示")]
+    [SerializeField]
+    private TMP_Text alphabetCountText;
 
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
@@ -35,7 +38,7 @@ public class GenerateAlphabet : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UpdateAlphabetCountText();
     }
 
     // Update is called once per frame
@@ -60,7 +63,6 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
-
         //生成
         GameObject go = new GameObject("Alphabet");
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
@@ -71,9 +73,7 @@ public class GenerateAlphabet : MonoBehaviour
         destroyOnFall.SetDestroyY(destroyY);
         destroyOnFall.SetOwner(this);
         currentAlphabetCount++;
-
-
-
+        UpdateAlphabetCountText();
 
         var tf = go.transform;
         tf.position = transform.position + (new Vector3(facingDirection, 0.0f) * forwardOffset) + transform.up * upwardOffset;
@@ -100,6 +100,18 @@ public class GenerateAlphabet : MonoBehaviour
     public void NotifyAlphabetDestroyed()
     {
         currentAlphabetCount = Mathf.Max(0, currentAlphabetCount - 1);
+        UpdateAlphabetCountText();
     }
 
+    private void UpdateAlphabetCountText()
+    {
+        if (alphabetCountText == null)
+        {
+            return;
+        }
+
+        int remainingCount = maxAlphabetCount - currentAlphabetCount;
+        alphabetCountText.text = $"{remainingCount}";
+
+    }
 }
