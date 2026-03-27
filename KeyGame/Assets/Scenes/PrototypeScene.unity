@@ -499,7 +499,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u6B8B\u308A:3"
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1073,6 +1073,9 @@ MonoBehaviour:
   alphabetScale: 0.4
   destroyY: -10
   maxAlphabetCount: 3
+  alphabetCooldown: 0.3
+  spawnSpacing: 0.6
+  maxSpawnShiftCount: 6
   alphabetCountText: {fileID: 1042018636}
   alphabetSprites:
   - {fileID: 354403392, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}

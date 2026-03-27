@@ -135,6 +135,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 毎フレーム必要な処理
         UpdateFacingDirection();
         HandleMouseInput();
+        HandleKeyboardInput();
 
         // 狙い中だけ角度を自動で往復させる
         if (_holdState == HoldState.Aiming)
@@ -167,7 +168,28 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 今の状態によって左クリックの意味を変える
+        HandlePrimaryAction();
+    }
+
+    private void HandleKeyboardInput()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        // スペースが押されていなければ何もしない
+        if (!Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            return;
+        }
+
+        HandlePrimaryAction();
+    }
+
+    private void HandlePrimaryAction()
+    {
+        // 今の状態によって左クリックやスペースの意味を変える
         switch (_holdState)
         {
             case HoldState.None:
