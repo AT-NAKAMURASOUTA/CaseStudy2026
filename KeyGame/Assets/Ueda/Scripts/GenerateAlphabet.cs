@@ -25,6 +25,12 @@ public class GenerateAlphabet : MonoBehaviour
 
     private int currentAlphabetCount = 0;
 
+    [Header("文字生成のクールタイム")]
+    [SerializeField]
+    private float alphabetCooldown = 0.3f;
+
+    private float nextSpawnTime = 0f;
+
     [Header("残り文字数表示")]
     [SerializeField]
     private TMP_Text alphabetCountText;
@@ -73,6 +79,11 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
+        if (Time.time < nextSpawnTime)
+        {
+            return;
+        }
+
         //生成
         GameObject go = new GameObject("Alphabet");
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
@@ -84,6 +95,7 @@ public class GenerateAlphabet : MonoBehaviour
         destroyOnFall.SetOwner(this);
         currentAlphabetCount++;
         UpdateAlphabetCountText();
+        nextSpawnTime = Time.time + alphabetCooldown;
 
         var tf = go.transform;
         tf.position = transform.position + (new Vector3(facingDirection, 0.0f) * forwardOffset) + transform.up * upwardOffset;
