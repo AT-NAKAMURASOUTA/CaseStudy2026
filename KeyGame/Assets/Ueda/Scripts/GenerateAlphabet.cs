@@ -31,6 +31,14 @@ public class GenerateAlphabet : MonoBehaviour
 
     private float nextSpawnTime = 0f;
 
+    [Header("文字同士が重ならないための間隔")]
+    [SerializeField]
+    private float spawnSpacing = 0.6f;
+
+    [Header("生成位置をずらして探す最大回数")]
+    [SerializeField]
+    private int maxSpawnShiftCount = 6;
+
     [Header("残り文字数表示")]
     [SerializeField]
     private TMP_Text alphabetCountText;
@@ -84,6 +92,8 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
+        Vector3 spawnPosition = FindSpawnPosition();
+
         //生成
         GameObject go = new GameObject("Alphabet");
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
@@ -98,8 +108,43 @@ public class GenerateAlphabet : MonoBehaviour
         nextSpawnTime = Time.time + alphabetCooldown;
 
         var tf = go.transform;
-        tf.position = transform.position + (new Vector3(facingDirection, 0.0f) * forwardOffset) + transform.up * upwardOffset;
+        tf.position = spawnPosition;
         tf.localScale = Vector3.one * alphabetScale;
+    }
+
+    private Vector3 FindSpawnPosition()
+    {
+        Vector3 basePosition = transform.position + (new Vector3(facingDirection, 0.0f) * forwardOffset) + transform.up * upwardOffset;
+
+        for (int i = 0; i <= maxSpawnShiftCount; i++)
+        {
+            Vector3 candidate = basePosition + new Vector3(spawnSpacing * i * facingDirection, 0.0f, 0.0f);
+            if (!IsAlphabetOverlapping(candidate))
+            {
+                return candidate;
+            }
+        }
+
+        return basePosition + new Vector3(spawnSpacing * (maxSpawnShiftCount + 1) * facingDirection, 0.0f, 0.0f);
+    }
+
+    private bool IsAlphabetOverlapping(Vector3 position)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(position, spawnSpacing * 0.45f);
+        foreach (var hit in hits)
+        {
+            if (hit == null)
+            {
+                continue;
+            }
+
+            if (hit.gameObject.name.StartsWith("Alphabet"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private int GetKeyboardAlphabet()
