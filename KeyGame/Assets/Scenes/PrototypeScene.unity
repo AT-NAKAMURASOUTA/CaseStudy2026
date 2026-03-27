@@ -808,6 +808,7 @@ GameObject:
   - component: {fileID: 2125447316}
   - component: {fileID: 2125447317}
   - component: {fileID: 2125447318}
+  - component: {fileID: 2125447319}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1073,7 +1074,7 @@ MonoBehaviour:
   alphabetScale: 0.4
   destroyY: -10
   maxAlphabetCount: 3
-  alphabetCooldown: 0.3
+  alphabetCooldown: 1
   spawnSpacing: 0.6
   maxSpawnShiftCount: 6
   alphabetCountText: {fileID: 1042018636}
@@ -1157,6 +1158,30 @@ MonoBehaviour:
   aimArrowForwardOffset: 0.5
   aimArrowHeightOffset: 0
   aimArrowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!114 &2125447319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125447309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3742d592f5e43d745b31610ba0d6d3b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missY: -10
+  respawnPoint: {fileID: 0}
+  targetCanvas: {fileID: 0}
+  openRadius: 1.2
+  startOpenDuration: 1
+  respawnOpenDuration: 1
+  closeDuration: 1
+  holdClosedDuration: 0.5
+  overlayColor: {r: 0, g: 0, b: 0, a: 1}
+  edgeSoftness: 0.02
+  cameraFocusSpeed: 1
+  cameraReturnDuration: 0.2
 --- !u!1 &3000001000
 GameObject:
   m_ObjectHideFlags: 0
