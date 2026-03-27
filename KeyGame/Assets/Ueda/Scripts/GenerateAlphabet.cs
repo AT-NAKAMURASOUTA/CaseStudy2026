@@ -44,12 +44,22 @@ public class GenerateAlphabet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
+        var playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        if (playerSpriteRenderer != null)
         {
-            if (Mathf.Abs(rb.linearVelocityX) > 2.0f)
-                facingDirection = Mathf.Sign(rb.linearVelocityX);
+            facingDirection = playerSpriteRenderer.flipX ? -1f : 1f;
         }
+        else
+        {
+            var rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                if (Mathf.Abs(rb.linearVelocityX) > 2.0f)
+                    facingDirection = Mathf.Sign(rb.linearVelocityX);
+            }
+        }
+
+
 
         // キーボードのアルファベットキーが押されたかをチェック
         int alphabetIndex = GetKeyboardAlphabet();
