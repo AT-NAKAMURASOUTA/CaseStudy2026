@@ -101,8 +101,10 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
+        var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
         destroyOnFall.SetDestroyY(destroyY);
         destroyOnFall.SetOwner(this);
+        alphabetWallReaction.SetAlphabetCharacter((char)('A' + alphabetIndex));
         currentAlphabetCount++;
         UpdateAlphabetCountText();
         nextSpawnTime = Time.time + alphabetCooldown;
