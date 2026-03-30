@@ -73,7 +73,7 @@ public sealed class SampleLetterSpawner : MonoBehaviour
 
     private void SpawnLetter(char letter)
     {
-        var sprite = SampleAssetLoader.LoadSprite($"Alphabet/SampleLetters/{letter}.png", spawnedLetterPixelsPerUnit);
+        var sprite = SampleAssetLoader.LoadSprite($"Alphabet/Individual/{letter}.png", spawnedLetterPixelsPerUnit);
         if (sprite == null)
         {
             Debug.LogWarning($"Letter sprite not found for {letter}");

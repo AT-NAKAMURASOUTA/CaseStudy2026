@@ -1,0 +1,1113 @@
+fileFormatVersion: 2
+guid: aab6308c4503d0648a40b74ad7cd3d60
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: AlphabetSheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 33, y: 92}
+        - {x: -33, y: 92}
+        - {x: -101, y: -92}
+        - {x: -35.33847, y: -92}
+        - {x: -28, y: -64}
+        - {x: 26, y: -64}
+        - {x: 35.39052, y: -92}
+        - {x: 102, y: -92}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f869ea18739199c41ad4913e1c250436
+      internalID: 354403392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -94, y: -100}
+        - {x: 40.312683, y: -100}
+        - {x: 77, y: -85}
+        - {x: 92, y: -61}
+        - {x: 94, y: -43}
+        - {x: 92, y: -25}
+        - {x: 81, y: -5}
+        - {x: 63, y: 7}
+        - {x: 82, y: 26}
+        - {x: 85, y: 44}
+        - {x: 84, y: 61}
+        - {x: 76, y: 78}
+        - {x: 66, y: 88}
+        - {x: 51, y: 96}
+        - {x: 35.14334, y: 100}
+        - {x: -94, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6155ddc806806624da9e5eba489bac78
+      internalID: 822874187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -75, y: 70}
+        - {x: -95, y: 28}
+        - {x: -94, y: -22}
+        - {x: -84, y: -54}
+        - {x: -57, y: -86}
+        - {x: -24, y: -99}
+        - {x: 23.24701, y: -100.52405}
+        - {x: 59, y: -90}
+        - {x: 87, y: -58}
+        - {x: 96, y: -30}
+        - {x: 38, y: -12}
+        - {x: 24, y: -41}
+        - {x: 2, y: -48}
+        - {x: -20, y: -37}
+        - {x: -27, y: -3}
+        - {x: -20, y: 35}
+        - {x: 2, y: 48}
+        - {x: 24, y: 41}
+        - {x: 35, y: 21}
+        - {x: 95, y: 35}
+        - {x: 76, y: 75}
+        - {x: 45, y: 95}
+        - {x: 3, y: 100}
+        - {x: -43, y: 92}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12f320902e44ec3448c386090ba1338f
+      internalID: -505612565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -92, y: -100}
+        - {x: 17.070007, y: -100}
+        - {x: 50, y: -92}
+        - {x: 73, y: -74}
+        - {x: 89, y: -45}
+        - {x: 93, y: 2.9995117}
+        - {x: 87, y: 47}
+        - {x: 59, y: 85}
+        - {x: 19.798035, y: 99.99988}
+        - {x: -92, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5595fe1c50914c642af68d2e00d40070
+      internalID: -2112475858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -85, y: -101}
+        - {x: 85, y: -101}
+        - {x: 84.29602, y: -48.200073}
+        - {x: -16, y: -47}
+        - {x: -16, y: -20}
+        - {x: 76, y: -20}
+        - {x: 76, y: 28}
+        - {x: -16, y: 29}
+        - {x: -16, y: 49}
+        - {x: 83, y: 49}
+        - {x: 83, y: 100.474976}
+        - {x: -85, y: 101}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87641d42993a5234cb2a7f32cff6a6dd
+      internalID: 67718273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 1024
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -78, y: -100}
+        - {x: -8, y: -100}
+        - {x: -7, y: -24}
+        - {x: 65, y: -23}
+        - {x: 65, y: 26}
+        - {x: -7, y: 27}
+        - {x: -7, y: 49}
+        - {x: 79, y: 49.034668}
+        - {x: 79, y: 100}
+        - {x: -78, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97c2010bc82a18c4d82c4ddc9c834e46
+      internalID: -1544095759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -95, y: 38}
+        - {x: -99, y: 1.9696045}
+        - {x: -92, y: -44}
+        - {x: -72, y: -76}
+        - {x: -39, y: -95}
+        - {x: -0.00005340576, y: -99.99994}
+        - {x: 55, y: -93}
+        - {x: 99, y: -68.75}
+        - {x: 99, y: 18.155884}
+        - {x: 1, y: 18}
+        - {x: 1, y: -31}
+        - {x: 39, y: -31}
+        - {x: 40, y: -40}
+        - {x: 4, y: -49}
+        - {x: -20, y: -39}
+        - {x: -29, y: -22}
+        - {x: -30, y: 21}
+        - {x: -20, y: 40}
+        - {x: 3, y: 50}
+        - {x: 23, y: 45}
+        - {x: 35, y: 28}
+        - {x: 97, y: 41}
+        - {x: 84, y: 73}
+        - {x: 57, y: 94}
+        - {x: 0, y: 100}
+        - {x: -43, y: 94}
+        - {x: -75, y: 70}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2a48ecf54955ee409bbbf0fd0f609e1
+      internalID: -1780520138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_7
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -96, y: -101}
+        - {x: -27.712036, y: -101}
+        - {x: -27, y: -23}
+        - {x: 26, y: -24}
+        - {x: 27.61731, y: -101}
+        - {x: 98, y: -101}
+        - {x: 98, y: 101}
+        - {x: 27.617493, y: 101}
+        - {x: 28, y: 32}
+        - {x: -28, y: 32}
+        - {x: -27.711914, y: 101}
+        - {x: -96, y: 101}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4301daa005dd764c9296873830f60e7
+      internalID: 949672491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -34, y: -100}
+        - {x: 35, y: -100}
+        - {x: 35, y: 100}
+        - {x: -34, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 976d3e3a77b291743bbc51d8410f465b
+      internalID: -1178457391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_9
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 11, y: -39}
+        - {x: -1, y: -47}
+        - {x: -13, y: -39}
+        - {x: -16, y: -16}
+        - {x: -80, y: -23.795166}
+        - {x: -74, y: -61}
+        - {x: -58, y: -83}
+        - {x: -33, y: -98}
+        - {x: 3.8574219, y: -100}
+        - {x: 33, y: -97}
+        - {x: 55, y: -87}
+        - {x: 73, y: -66}
+        - {x: 79.99994, y: -35.308838}
+        - {x: 80, y: 100}
+        - {x: 13.510132, y: 100}
+        - {x: 13, y: -17}
+      tessellationDetail: 0
+      bones: []
+      spriteID: acfc1ff07289143469e09ec6df3af859
+      internalID: -1132685130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_10
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -100, y: -95}
+        - {x: -34, y: -95}
+        - {x: -34, y: -47}
+        - {x: -13, y: -25}
+        - {x: 24.835205, y: -95}
+        - {x: 104, y: -94}
+        - {x: 34, y: 20}
+        - {x: 102, y: 94}
+        - {x: 16.247192, y: 94}
+        - {x: -35, y: 36}
+        - {x: -35.308716, y: 94}
+        - {x: -100, y: 94}
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb6b953b6dc0270459e32b137ec5fd47
+      internalID: 528485059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_11
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 768
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -80, y: -100}
+        - {x: 80, y: -100}
+        - {x: 80.00012, y: -43.650024}
+        - {x: -11, y: -43}
+        - {x: -11, y: 100}
+        - {x: -80, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cb739684b0180445938cc5ea10cfc05
+      internalID: 1070156875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -101, y: -91}
+        - {x: -47.093414, y: -90.99994}
+        - {x: -47, y: 7}
+        - {x: -22.433502, y: -90.99994}
+        - {x: 22.433212, y: -91}
+        - {x: 47, y: 8}
+        - {x: 49, y: -91}
+        - {x: 100, y: -91}
+        - {x: 100, y: 90}
+        - {x: 23.045593, y: 90}
+        - {x: 0, y: 0}
+        - {x: -21.467026, y: 90}
+        - {x: -101, y: 90}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99e9062c303b84843a482ca4950a3817
+      internalID: 1934093712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_13
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -97, y: -100}
+        - {x: -31.831238, y: -100}
+        - {x: -31, y: -6}
+        - {x: 32.08432, y: -100}
+        - {x: 96, y: -100}
+        - {x: 96, y: 100}
+        - {x: 30.831268, y: 100}
+        - {x: 30, y: 7}
+        - {x: -33.08435, y: 100}
+        - {x: -97, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32fb496f5cf1aaf4d905d711a69e06e3
+      internalID: 2103631025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_14
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -89, y: 53}
+        - {x: -97, y: 36}
+        - {x: -100, y: 19}
+        - {x: -101, y: -0.5}
+        - {x: -99, y: -24}
+        - {x: -95, y: -42}
+        - {x: -87, y: -58}
+        - {x: -77, y: -73}
+        - {x: -64, y: -84}
+        - {x: -45, y: -94}
+        - {x: -24, y: -99}
+        - {x: -0.000061035156, y: -101}
+        - {x: 21, y: -101}
+        - {x: 40, y: -96}
+        - {x: 57, y: -89}
+        - {x: 72, y: -78}
+        - {x: 85, y: -63}
+        - {x: 95, y: -44}
+        - {x: 100, y: -22}
+        - {x: 101, y: 2.5145264}
+        - {x: 100, y: 24}
+        - {x: 94, y: 45}
+        - {x: 82, y: 66}
+        - {x: 66, y: 81}
+        - {x: 51, y: 91}
+        - {x: 35, y: 96}
+        - {x: 17, y: 100}
+        - {x: 0, y: 100}
+        - {x: -24, y: 98}
+        - {x: -46, y: 93}
+        - {x: -64, y: 83}
+        - {x: -80, y: 69}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c81cb0f760cfd3047a976d50022da27a
+      internalID: -900878127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_15
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -86, y: -101}
+        - {x: -16, y: -101}
+        - {x: -16, y: -29}
+        - {x: 28, y: -29}
+        - {x: 53, y: -22}
+        - {x: 74, y: -11}
+        - {x: 83, y: 11}
+        - {x: 86, y: 37.811707}
+        - {x: 82, y: 61}
+        - {x: 70, y: 82}
+        - {x: 52, y: 94}
+        - {x: 27.92212, y: 100}
+        - {x: -86, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2285b504208381d4fbebe208845902e2
+      internalID: -1000543117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -82, y: 63}
+        - {x: -90, y: 47}
+        - {x: -95, y: 29}
+        - {x: -96, y: 7}
+        - {x: -95, y: -14}
+        - {x: -91, y: -30}
+        - {x: -83, y: -46}
+        - {x: -73, y: -60}
+        - {x: -59, y: -70}
+        - {x: -42, y: -78}
+        - {x: -23, y: -84}
+        - {x: -3.000122, y: -86}
+        - {x: 21, y: -84}
+        - {x: 39, y: -77}
+        - {x: 58, y: -92}
+        - {x: 78, y: -102}
+        - {x: 96, y: -64}
+        - {x: 83, y: -58}
+        - {x: 71, y: -50}
+        - {x: 85, y: -28}
+        - {x: 89, y: -10}
+        - {x: 90, y: 9}
+        - {x: 88, y: 30}
+        - {x: 83, y: 49}
+        - {x: 73, y: 66}
+        - {x: 61, y: 80}
+        - {x: 48, y: 89}
+        - {x: 35, y: 95}
+        - {x: 17, y: 99}
+        - {x: -0.21032715, y: 99.99994}
+        - {x: -21, y: 99}
+        - {x: -39, y: 95}
+        - {x: -56, y: 87}
+        - {x: -72, y: 77}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ec52799a8134944ca5f286bdc662662
+      internalID: -843282842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_17
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -99, y: -100}
+        - {x: -29.303955, y: -99.99994}
+        - {x: -29, y: -23}
+        - {x: -17, y: -27}
+        - {x: 23.355957, y: -99.99994}
+        - {x: 101, y: -100}
+        - {x: 63, y: -26}
+        - {x: 46, y: -14}
+        - {x: 69, y: -1}
+        - {x: 79, y: 18}
+        - {x: 83, y: 43}
+        - {x: 79, y: 66}
+        - {x: 67, y: 85}
+        - {x: 47, y: 96}
+        - {x: 11.854736, y: 100}
+        - {x: -99, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 262fbe93da6e3044cba48559df58a2e1
+      internalID: 638431254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -73, y: 72}
+        - {x: -82, y: 47}
+        - {x: -80, y: 21}
+        - {x: -67, y: 3}
+        - {x: -28, y: -18}
+        - {x: 15, y: -28}
+        - {x: 24, y: -40}
+        - {x: 16, y: -50}
+        - {x: 3, y: -55}
+        - {x: -12, y: -51}
+        - {x: -21, y: -40}
+        - {x: -27, y: -23}
+        - {x: -89, y: -26.975372}
+        - {x: -81, y: -65}
+        - {x: -58, y: -88}
+        - {x: -30, y: -99}
+        - {x: 2, y: -101}
+        - {x: 37, y: -97}
+        - {x: 62, y: -87}
+        - {x: 79, y: -67}
+        - {x: 86, y: -51}
+        - {x: 89, y: -33.792328}
+        - {x: 82, y: -2}
+        - {x: 61, y: 17}
+        - {x: 34, y: 28}
+        - {x: 3, y: 36}
+        - {x: -9, y: 38}
+        - {x: -18, y: 46}
+        - {x: -14, y: 53}
+        - {x: 0, y: 56}
+        - {x: 12, y: 52}
+        - {x: 21, y: 34}
+        - {x: 83, y: 35}
+        - {x: 77, y: 63}
+        - {x: 58, y: 87}
+        - {x: 29, y: 98}
+        - {x: -2.6695786, y: 100.514984}
+        - {x: -33, y: 97}
+        - {x: -55, y: 89}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74a425b622d13c48b0b3b8c5c5226ad
+      internalID: -857191977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -93.99997, y: 43.931763}
+        - {x: -34, y: 44}
+        - {x: -33.190308, y: -98.99997}
+        - {x: 34.218445, y: -99}
+        - {x: 33, y: 44}
+        - {x: 94, y: 44}
+        - {x: 94, y: 100}
+        - {x: -94, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd3b896506824fc40b2443edac60d2b3
+      internalID: -1773383498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_20
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -94.38098, y: -23.795166}
+        - {x: -89, y: -53}
+        - {x: -70, y: -80}
+        - {x: -37, y: -98}
+        - {x: 3.3345337, y: -100}
+        - {x: 40, y: -98}
+        - {x: 68, y: -81}
+        - {x: 89, y: -52}
+        - {x: 95, y: -24.1763}
+        - {x: 95, y: 99}
+        - {x: 27.906311, y: 99.35315}
+        - {x: 28, y: -27}
+        - {x: 21, y: -40}
+        - {x: 9, y: -47}
+        - {x: -9, y: -46}
+        - {x: -20, y: -38}
+        - {x: -27, y: -26}
+        - {x: -28.119934, y: 99.64801}
+        - {x: -95, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2127b4691e26c6644a9ae0b3189fd250
+      internalID: -1368558674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_21
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -33, y: -93}
+        - {x: 34, y: -93}
+        - {x: 100, y: 92}
+        - {x: 36.40271, y: 92}
+        - {x: 1, y: -21}
+        - {x: -35.308716, y: 92}
+        - {x: -100, y: 92}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 154448e00f2cbf04c84927a009d8bfe5
+      internalID: 1975361489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -70, y: -73}
+        - {x: -18.6958, y: -72.99997}
+        - {x: -1, y: 2}
+        - {x: 20.341675, y: -72.99997}
+        - {x: 70, y: -73}
+        - {x: 100, y: 73}
+        - {x: 52.772705, y: 73}
+        - {x: 40, y: 16}
+        - {x: 23.700806, y: 73}
+        - {x: -23.266968, y: 73}
+        - {x: -39, y: 15}
+        - {x: -52.425415, y: 73}
+        - {x: -101, y: 73}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cee5440613d71b4883bf86f28dfbf06
+      internalID: -499955643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_23
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -95, y: 85}
+        - {x: -41, y: 3}
+        - {x: -99.7334, y: -83.51041}
+        - {x: -100, y: -93}
+        - {x: -32.46753, y: -92.99997}
+        - {x: 0, y: -41}
+        - {x: 31.779419, y: -93}
+        - {x: 100, y: -93}
+        - {x: 100, y: -83}
+        - {x: 42, y: 2}
+        - {x: 95, y: 83}
+        - {x: 95, y: 92}
+        - {x: 27.606445, y: 91.99997}
+        - {x: 1, y: 44}
+        - {x: -25.373047, y: 92}
+        - {x: -95, y: 92}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25f27dba4d0786a47bb33b31d20b9531
+      internalID: -1753508432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -100, y: 85}
+        - {x: -33, y: -16}
+        - {x: -33, y: -93}
+        - {x: 33, y: -93}
+        - {x: 33, y: -16}
+        - {x: 100, y: 83}
+        - {x: 100, y: 93}
+        - {x: 33.76625, y: 93}
+        - {x: 1, y: 38}
+        - {x: -32.4675, y: 93}
+        - {x: -100, y: 93}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 576433b75b0d61e4d8f8f2e97d85d8a7
+      internalID: -731150222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AlphabetSheet_25
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -86, y: 49.03482}
+        - {x: 3, y: 49}
+        - {x: -96, y: -53}
+        - {x: -96, y: -100}
+        - {x: 96, y: -100}
+        - {x: 96, y: -49}
+        - {x: -8, y: -49}
+        - {x: 92, y: 54}
+        - {x: 92, y: 99.7437}
+        - {x: -86, y: 100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6f3c44953940f24b9a2abafd5e342cf
+      internalID: -1032122852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      AlphabetSheet_0: 354403392
+      AlphabetSheet_1: 822874187
+      AlphabetSheet_10: 528485059
+      AlphabetSheet_11: 1070156875
+      AlphabetSheet_12: 1934093712
+      AlphabetSheet_13: 2103631025
+      AlphabetSheet_14: -900878127
+      AlphabetSheet_15: -1000543117
+      AlphabetSheet_16: -843282842
+      AlphabetSheet_17: 638431254
+      AlphabetSheet_18: -857191977
+      AlphabetSheet_19: -1773383498
+      AlphabetSheet_2: -505612565
+      AlphabetSheet_20: -1368558674
+      AlphabetSheet_21: 1975361489
+      AlphabetSheet_22: -499955643
+      AlphabetSheet_23: -1753508432
+      AlphabetSheet_24: -731150222
+      AlphabetSheet_25: -1032122852
+      AlphabetSheet_3: -2112475858
+      AlphabetSheet_4: 67718273
+      AlphabetSheet_5: -1544095759
+      AlphabetSheet_6: -1780520138
+      AlphabetSheet_7: 949672491
+      AlphabetSheet_8: -1178457391
+      AlphabetSheet_9: -1132685130
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
