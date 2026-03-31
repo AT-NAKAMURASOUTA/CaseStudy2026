@@ -44,4 +44,11 @@ public class SpecialAreaCollision : MonoBehaviour
         return accelerationHitFlag;
 
     }
+
+    //低重力エリアに入っているかの判定
+    public bool GetLowGravityCollision()
+    {
+        return lowGravityHitFlag;
+    }
+
 }
