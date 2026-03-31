@@ -3,10 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpecialArea")]
 public class ScriptableObject_SpecialAreaData : ScriptableObject
 {
-    //加速度両
+    //加速度量
     public float accelerationMagnification = 1.3f;
-    //低重力両
-    public float lowGravityMagnification = 1.3f;
+    //低重力量
+    public float lowGravityMagnification = 0.7f;
+
 
     //加速度量の取得
     public float GetAccelerationMagnification()
@@ -20,4 +21,5 @@ public class ScriptableObject_SpecialAreaData : ScriptableObject
         return lowGravityMagnification;
 
     }
+
 }

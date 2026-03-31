@@ -12,8 +12,6 @@ public class AlphabetSpecialAreaInUpdate : MonoBehaviour
     
     //加速度の更新
     bool accelerationFlag = false;
-    //低重力の更新
-    bool lowGravityFlag = false;
 
 
     void Start()
@@ -27,18 +25,22 @@ public class AlphabetSpecialAreaInUpdate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(specialAreaFlag.GetAccelerationCollision()&&
-            accelerationFlag==false)
-        {//初めて加速する
+        if (specialAreaFlag.GetAccelerationCollision())
+        {//加速エリアにいる！
 
-            float nowVel = rigid2D.linearVelocityX * assetData.GetAccelerationMagnification();
+            if (accelerationFlag == false)
+            {//初めてなら加速する
 
-            rigid2D.linearVelocity = new Vector2(nowVel,
-                 rigid2D.linearVelocityY);
+                float nowVel = rigid2D.linearVelocityX * assetData.GetAccelerationMagnification();
 
-            accelerationFlag = true;
+                rigid2D.linearVelocity = new Vector2(nowVel,
+                     rigid2D.linearVelocityY);
+
+                accelerationFlag = true;
+            }
+
         }
-        else 
+        else
         {
 
             accelerationFlag = false;
@@ -47,23 +49,19 @@ public class AlphabetSpecialAreaInUpdate : MonoBehaviour
 
         if (specialAreaFlag.GetLowGravityCollision())
         {
-            float nowVel = rigid2D.linearVelocityY * assetData.GetLowGravityMagnification();
 
+            //速度計算
+            float nowVel = rigid2D.linearVelocityY;
+
+
+            nowVel *=
+                assetData.GetLowGravityMagnification();
             rigid2D.linearVelocity = new Vector2(rigid2D.linearVelocityX,
-                 nowVel );
+                 nowVel);
 
-            accelerationFlag = true;
 
-            lowGravityFlag = true;
         }
-        else if(lowGravityFlag)
-        {//低重力エリア抜けました
-
-            lowGravityFlag = false;
-        }
-
     }
-
     public void SetScriptableObject(ScriptableObject_SpecialAreaData data)
     {
         assetData = data; 

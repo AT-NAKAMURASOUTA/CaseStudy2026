@@ -601,12 +601,20 @@ PrefabInstance:
       value: LowGravity
       objectReference: {fileID: 0}
     - target: {fileID: 1498447622929826829, guid: 3497005422e89f64d9952f647fac7c74, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6.317938
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498447622929826829, guid: 3497005422e89f64d9952f647fac7c74, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.85446197
+      objectReference: {fileID: 0}
+    - target: {fileID: 1498447622929826829, guid: 3497005422e89f64d9952f647fac7c74, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.51
+      value: 6.4256
       objectReference: {fileID: 0}
     - target: {fileID: 1498447622929826829, guid: 3497005422e89f64d9952f647fac7c74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.53
+      value: -1.4882
       objectReference: {fileID: 0}
     - target: {fileID: 1498447622929826829, guid: 3497005422e89f64d9952f647fac7c74, type: 3}
       propertyPath: m_LocalPosition.z

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accelerationMagnification: 1.3
   lowGravityMagnification: 0.7
+  lowGravityMagnificationJump: 1.1
