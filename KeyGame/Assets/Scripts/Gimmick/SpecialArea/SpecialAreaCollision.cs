@@ -38,4 +38,10 @@ public class SpecialAreaCollision : MonoBehaviour
         }
     }
 
+    //加速エリアに入っているかの判定
+    public bool GetAccelerationCollision()
+    {
+        return accelerationHitFlag;
+
+    }
 }
