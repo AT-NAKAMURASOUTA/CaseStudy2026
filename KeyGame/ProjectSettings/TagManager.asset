@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - AccelerationAreaTag
+  - LowGravityTag
   layers:
   - Default
   - TransparentFX
