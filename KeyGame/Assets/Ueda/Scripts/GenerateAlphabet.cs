@@ -99,6 +99,7 @@ public class GenerateAlphabet : MonoBehaviour
 
         //生成
         GameObject go = new GameObject("Alphabet");
+        go.tag = "AlphabetTag";//タグを設定
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
         go.AddComponent<PolygonCollider2D>();
