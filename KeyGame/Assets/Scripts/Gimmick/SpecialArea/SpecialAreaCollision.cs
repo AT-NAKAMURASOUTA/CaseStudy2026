@@ -13,12 +13,28 @@ public class SpecialAreaCollision : MonoBehaviour
         if(collision.tag == "AccelerationAreaTag")
         {//加速エリア進入中
 
-            accelerationHitFlag = true;Debug.Log("ok");
+            accelerationHitFlag = true;
         }
         if(collision.tag == "LowGravityTag")
         {//低重力エリア
 
             lowGravityHitFlag = true;
+        }
+    }
+
+    //当たり判定から外れた時
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "AccelerationAreaTag")
+        {//加速エリア進入中
+
+            accelerationHitFlag = false;
+
+        }
+        if (collision.tag == "LowGravityTag")
+        {//低重力エリア
+
+            lowGravityHitFlag = false;
         }
     }
 
