@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1060672856590120612}
   - component: {fileID: 5784146352209861053}
   - component: {fileID: 6953974110485473022}
+  - component: {fileID: 914240880218661890}
   m_Layer: 0
   m_Name: AccelerationArea
   m_TagString: AccelerationAreaTag
@@ -134,3 +135,15 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &914240880218661890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415091547243325252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d4705aa9d1e7644a2867a49c3e15dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
