@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AssetSpecialAreaData
   m_EditorClassIdentifier: 
   accelerationMagnification: 1.3
-  lowGravityMagnification: 1.3
+  lowGravityMagnification: 0.7
