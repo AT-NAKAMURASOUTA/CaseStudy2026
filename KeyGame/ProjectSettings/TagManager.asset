@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AccelerationAreaTag
   - LowGravityTag
+  - AlphabetTag
   layers:
   - Default
   - TransparentFX

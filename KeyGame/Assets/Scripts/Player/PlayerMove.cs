@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -12,7 +13,6 @@ using UnityEngine.UIElements;
 // ==============================================
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
-
 
 // ==============================================
 // クラス定義
@@ -39,10 +39,14 @@ public sealed class PlayerMove : MonoBehaviour
     [Tooltip("地面との判定半径")]
     [SerializeField] private float m_CheckRadius = 0.1f;
 
+    [Header("加速度、低重力の量ScriptableObejct")]
+    [SerializeField]ScriptableObject_SpecialAreaData m_SpecialAreaAsset;
+
     // プライベート変数
     // コンポーネントのキャッシュ用変数
     private Rigidbody2D m_Rigidbody2D;
     private PlayerInput m_PlayerInput;
+    private SpecialAreaCollision m_SpecialAreaCollision;//okada:特殊エリアの当たり判定
     // アニメーション制御用変数
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
@@ -68,6 +72,7 @@ public sealed class PlayerMove : MonoBehaviour
         m_PlayerInput = GetComponent<PlayerInput>();
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_SpecialAreaCollision = this.gameObject.AddComponent<SpecialAreaCollision>();//追加
 
         // InputAction に関数を登録
         m_PlayerInput.actions["Move"].performed += MoveInput;
@@ -108,7 +113,25 @@ public sealed class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         // 移動処理
-        m_Rigidbody2D.linearVelocity = new Vector2(m_MoveSpeed * m_MoveInput, m_Rigidbody2D.linearVelocity.y);
+        Vector2 nowMoveSpeed = new Vector2(m_MoveSpeed * m_MoveInput, m_Rigidbody2D.linearVelocity.y);
+        
+        //横移動の補正
+        if(m_SpecialAreaCollision.GetAccelerationCollision())
+        {//加速する
+
+            //ScriptableObjectにSetしてある値（倍率）を使う
+            nowMoveSpeed.x *= m_SpecialAreaAsset.GetAccelerationMagnification();
+        }
+        //縦移動
+        if(m_SpecialAreaCollision.GetLowGravityCollision())
+        {//落下速度遅く、上昇速度遅く
+
+            //ScriptableObjectにSetしてある値（倍率）を使う
+            nowMoveSpeed.y *= m_SpecialAreaAsset.GetLowGravityMagnification();
+        }
+
+        //移動
+        m_Rigidbody2D.linearVelocity = nowMoveSpeed;
 
         // 跳躍処理
         if (m_JumpInput)
