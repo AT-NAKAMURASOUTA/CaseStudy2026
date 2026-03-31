@@ -43,6 +43,9 @@ public class GenerateAlphabet : MonoBehaviour
     [SerializeField]
     private TMP_Text alphabetCountText;
 
+    [Header("アルファベットに渡す用のScriptableObjectのデータ")]
+    [SerializeField] ScriptableObject_SpecialAreaData specialAreaData;
+     
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
     readonly private int NOKEY = -1;
@@ -100,6 +103,7 @@ public class GenerateAlphabet : MonoBehaviour
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
+        go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
         destroyOnFall.SetDestroyY(destroyY);

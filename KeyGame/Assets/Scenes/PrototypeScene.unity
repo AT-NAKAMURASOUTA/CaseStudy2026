@@ -992,6 +992,7 @@ MonoBehaviour:
   spawnSpacing: 0.6
   maxSpawnShiftCount: 6
   alphabetCountText: {fileID: 1042018636}
+  specialAreaData: {fileID: 11400000, guid: d1a44b39756ee0c478c023de241d990b, type: 2}
   alphabetSprites:
   - {fileID: 354403392, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
   - {fileID: 822874187, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
