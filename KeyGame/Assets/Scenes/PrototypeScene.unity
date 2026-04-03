@@ -985,7 +985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardOffset: 1.2
   upwardOffset: 0.5
-  alphabetScale: 0.4
+  alphabetScale: 0.6
   destroyY: -10
   maxAlphabetCount: 3
   alphabetCooldown: 1

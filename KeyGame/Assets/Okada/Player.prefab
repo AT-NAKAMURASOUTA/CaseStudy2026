@@ -279,9 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e98094f842b6e364a846b96b83c50061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forwardOffset: 1.2
-  upwardOffset: 0.5
-  alphabetScale: 0.4
+  forwardOffset: 2
+  upwardOffset: 0.8
+  alphabetScale: 1.4
   destroyY: -10
   maxAlphabetCount: 3
   alphabetCooldown: 1
@@ -351,8 +351,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRadius: 1.2
-  holdDistance: 0.9
-  holdHeight: 0.4
+  holdDistance: 1.8
+  holdHeight: 0.7
   pickableLayers:
     serializedVersion: 2
     m_Bits: 4294967295
