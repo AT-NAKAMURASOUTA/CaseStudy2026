@@ -1,143 +1,148 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public sealed class AlphabetThrowController : MonoBehaviour
 {
-    // 現在の状態
+    // 迴ｾ蝨ｨ縺ｮ迥ｶ諷・
     private enum HoldState
     {
-        None,    // 何も持っていない
-        Holding, // 持っているだけの状態
-        Aiming,  // 投げる方向を決めている状態
+        None,    // 菴輔ｂ謖√▲縺ｦ縺・↑縺・
+        Holding, // 謖√▲縺ｦ縺・ｋ縺縺代・迥ｶ諷・
+        Aiming,  // 謚輔￡繧区婿蜷代ｒ豎ｺ繧√※縺・ｋ迥ｶ諷・
     }
 
-    [Header("拾える範囲")]
+    [Header("諡ｾ縺医ｋ遽・峇")]
     [SerializeField]
     private float pickupRadius = 1.2f;
 
-    [Header("持つ位置の前方向の距離")]
+    [Header("謖√▽菴咲ｽｮ縺ｮ蜑肴婿蜷代・霍晞屬")]
     [SerializeField]
     private float holdDistance = 0.9f;
 
-    [Header("持つ位置の高さ")]
+    [Header("謖√▽菴咲ｽｮ縺ｮ鬮倥＆")]
     [SerializeField]
     private float holdHeight = 1.0f;
 
-    [Header("拾えるレイヤー")]
+    [Header("諡ｾ縺医ｋ繝ｬ繧､繝､繝ｼ")]
     [SerializeField]
     private LayerMask pickableLayers = ~0;
 
-    [Header("拾えるオブジェクト名")]
+    [Header("諡ｾ縺医ｋ繧ｪ繝悶ず繧ｧ繧ｯ繝亥錐")]
     [SerializeField]
     private string pickableObjectName = "Alphabet";
 
-    [Header("投げる速さ")]
+    [Header("謚輔￡繧矩溘＆")]
     [SerializeField]
     private float throwSpeed = 12f;
 
-    [Header("投げる時の回転の強さ")]
+    [Header("Throw Torque")]
     [SerializeField]
     private float throwTorque = 8f;
 
-    [Header("照準角度の下限")]
+    [Header("辣ｧ貅冶ｧ貞ｺｦ縺ｮ荳矩剞")]
     [SerializeField]
     private float minAimAngle = 30f;
 
-    [Header("照準角度の上限")]
+    [Header("辣ｧ貅冶ｧ貞ｺｦ縺ｮ荳企剞")]
     [SerializeField]
     private float maxAimAngle = 90f;
 
-    [Header("照準角度の往復速度")]
+    [Header("辣ｧ貅冶ｧ貞ｺｦ縺ｮ蠕蠕ｩ騾溷ｺｦ")]
     [SerializeField]
     private float aimSwingSpeed = 120f;
 
 
-    [Header("矢印の長さ")]
+    [Header("Aim Arrow Length")]
     [SerializeField]
     private float aimArrowLength = 1.8f;
 
-    [Header("矢印の太さ")]
+    [Header("Aim Arrow Width")]
     [SerializeField]
     private float aimArrowWidth = 0.05f;
 
-    [Header("矢印の先端の長さ")]
+    [Header("Aim Arrow Head Length")]
     [SerializeField]
     private float aimArrowHeadLength = 0.28f;
 
-    [Header("矢印の先端の角度")]
+    [Header("遏｢蜊ｰ縺ｮ蜈育ｫｯ縺ｮ隗貞ｺｦ")]
     [SerializeField]
     private float aimArrowHeadAngle = 28f;
 
-    [Header("矢印の前方向のずらし量")]
+    [Header("遏｢蜊ｰ縺ｮ蜑肴婿蜷代・縺壹ｉ縺鈴㍼")]
     [SerializeField]
     private float aimArrowForwardOffset = 0.35f;
 
-    [Header("矢印の上方向のずらし量")]
+    [Header("遏｢蜊ｰ縺ｮ荳頑婿蜷代・縺壹ｉ縺鈴㍼")]
     [SerializeField]
     private float aimArrowHeightOffset = 0.5f;
 
-    [Header("矢印の色")]
+    [Header("遏｢蜊ｰ縺ｮ濶ｲ")]
     [SerializeField]
     private Color aimArrowColor = Color.yellow;
 
-    // メインカメラ
+    // 繝｡繧､繝ｳ繧ｫ繝｡繝ｩ
     private Camera _mainCamera;
 
-    // プレイヤー本体のRigidbody2D
+    // 繝励Ξ繧､繝､繝ｼ譛ｬ菴薙・Rigidbody2D
     private Rigidbody2D _playerRigidbody2D;
 
-    // プレイヤーについているCollider2Dの一覧
+    // 繝励Ξ繧､繝､繝ｼ縺ｫ縺､縺・※縺・ｋCollider2D縺ｮ荳隕ｧ
     private Collider2D[] _playerColliders;
 
-    // 今持っているアルファベット
+    // 莉頑戟縺｣縺ｦ縺・ｋ繧｢繝ｫ繝輔ぃ繝吶ャ繝・
     private Rigidbody2D _heldLetter;
 
-    // 今の持ち状態
+    // 莉翫・謖√■迥ｶ諷・
     private HoldState _holdState;
 
-    // プレイヤーが向いている方向
-    // 右向きなら1、左向きなら-1
+    // 繝励Ξ繧､繝､繝ｼ縺悟髄縺・※縺・ｋ譁ｹ蜷・
+    // 蜿ｳ蜷代″縺ｪ繧・縲∝ｷｦ蜷代″縺ｪ繧・1
     private float _facingSign = 1f;
 
-    // 矢印の棒部分
+    // 遏｢蜊ｰ縺ｮ譽帝Κ蛻・
     private LineRenderer _aimShaft;
 
-    // 矢印の先端部分
+    // 遏｢蜊ｰ縺ｮ蜈育ｫｯ驛ｨ蛻・
     private LineRenderer _aimHead;
 
-    // 現在の狙い角度
+    // 迴ｾ蝨ｨ縺ｮ迢吶＞隗貞ｺｦ
     private float _currentAimAngle = 30f;
 
-    // 狙い角度の進行方向
-    // 1 で増加、-1 で減少
+    // 迢吶＞隗貞ｺｦ縺ｮ騾ｲ陦梧婿蜷・
+    // 1 縺ｧ蠅怜刈縲・1 縺ｧ貂帛ｰ・
     private float _aimAngleDirection = 1f;
 
 
     private void Awake()
     {
-        // 最初に必要な参照を取っておく
+        // 譛蛻昴↓蠢・ｦ√↑蜿ら・繧貞叙縺｣縺ｦ縺翫￥
         _mainCamera = Camera.main;
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerColliders = GetComponents<Collider2D>();
 
-        // 矢印を表示するためのLineRendererを作る
+        // 遏｢蜊ｰ繧定｡ｨ遉ｺ縺吶ｋ縺溘ａ縺ｮLineRenderer繧剃ｽ懊ｋ
         CreateAimRenderers();
     }
 
     private void Update()
     {
-        // カメラ参照が切れていたら取り直す
+        // 繧ｫ繝｡繝ｩ蜿ら・縺悟・繧後※縺・◆繧牙叙繧顔峩縺・
         if (_mainCamera == null)
         {
             _mainCamera = Camera.main;
         }
 
-        // 毎フレーム必要な処理
+        if (_heldLetter == null && _holdState != HoldState.None)
+        {
+            _holdState = HoldState.None;
+        }
+
+        // 豈弱ヵ繝ｬ繝ｼ繝蠢・ｦ√↑蜃ｦ逅・
         UpdateFacingDirection();
         HandleMouseInput();
         HandleKeyboardInput();
 
-        // 狙い中だけ角度を自動で往復させる
+        // 迢吶＞荳ｭ縺縺題ｧ貞ｺｦ繧定・蜍輔〒蠕蠕ｩ縺輔○繧・
         if (_holdState == HoldState.Aiming)
         {
             UpdateAimOscillation();
@@ -155,14 +160,14 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 右クリックされた時の処理
+        // 蜿ｳ繧ｯ繝ｪ繝・け縺輔ｌ縺滓凾縺ｮ蜃ｦ逅・
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             HandleRightClick();
             return;
         }
 
-        // 左クリックされていなければ何もしない
+        // 蟾ｦ繧ｯ繝ｪ繝・け縺輔ｌ縺ｦ縺・↑縺代ｌ縺ｰ菴輔ｂ縺励↑縺・
         if (!Mouse.current.leftButton.wasPressedThisFrame)
         {
             return;
@@ -178,7 +183,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // スペースが押されていなければ何もしない
+        // 繧ｹ繝壹・繧ｹ縺梧款縺輔ｌ縺ｦ縺・↑縺代ｌ縺ｰ菴輔ｂ縺励↑縺・
         if (!Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             return;
@@ -189,21 +194,21 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void HandlePrimaryAction()
     {
-        // 今の状態によって左クリックやスペースの意味を変える
+        // 莉翫・迥ｶ諷九↓繧医▲縺ｦ蟾ｦ繧ｯ繝ｪ繝・け繧・せ繝壹・繧ｹ縺ｮ諢丞袖繧貞､峨∴繧・
         switch (_holdState)
         {
             case HoldState.None:
-                // 何も持っていない時は近くの文字を拾う
+                // 菴輔ｂ謖√▲縺ｦ縺・↑縺・凾縺ｯ霑代￥縺ｮ譁・ｭ励ｒ諡ｾ縺・
                 TryPickLetter();
                 break;
 
             case HoldState.Holding:
-                // 持っている時は照準状態に入る
+                // 謖√▲縺ｦ縺・ｋ譎ゅ・辣ｧ貅也憾諷九↓蜈･繧・
                 StartAiming();
                 break;
 
             case HoldState.Aiming:
-                // 照準中なら投げる
+                // 辣ｧ貅紋ｸｭ縺ｪ繧画兜縺偵ｋ
                 ThrowHeldLetter();
                 break;
         }
@@ -214,12 +219,12 @@ public sealed class AlphabetThrowController : MonoBehaviour
         switch (_holdState)
         {
             case HoldState.Holding:
-                // 持っているだけの時はその場で離す
+                // 謖√▲縺ｦ縺・ｋ縺縺代・譎ゅ・縺昴・蝣ｴ縺ｧ髮｢縺・
                 ReleaseHeldLetter();
                 break;
 
             case HoldState.Aiming:
-                // 照準中は構えをやめて持っている状態に戻す
+                // 辣ｧ貅紋ｸｭ縺ｯ讒九∴繧偵ｄ繧√※謖√▲縺ｦ縺・ｋ迥ｶ諷九↓謌ｻ縺・
                 CancelAiming();
                 break;
         }
@@ -227,7 +232,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void TryPickLetter()
     {
-        // プレイヤーの近くにある、拾える対象を全部調べる
+        // 繝励Ξ繧､繝､繝ｼ縺ｮ霑代￥縺ｫ縺ゅｋ縲∵鏡縺医ｋ蟇ｾ雎｡繧貞・驛ｨ隱ｿ縺ｹ繧・
         var hits = Physics2D.OverlapCircleAll(transform.position, pickupRadius, pickableLayers);
 
         Rigidbody2D nearestLetter = null;
@@ -235,13 +240,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         foreach (var hit in hits)
         {
-            // 無効なものは無視
+            // 辟｡蜉ｹ縺ｪ繧ゅ・縺ｯ辟｡隕・
             if (hit == null)
             {
                 continue;
             }
 
-            // 指定した名前で始まるオブジェクトだけ拾う
+            // 謖・ｮ壹＠縺溷錐蜑阪〒蟋九∪繧九が繝悶ず繧ｧ繧ｯ繝医□縺第鏡縺・
             if (!hit.gameObject.name.StartsWith(pickableObjectName))
             {
                 continue;
@@ -249,20 +254,20 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
             var rb = hit.attachedRigidbody;
 
-            // Rigidbody2Dが付いていないものは対象外
+            // Rigidbody2D縺御ｻ倥＞縺ｦ縺・↑縺・ｂ縺ｮ縺ｯ蟇ｾ雎｡螟・
             if (rb == null)
             {
                 continue;
             }
 
-            // プレイヤーの後ろ側にある文字は拾わない
+            // 繝励Ξ繧､繝､繝ｼ縺ｮ蠕後ｍ蛛ｴ縺ｫ縺ゅｋ譁・ｭ励・諡ｾ繧上↑縺・
             var toLetter = rb.worldCenterOfMass - (Vector2)transform.position;
             if (toLetter.x * _facingSign < 0f)
             {
                 continue;
             }
 
-            // 一番近いものを選ぶ
+            // 荳逡ｪ霑代＞繧ゅ・繧帝∈縺ｶ
             var distance = Vector2.Distance(transform.position, rb.worldCenterOfMass);
             if (distance >= nearestDistance)
             {
@@ -273,28 +278,28 @@ public sealed class AlphabetThrowController : MonoBehaviour
             nearestLetter = rb;
         }
 
-        // 何も見つからなければ終わり
+        // 菴輔ｂ隕九▽縺九ｉ縺ｪ縺代ｌ縺ｰ邨ゅｏ繧・
         if (nearestLetter == null)
         {
             return;
         }
 
-        // 見つけた文字を持つ
+        // 隕九▽縺代◆譁・ｭ励ｒ謖√▽
         _heldLetter = nearestLetter;
 
-        // 持った瞬間に動きを止める
+        // 謖√▲縺溽椪髢薙↓蜍輔″繧呈ｭ｢繧√ｋ
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
 
-        // 手元に固定したいのでKinematicにする
+        // 謇句・縺ｫ蝗ｺ螳壹＠縺溘＞縺ｮ縺ｧKinematic縺ｫ縺吶ｋ
         _heldLetter.bodyType = RigidbodyType2D.Kinematic;
         _holdState = HoldState.Holding;
 
-        // 持った瞬間に前方の持つ位置へ移動する
+        // 謖√▲縺溽椪髢薙↓蜑肴婿縺ｮ謖√▽菴咲ｽｮ縺ｸ遘ｻ蜍輔☆繧・
         _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
         _heldLetter.transform.rotation = Quaternion.identity;
 
-        // プレイヤーとぶつからないようにする
+        // 繝励Ξ繧､繝､繝ｼ縺ｨ縺ｶ縺､縺九ｉ縺ｪ縺・ｈ縺・↓縺吶ｋ
         IgnoreHeldLetterCollisionWithPlayer();
     }
 
@@ -305,26 +310,26 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 照準開始時は下限角度からスタートする
+        // 辣ｧ貅夜幕蟋区凾縺ｯ荳矩剞隗貞ｺｦ縺九ｉ繧ｹ繧ｿ繝ｼ繝医☆繧・
         _currentAimAngle = minAimAngle;
         _aimAngleDirection = 1f;
 
-        // 照準状態に入る
+        // 辣ｧ貅也憾諷九↓蜈･繧・
         _holdState = HoldState.Aiming;
     }
 
     private void UpdateAimOscillation()
     {
-        // 設定した速度で照準角度を往復させる
+        // 險ｭ螳壹＠縺滄溷ｺｦ縺ｧ辣ｧ貅冶ｧ貞ｺｦ繧貞ｾ蠕ｩ縺輔○繧・
         _currentAimAngle += aimSwingSpeed * _aimAngleDirection * Time.deltaTime;
 
-        // 上限に達したら折り返す
+        // 荳企剞縺ｫ驕斐＠縺溘ｉ謚倥ｊ霑斐☆
         if (_currentAimAngle >= maxAimAngle)
         {
             _currentAimAngle = maxAimAngle;
             _aimAngleDirection = -1f;
         }
-        // 下限に達したら折り返す
+        // 荳矩剞縺ｫ驕斐＠縺溘ｉ謚倥ｊ霑斐☆
         else if (_currentAimAngle <= minAimAngle)
         {
             _currentAimAngle = minAimAngle;
@@ -341,10 +346,10 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 持っている間は常に決まった位置へ移動させる
+        // 謖√▲縺ｦ縺・ｋ髢薙・蟶ｸ縺ｫ豎ｺ縺ｾ縺｣縺滉ｽ咲ｽｮ縺ｸ遘ｻ蜍輔＆縺帙ｋ
         _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
 
-        // 見た目が傾かないように回転を戻す
+        // 隕九◆逶ｮ縺悟だ縺九↑縺・ｈ縺・↓蝗櫁ｻ｢繧呈綾縺・
         _heldLetter.transform.rotation = Quaternion.identity;
     }
 
@@ -357,17 +362,17 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         var aimDirection = GetAimDirection();
 
-        // 物理挙動を戻して投げられる状態にする
+        // 迚ｩ逅・嫌蜍輔ｒ謌ｻ縺励※謚輔￡繧峨ｌ繧狗憾諷九↓縺吶ｋ
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
 
-        // 決めた方向へ速度を与えて飛ばす
+        // 豎ｺ繧√◆譁ｹ蜷代∈騾溷ｺｦ繧剃ｸ弱∴縺ｦ鬟帙・縺・
         _heldLetter.linearVelocity = aimDirection * throwSpeed;
 
-        // 少し回転も加えて見た目を自然にする
+        // 蟆代＠蝗櫁ｻ｢繧ょ刈縺医※隕九◆逶ｮ繧定・辟ｶ縺ｫ縺吶ｋ
         _heldLetter.AddTorque(-Mathf.Sign(aimDirection.x) * throwTorque, ForceMode2D.Impulse);
 
-        // 手放したので参照を消す
+        // 謇区叛縺励◆縺ｮ縺ｧ蜿ら・繧呈ｶ医☆
         _heldLetter = null;
         _holdState = HoldState.None;
     }
@@ -379,7 +384,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 照準だけ解除して、持っている状態に戻す
+        // 辣ｧ貅悶□縺題ｧ｣髯､縺励※縲∵戟縺｣縺ｦ縺・ｋ迥ｶ諷九↓謌ｻ縺・
         _holdState = HoldState.Holding;
     }
 
@@ -390,20 +395,20 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // その場に落とすためDynamicに戻す
+        // 縺昴・蝣ｴ縺ｫ關ｽ縺ｨ縺吶◆繧．ynamic縺ｫ謌ｻ縺・
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
 
-        // 手放したので初期状態に戻す
+        // 謇区叛縺励◆縺ｮ縺ｧ蛻晄悄迥ｶ諷九↓謌ｻ縺・
         _heldLetter = null;
         _holdState = HoldState.None;
     }
 
     private Vector2 GetMouseWorldPosition()
     {
-        // マウスの画面座標をワールド座標に変換する
+        // 繝槭え繧ｹ縺ｮ逕ｻ髱｢蠎ｧ讓吶ｒ繝ｯ繝ｼ繝ｫ繝牙ｺｧ讓吶↓螟画鋤縺吶ｋ
         var screenPosition = Mouse.current.position.ReadValue();
 
         var worldPosition = _mainCamera.ScreenToWorldPoint(
@@ -419,11 +424,11 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector2 GetAimDirection()
     {
-        // 現在の角度から狙い方向を作る
+        // 迴ｾ蝨ｨ縺ｮ隗貞ｺｦ縺九ｉ迢吶＞譁ｹ蜷代ｒ菴懊ｋ
         var radians = _currentAimAngle * Mathf.Deg2Rad;
         var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 
-        // 左向きのときはX方向を反転して前方へ向ける
+        // 蟾ｦ蜷代″縺ｮ縺ｨ縺阪・X譁ｹ蜷代ｒ蜿崎ｻ｢縺励※蜑肴婿縺ｸ蜷代￠繧・
         if (_facingSign < 0f)
         {
             direction.x *= -1f;
@@ -435,7 +440,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector3 GetHoldPosition(float distance, float height)
     {
-        // プレイヤーの前方、少し上の位置を返す
+        // 繝励Ξ繧､繝､繝ｼ縺ｮ蜑肴婿縲∝ｰ代＠荳翫・菴咲ｽｮ繧定ｿ斐☆
         return transform.position
             + (Vector3)(GetFacingDirection() * distance)
             + Vector3.up * height;
@@ -448,13 +453,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void UpdateFacingDirection()
     {
-        // ほぼ止まっている時は向きを変えない
+        // 縺ｻ縺ｼ豁｢縺ｾ縺｣縺ｦ縺・ｋ譎ゅ・蜷代″繧貞､峨∴縺ｪ縺・
         if (_playerRigidbody2D == null || Mathf.Abs(_playerRigidbody2D.linearVelocity.x) <= 0.01f)
         {
             return;
         }
 
-        // 横移動の向きを現在の向きとして記録する
+        // 讓ｪ遘ｻ蜍輔・蜷代″繧堤樟蝨ｨ縺ｮ蜷代″縺ｨ縺励※險倬鹸縺吶ｋ
         _facingSign = Mathf.Sign(_playerRigidbody2D.linearVelocity.x);
     }
 
@@ -481,7 +486,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
                     continue;
                 }
 
-                // 持っている文字がプレイヤーに当たらないようにする
+                // 謖√▲縺ｦ縺・ｋ譁・ｭ励′繝励Ξ繧､繝､繝ｼ縺ｫ蠖薙◆繧峨↑縺・ｈ縺・↓縺吶ｋ
                 Physics2D.IgnoreCollision(playerCollider, letterCollider, true);
             }
         }
@@ -517,7 +522,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void CreateAimRenderers()
     {
-        // 矢印の棒部分と先端部分を別々に作る
+        // 遏｢蜊ｰ縺ｮ譽帝Κ蛻・→蜈育ｫｯ驛ｨ蛻・ｒ蛻･縲・↓菴懊ｋ
         _aimShaft = CreateLineRenderer("AimArrowShaft", 2);
         _aimHead = CreateLineRenderer("AimArrowHead", 3);
     }
@@ -536,7 +541,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         lineRenderer.endColor = aimArrowColor;
         lineRenderer.sortingOrder = 20;
 
-        // 最初は非表示にしておく
+        // 譛蛻昴・髱櫁｡ｨ遉ｺ縺ｫ縺励※縺翫￥
         lineRenderer.enabled = false;
 
         return lineRenderer;
@@ -549,7 +554,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 文字を持っていない、または照準中でないなら矢印は表示しない
+        // 譁・ｭ励ｒ謖√▲縺ｦ縺・↑縺・√∪縺溘・辣ｧ貅紋ｸｭ縺ｧ縺ｪ縺・↑繧臥泙蜊ｰ縺ｯ陦ｨ遉ｺ縺励↑縺・
         if (_heldLetter == null || _holdState != HoldState.Aiming)
         {
             _aimShaft.enabled = false;
@@ -562,24 +567,24 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         var aimDirection = GetAimDirection();
 
-        // 矢印の始点
+        // 遏｢蜊ｰ縺ｮ蟋狗せ
         var arrowStart =
             _heldLetter.transform.position +
             (Vector3)(GetFacingDirection() * aimArrowForwardOffset) +
             Vector3.up * aimArrowHeightOffset;
 
-        // 矢印の終点
+        // 遏｢蜊ｰ縺ｮ邨らせ
         var arrowEnd = arrowStart + (Vector3)(aimDirection * aimArrowLength);
 
-        // 棒部分を更新
+        // 譽帝Κ蛻・ｒ譖ｴ譁ｰ
         _aimShaft.SetPosition(0, arrowStart);
         _aimShaft.SetPosition(1, arrowEnd);
 
-        // 先端の左右の点を求める
+        // 蜈育ｫｯ縺ｮ蟾ｦ蜿ｳ縺ｮ轤ｹ繧呈ｱゅａ繧・
         var leftHead = GetArrowHeadPoint(arrowEnd, aimDirection, aimArrowHeadAngle);
         var rightHead = GetArrowHeadPoint(arrowEnd, aimDirection, -aimArrowHeadAngle);
 
-        // 先端部分を更新
+        // 蜈育ｫｯ驛ｨ蛻・ｒ譖ｴ譁ｰ
         _aimHead.SetPosition(0, leftHead);
         _aimHead.SetPosition(1, arrowEnd);
         _aimHead.SetPosition(2, rightHead);
@@ -587,15 +592,18 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector3 GetArrowHeadPoint(Vector3 arrowEnd, Vector2 aimDirection, float angleOffset)
     {
-        // 終点から少し斜め後ろに点を作って矢印の先端にする
+        // 邨らせ縺九ｉ蟆代＠譁懊ａ蠕後ｍ縺ｫ轤ｹ繧剃ｽ懊▲縺ｦ遏｢蜊ｰ縺ｮ蜈育ｫｯ縺ｫ縺吶ｋ
         var rotatedDirection = Quaternion.Euler(0f, 0f, angleOffset) * -aimDirection;
         return arrowEnd + (Vector3)(rotatedDirection.normalized * aimArrowHeadLength);
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Sceneビューで拾える範囲が分かるように円を描く
+        // Scene繝薙Η繝ｼ縺ｧ諡ｾ縺医ｋ遽・峇縺悟・縺九ｋ繧医≧縺ｫ蜀・ｒ謠上￥
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, pickupRadius);
     }
 }
+
+
+
