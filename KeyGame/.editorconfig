@@ -2,8 +2,8 @@
 root = true
 
 [*]
-# 改行コードを Linux/macOS と同じにしました。 (\n)
-end_of_line = lf
+# 改行コードを Windows固定に修正しました。
+end_of_line = crlf
 # ファイルの最後に改行を入れる
 insert_final_newline = true
 
