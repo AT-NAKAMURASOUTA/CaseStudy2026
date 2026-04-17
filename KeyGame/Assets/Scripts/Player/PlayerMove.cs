@@ -163,6 +163,9 @@ public sealed class PlayerMove : MonoBehaviour
             // 移動しているか
             m_Animator.SetBool("isWalking", m_MoveInput != 0);
 
+            // 空中にいるならジャンプ中
+            m_Animator.SetBool("isJumping", !isGrounded);
+
             // 地面にいるか
             m_Animator.SetBool("isGrounded", isGrounded);
         }
