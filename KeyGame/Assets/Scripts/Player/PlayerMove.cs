@@ -41,6 +41,7 @@ public sealed class PlayerMove : MonoBehaviour
 
     [Header("加速度、低重力の量ScriptableObejct")]
     [SerializeField]ScriptableObject_SpecialAreaData m_SpecialAreaAsset;
+    [SerializeField] private PhysicsMaterial2D m_PhysicsMaterialOverride;
 
     // プライベート変数
     // コンポーネントのキャッシュ用変数
@@ -50,6 +51,8 @@ public sealed class PlayerMove : MonoBehaviour
     // アニメーション制御用変数
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
+    private Collider2D[] m_PlayerColliders;
+    private PhysicsMaterial2D m_RuntimeNoFrictionMaterial;
 
     // Input情報取得変数
     private float m_MoveInput;
@@ -72,7 +75,9 @@ public sealed class PlayerMove : MonoBehaviour
         m_PlayerInput = GetComponent<PlayerInput>();
         m_Animator = GetComponent<Animator>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_PlayerColliders = GetComponents<Collider2D>();
         m_SpecialAreaCollision = this.gameObject.AddComponent<SpecialAreaCollision>();//追加
+        ApplyNoFrictionMaterial();
 
         // InputAction に関数を登録
         m_PlayerInput.actions["Move"].performed += MoveInput;
@@ -94,6 +99,43 @@ public sealed class PlayerMove : MonoBehaviour
             return;
         }
 #endif
+    }
+
+    private void ApplyNoFrictionMaterial()
+    {
+        // Colliderが取れていないなら何もしない
+        if (m_PlayerColliders == null || m_PlayerColliders.Length == 0)
+        {
+            return;
+        }
+
+        // Inspectorで指定されているものがあればそれを使用
+        PhysicsMaterial2D material = m_PhysicsMaterialOverride;
+        if (material == null)
+        {
+            // 未設定なら実行時用に摩擦なしマテリアルを作成
+            m_RuntimeNoFrictionMaterial = new PhysicsMaterial2D("PlayerNoFrictionRuntime");
+
+            // 摩擦をなくす
+            m_RuntimeNoFrictionMaterial.friction = 0f;
+
+            // 反発を0にする
+            m_RuntimeNoFrictionMaterial.bounciness = 0f;
+
+            material = m_RuntimeNoFrictionMaterial;
+        }
+
+        foreach (Collider2D playerCollider in m_PlayerColliders)
+        {
+            // 配列の中にnullがあれば飛ばす
+            if (playerCollider == null)
+            {
+                continue;
+            }
+
+            // プレイヤーについているCollider全部に同じマテリアルを入れる
+            playerCollider.sharedMaterial = material;
+        }
     }
 
 
