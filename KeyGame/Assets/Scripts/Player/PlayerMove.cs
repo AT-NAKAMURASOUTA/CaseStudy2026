@@ -38,6 +38,14 @@ public sealed class PlayerMove : MonoBehaviour
     [SerializeField] private Vector3 m_CheckPos = new Vector3(0.0f, -0.5f, 0.0f);
     [Tooltip("地面との判定半径")]
     [SerializeField] private float m_CheckRadius = 0.1f;
+    [Header("ジャンプアニメ調整")]
+    [SerializeField] private float m_TakeoffAnimationDuration = 0.16f;
+    [SerializeField] private float m_TakeoffAnimationEndNormalizedTime = 0.22f;
+    [SerializeField] private float m_AirborneAnimationNormalizedTime = 0.58f;
+    [SerializeField] private float m_LandingAnimationStartNormalizedTime = 0.8f;
+    [SerializeField] private float m_LandingPredictionTime = 0.1f;
+    [SerializeField] private float m_MinLandingSpeed = 0.35f;
+    [SerializeField] private float m_GroundProbeExtraDistance = 0.4f;
 
     [Header("加速度、低重力の量ScriptableObejct")]
     [SerializeField]ScriptableObject_SpecialAreaData m_SpecialAreaAsset;
@@ -53,6 +61,7 @@ public sealed class PlayerMove : MonoBehaviour
     private SpriteRenderer m_SpriteRenderer;
     private Collider2D[] m_PlayerColliders;
     private PhysicsMaterial2D m_RuntimeNoFrictionMaterial;
+    private static readonly int JumpStateHash = Animator.StringToHash("Base Layer.Jump");
 
     // Input情報取得変数
     private float m_MoveInput;
@@ -63,6 +72,8 @@ public sealed class PlayerMove : MonoBehaviour
     private int m_JumpCount;
     // 前フレームの地面接触状態
     private bool m_WasGrounded;
+    private bool m_IsJumpAnimating;
+    private float m_JumpAnimationElapsed;
 
 
     // ------------------------------------------
@@ -184,6 +195,14 @@ public sealed class PlayerMove : MonoBehaviour
                 m_Rigidbody2D.linearVelocityY = m_JumpForce;
 
                 m_JumpCount--;
+                m_IsJumpAnimating = true;
+                m_JumpAnimationElapsed = 0f;
+
+                if (m_Animator != null)
+                {
+                    m_Animator.Play(JumpStateHash, 0, 0f);
+                    m_Animator.Update(0f);
+                }
             }
 
             // フラグ更新
@@ -197,6 +216,8 @@ public sealed class PlayerMove : MonoBehaviour
         {
             // 地面に接触している場合、跳躍回数をリセット
             m_JumpCount = m_MaxJumpCount;
+            m_IsJumpAnimating = false;
+            m_JumpAnimationElapsed = 0f;
         }
 
         // アニメーション制御
@@ -205,11 +226,13 @@ public sealed class PlayerMove : MonoBehaviour
             // 移動しているか
             m_Animator.SetBool("isWalking", m_MoveInput != 0);
 
-            // 空中にいるならジャンプ中
-            m_Animator.SetBool("isJumping", !isGrounded);
+            // 実際にジャンプした時だけジャンプアニメを再生
+            m_Animator.SetBool("isJumping", m_IsJumpAnimating);
 
             // 地面にいるか
             m_Animator.SetBool("isGrounded", isGrounded);
+
+            UpdateJumpAnimationPlayback(isGrounded);
         }
 
         // 向きの反転処理
@@ -246,6 +269,95 @@ public sealed class PlayerMove : MonoBehaviour
     public void JumpInput(InputAction.CallbackContext context)
     {
         m_JumpInput = true;
+    }
+
+    private void UpdateJumpAnimationPlayback(bool isGrounded)
+    {
+        if (!m_IsJumpAnimating || m_Animator == null)
+        {
+            return;
+        }
+
+        m_JumpAnimationElapsed += Time.fixedDeltaTime;
+
+        float normalizedTime;
+        if (m_JumpAnimationElapsed < m_TakeoffAnimationDuration)
+        {
+            float takeoffT = m_TakeoffAnimationDuration > 0f
+                ? Mathf.Clamp01(m_JumpAnimationElapsed / m_TakeoffAnimationDuration)
+                : 1f;
+
+            normalizedTime = Mathf.Lerp(0f, m_TakeoffAnimationEndNormalizedTime, takeoffT);
+        }
+        else if (TryGetLandingApproachRatio(isGrounded, out float landingT))
+        {
+            normalizedTime = Mathf.Lerp(
+                m_LandingAnimationStartNormalizedTime,
+                1f,
+                landingT
+            );
+        }
+        else
+        {
+            normalizedTime = m_AirborneAnimationNormalizedTime;
+        }
+
+        m_Animator.Play(JumpStateHash, 0, Mathf.Clamp01(normalizedTime));
+        m_Animator.Update(0f);
+    }
+
+    private bool TryGetLandingApproachRatio(bool isGrounded, out float landingT)
+    {
+        landingT = 0f;
+
+        if (isGrounded)
+        {
+            landingT = 1f;
+            return true;
+        }
+
+        float downwardSpeed = -m_Rigidbody2D.linearVelocity.y;
+        if (downwardSpeed <= m_MinLandingSpeed)
+        {
+            return false;
+        }
+
+        if (!TryGetGroundDistance(out float groundDistance))
+        {
+            return false;
+        }
+
+        float timeToGround = groundDistance / downwardSpeed;
+        if (timeToGround > m_LandingPredictionTime)
+        {
+            return false;
+        }
+
+        landingT = 1f - Mathf.Clamp01(timeToGround / Mathf.Max(0.0001f, m_LandingPredictionTime));
+        return true;
+    }
+
+    private bool TryGetGroundDistance(out float groundDistance)
+    {
+        Vector2 origin = (Vector2)transform.position + (Vector2)m_CheckPos;
+        float castDistance = m_CheckRadius + m_GroundProbeExtraDistance;
+
+        RaycastHit2D hit = Physics2D.CircleCast(
+            origin,
+            m_CheckRadius,
+            Vector2.down,
+            castDistance,
+            m_GroundLayer
+        );
+
+        if (!hit.collider)
+        {
+            groundDistance = 0f;
+            return false;
+        }
+
+        groundDistance = Mathf.Max(0f, hit.distance - m_CheckRadius);
+        return true;
     }
 
 
