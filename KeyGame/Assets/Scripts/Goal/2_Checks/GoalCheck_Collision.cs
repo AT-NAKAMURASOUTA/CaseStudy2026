@@ -29,6 +29,11 @@ public class GoalCheck_Collision : MonoBehaviour
     {
         // ゴールマネージャーを取得
         m_GoalManager = GoalManager.GetGoalManager();
+
+        // BoxCollider2Dを取得
+        BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+        // トリガーに設定
+        boxCollider.isTrigger = true;
     }
 
 
