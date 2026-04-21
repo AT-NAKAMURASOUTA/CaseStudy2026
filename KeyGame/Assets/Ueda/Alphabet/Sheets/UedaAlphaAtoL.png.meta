@@ -1,0 +1,613 @@
+fileFormatVersion: 2
+guid: fdf1bdd52db6f3345859d8ae7d42dd41
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2609680468490411216
+    second: UedaAlphaAtoL_0
+  - first:
+      213: 4821852892244528701
+    second: UedaAlphaAtoL_1
+  - first:
+      213: -4339858501914291761
+    second: UedaAlphaAtoL_2
+  - first:
+      213: -2264331671496893095
+    second: UedaAlphaAtoL_3
+  - first:
+      213: 4540591101507334446
+    second: UedaAlphaAtoL_4
+  - first:
+      213: -4491186084434080010
+    second: UedaAlphaAtoL_5
+  - first:
+      213: 2293353019278351071
+    second: UedaAlphaAtoL_6
+  - first:
+      213: -2223094142295609533
+    second: UedaAlphaAtoL_7
+  - first:
+      213: -3739731854481996057
+    second: UedaAlphaAtoL_8
+  - first:
+      213: -3768277016117483018
+    second: UedaAlphaAtoL_9
+  - first:
+      213: -275210643890132182
+    second: UedaAlphaAtoL_10
+  - first:
+      213: -8788537575895197355
+    second: UedaAlphaAtoL_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -97, y: -83}
+        - {x: -80, y: -90}
+        - {x: -51, y: -10}
+        - {x: 52, y: -13}
+        - {x: 84, y: -98}
+        - {x: 102, y: -91}
+        - {x: 66, y: 2}
+        - {x: 33, y: 95}
+        - {x: -33, y: 95}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba03c2ab01c78f146a3f49e6d1043a34
+      internalID: 432307596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -83, y: -107}
+        - {x: 61, y: -94}
+        - {x: 84, y: -79}
+        - {x: 91, y: -53}
+        - {x: 91, y: -32}
+        - {x: 76, y: -6}
+        - {x: 48, y: 8}
+        - {x: 0, y: 7}
+        - {x: 19, y: 30}
+        - {x: 19, y: 51}
+        - {x: 1, y: 75}
+        - {x: -21, y: 92}
+        - {x: -91, y: 92}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ed67dcb3eea5ec408eec3a54cdbcb72
+      internalID: -352754543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -84, y: 47}
+        - {x: -100, y: 12.166199}
+        - {x: -100, y: -36.18042}
+        - {x: -90, y: -68}
+        - {x: -75, y: -93}
+        - {x: -52, y: -110}
+        - {x: -22, y: -119}
+        - {x: 19.149353, y: -119}
+        - {x: 67, y: -99}
+        - {x: 99, y: -67}
+        - {x: 88, y: -57}
+        - {x: 56, y: -83}
+        - {x: 17, y: -99}
+        - {x: -21, y: -100}
+        - {x: -46, y: -90}
+        - {x: -63, y: -74}
+        - {x: -80, y: -35}
+        - {x: -80, y: 7}
+        - {x: -64, y: 44}
+        - {x: -38, y: 69}
+        - {x: -18, y: 81}
+        - {x: 8, y: 86}
+        - {x: 48, y: 77}
+        - {x: 86, y: 48}
+        - {x: 98, y: 60}
+        - {x: 66, y: 90}
+        - {x: 18, y: 107}
+        - {x: -4, y: 107}
+        - {x: -35, y: 94}
+        - {x: -64, y: 73}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93adfe13bae86fe47bee62a569e87550
+      internalID: 1108691675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -81, y: -112}
+        - {x: 6, y: -112}
+        - {x: 35, y: -95}
+        - {x: 60, y: -78}
+        - {x: 82, y: -48}
+        - {x: 87.99994, y: -2.305481}
+        - {x: 79, y: 36}
+        - {x: 56, y: 67}
+        - {x: 33, y: 87}
+        - {x: 7, y: 100}
+        - {x: -81, y: 101}
+      tessellationDetail: 0
+      bones: []
+      spriteID: afc8a4f2354d15d4487a12377b11acc0
+      internalID: 1472999266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -80, y: -106}
+        - {x: 83, y: -106}
+        - {x: 83.000015, y: -88.208496}
+        - {x: -60, y: -88}
+        - {x: -59, y: -13}
+        - {x: 61, y: -7}
+        - {x: 60, y: 11}
+        - {x: -60, y: 9}
+        - {x: -60, y: 82}
+        - {x: 74, y: 79}
+        - {x: 75, y: 99}
+        - {x: -80, y: 102}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ed64f5b2915bde47813302a1255c2d3
+      internalID: -2085664364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_5
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -75, y: 37.72049}
+        - {x: -65, y: -106}
+        - {x: -43, y: -106}
+        - {x: -52, y: -9}
+        - {x: 38, y: -4}
+        - {x: 37, y: 15}
+        - {x: -52, y: 9}
+        - {x: -55, y: 79}
+        - {x: 71, y: 81}
+        - {x: 71, y: 98}
+        - {x: -75, y: 98}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93924bcb2f58a0345b3f5bfb62000fb8
+      internalID: 838222368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_6
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -87, y: 54}
+        - {x: -102, y: 9.253021}
+        - {x: -102, y: -37.933716}
+        - {x: -94, y: -69}
+        - {x: -75, y: -93}
+        - {x: -47, y: -108}
+        - {x: -17, y: -115}
+        - {x: 19, y: -115}
+        - {x: 66, y: -106}
+        - {x: 99, y: -73}
+        - {x: 91, y: -27}
+        - {x: 24, y: -27}
+        - {x: 24, y: -44}
+        - {x: 76, y: -45}
+        - {x: 79, y: -70}
+        - {x: 55, y: -90}
+        - {x: 2, y: -99}
+        - {x: -46, y: -91}
+        - {x: -66, y: -75}
+        - {x: -77, y: -57}
+        - {x: -85, y: -37}
+        - {x: -85, y: -12}
+        - {x: -74, y: 36}
+        - {x: -55, y: 66}
+        - {x: -33, y: 84}
+        - {x: 27, y: 85}
+        - {x: 60, y: 70}
+        - {x: 83, y: 52}
+        - {x: 99, y: 60}
+        - {x: 70, y: 87}
+        - {x: 25.34198, y: 103}
+        - {x: -34.51068, y: 103}
+        - {x: -62, y: 88}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 977f6f025fa1c8241959e6b9c6feefbb
+      internalID: -1714057631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_7
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -71, y: -112}
+        - {x: -53.157776, y: -112}
+        - {x: -51, y: -15}
+        - {x: 53, y: -17}
+        - {x: 54, y: -112}
+        - {x: 72, y: -112}
+        - {x: 73, y: 101}
+        - {x: 56.45984, y: 100.99997}
+        - {x: 54, y: 1}
+        - {x: -51, y: 4}
+        - {x: -50.098083, y: 101}
+        - {x: -71, y: 101}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18bec7b90a0630c49be94a5499d87489
+      internalID: -1919236951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -28, y: 85}
+        - {x: -1, y: 85}
+        - {x: 1, y: -91}
+        - {x: -26, y: -92}
+        - {x: -26, y: -110}
+        - {x: 43, y: -110}
+        - {x: 42.621674, y: -91.36734}
+        - {x: 19, y: -91}
+        - {x: 16, y: 87}
+        - {x: 39, y: 87}
+        - {x: 39, y: 105}
+        - {x: -28, y: 105}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 382576df6aef8b54c837f1c537f431fa
+      internalID: -1573891202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_9
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -63, y: 79.46506}
+        - {x: -43, y: 79}
+        - {x: -46, y: -60}
+        - {x: -42, y: -81}
+        - {x: -31, y: -95}
+        - {x: -15, y: -106}
+        - {x: 3.6246948, y: -108}
+        - {x: 26, y: -105}
+        - {x: 43, y: -92}
+        - {x: 53, y: -63}
+        - {x: 55, y: -26}
+        - {x: 38, y: -26}
+        - {x: 33, y: -63}
+        - {x: 26, y: -81}
+        - {x: 3, y: -91}
+        - {x: -15, y: -83}
+        - {x: -27, y: -60}
+        - {x: -23, y: 80}
+        - {x: -5, y: 81}
+        - {x: -5.284729, y: 97}
+        - {x: -63, y: 97}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2583890dae8d2c48b09a5c97303c5a2
+      internalID: -1507803242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_10
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -79, y: 22.718933}
+        - {x: -79, y: -100}
+        - {x: -60, y: -100}
+        - {x: -60, y: -26}
+        - {x: -33, y: 3}
+        - {x: 55, y: -109}
+        - {x: 68, y: -97}
+        - {x: -20, y: 17}
+        - {x: 57, y: 92}
+        - {x: 57, y: 107}
+        - {x: 44, y: 107}
+        - {x: -61, y: 0}
+        - {x: -54.91992, y: 103.537476}
+        - {x: -74, y: 103}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b95eb896a36bf9449dbab780f556a72
+      internalID: 1427968972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UedaAlphaAtoL_11
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -72, y: -110}
+        - {x: 74, y: -110}
+        - {x: 74, y: -91.95189}
+        - {x: -51, y: -92}
+        - {x: -50.80774, y: 101}
+        - {x: -72, y: 101}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2335d2f0a8ad1459e484954ab757c9
+      internalID: -1184535977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 18deac4a1efac8b42bd53d36b526e5c2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UedaAlphaAtoL_0: 432307596
+      UedaAlphaAtoL_1: -352754543
+      UedaAlphaAtoL_10: 1427968972
+      UedaAlphaAtoL_11: -1184535977
+      UedaAlphaAtoL_2: 1108691675
+      UedaAlphaAtoL_3: 1472999266
+      UedaAlphaAtoL_4: -2085664364
+      UedaAlphaAtoL_5: 838222368
+      UedaAlphaAtoL_6: -1714057631
+      UedaAlphaAtoL_7: -1919236951
+      UedaAlphaAtoL_8: -1573891202
+      UedaAlphaAtoL_9: -1507803242
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

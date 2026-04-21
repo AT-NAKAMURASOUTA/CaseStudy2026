@@ -3,23 +3,23 @@ using UnityEngine.InputSystem;
 
 public sealed class AlphabetThrowController : MonoBehaviour
 {
-    // 現在の状態
+    // 今の持ち状態
     private enum HoldState
     {
         None,    // 何も持っていない
-        Holding, // 持っているだけの状態
+        Holding, // 文字を持っているだけの状態
         Aiming,  // 投げる方向を決めている状態
     }
 
-    [Header("拾える範囲")]
+    [Header("拾える距離")]
     [SerializeField]
     private float pickupRadius = 1.2f;
 
-    [Header("持つ位置の前方向の距離")]
+    [Header("持った位置の前後距離")]
     [SerializeField]
     private float holdDistance = 0.9f;
 
-    [Header("持つ位置の高さ")]
+    [Header("持った位置の高さ")]
     [SerializeField]
     private float holdHeight = 1.0f;
 
@@ -35,22 +35,21 @@ public sealed class AlphabetThrowController : MonoBehaviour
     [SerializeField]
     private float throwSpeed = 12f;
 
-    [Header("投げる時の回転の強さ")]
+    [Header("投げたときの回転")]
     [SerializeField]
     private float throwTorque = 8f;
 
-    [Header("照準角度の下限")]
+    [Header("投げ角度の下限")]
     [SerializeField]
     private float minAimAngle = 30f;
 
-    [Header("照準角度の上限")]
+    [Header("投げ角度の上限")]
     [SerializeField]
     private float maxAimAngle = 90f;
 
-    [Header("照準角度の往復速度")]
+    [Header("投げ角度の往復速度")]
     [SerializeField]
     private float aimSwingSpeed = 120f;
-
 
     [Header("矢印の長さ")]
     [SerializeField]
@@ -64,15 +63,15 @@ public sealed class AlphabetThrowController : MonoBehaviour
     [SerializeField]
     private float aimArrowHeadLength = 0.28f;
 
-    [Header("矢印の先端の角度")]
+    [Header("矢印の先端の開き角度")]
     [SerializeField]
     private float aimArrowHeadAngle = 28f;
 
-    [Header("矢印の前方向のずらし量")]
+    [Header("矢印の前方向のずれ")]
     [SerializeField]
     private float aimArrowForwardOffset = 0.35f;
 
-    [Header("矢印の上方向のずらし量")]
+    [Header("矢印の上方向のずれ")]
     [SerializeField]
     private float aimArrowHeightOffset = 0.5f;
 
@@ -86,32 +85,31 @@ public sealed class AlphabetThrowController : MonoBehaviour
     // プレイヤー本体のRigidbody2D
     private Rigidbody2D _playerRigidbody2D;
 
-    // プレイヤーについているCollider2Dの一覧
+    // プレイヤーについているCollider2D一覧
     private Collider2D[] _playerColliders;
 
     // 今持っているアルファベット
     private Rigidbody2D _heldLetter;
 
-    // 今の持ち状態
+    // 現在の持ち状態
     private HoldState _holdState;
 
     // プレイヤーが向いている方向
     // 右向きなら1、左向きなら-1
     private float _facingSign = 1f;
 
-    // 矢印の棒部分
+    // 矢印の線部分
     private LineRenderer _aimShaft;
 
     // 矢印の先端部分
     private LineRenderer _aimHead;
 
-    // 現在の狙い角度
+    // 現在の投げ角度
     private float _currentAimAngle = 30f;
 
-    // 狙い角度の進行方向
-    // 1 で増加、-1 で減少
+    // 投げ角度の増減方向
+    // 1 なら増加、-1 なら減少
     private float _aimAngleDirection = 1f;
-
 
     private void Awake()
     {
@@ -120,7 +118,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerColliders = GetComponents<Collider2D>();
 
-        // 矢印を表示するためのLineRendererを作る
+        // 狙い表示用のLineRendererを作る
         CreateAimRenderers();
     }
 
@@ -132,12 +130,17 @@ public sealed class AlphabetThrowController : MonoBehaviour
             _mainCamera = Camera.main;
         }
 
+        if (_heldLetter == null && _holdState != HoldState.None)
+        {
+            _holdState = HoldState.None;
+        }
+
         // 毎フレーム必要な処理
         UpdateFacingDirection();
         HandleMouseInput();
         HandleKeyboardInput();
 
-        // 狙い中だけ角度を自動で往復させる
+        // 狙い中だけ角度を往復させる
         if (_holdState == HoldState.Aiming)
         {
             UpdateAimOscillation();
@@ -145,7 +148,6 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         UpdateHeldLetterPosition();
         UpdateAimArrow();
-
     }
 
     private void HandleMouseInput()
@@ -155,7 +157,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 右クリックされた時の処理
+        // 右クリック時の処理
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
             HandleRightClick();
@@ -189,21 +191,21 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void HandlePrimaryAction()
     {
-        // 今の状態によって左クリックやスペースの意味を変える
+        // 今の状態によって、左クリックやスペースの処理を変える
         switch (_holdState)
         {
             case HoldState.None:
-                // 何も持っていない時は近くの文字を拾う
+                // 何も持っていないときは近くの文字を拾う
                 TryPickLetter();
                 break;
 
             case HoldState.Holding:
-                // 持っている時は照準状態に入る
+                // 持っている状態なら狙いモードに入る
                 StartAiming();
                 break;
 
             case HoldState.Aiming:
-                // 照準中なら投げる
+                // 狙い中なら投げる
                 ThrowHeldLetter();
                 break;
         }
@@ -214,12 +216,12 @@ public sealed class AlphabetThrowController : MonoBehaviour
         switch (_holdState)
         {
             case HoldState.Holding:
-                // 持っているだけの時はその場で離す
+                // 持っているだけの状態ならその場で離す
                 ReleaseHeldLetter();
                 break;
 
             case HoldState.Aiming:
-                // 照準中は構えをやめて持っている状態に戻す
+                // 狙い中は投げるのをやめて持ち状態に戻す
                 CancelAiming();
                 break;
         }
@@ -227,7 +229,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void TryPickLetter()
     {
-        // プレイヤーの近くにある、拾える対象を全部調べる
+        // プレイヤーの近くにある、拾える対象を調べる
         var hits = Physics2D.OverlapCircleAll(transform.position, pickupRadius, pickableLayers);
 
         Rigidbody2D nearestLetter = null;
@@ -249,13 +251,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
             var rb = hit.attachedRigidbody;
 
-            // Rigidbody2Dが付いていないものは対象外
+            // Rigidbody2Dが無いものは対象外
             if (rb == null)
             {
                 continue;
             }
 
-            // プレイヤーの後ろ側にある文字は拾わない
+            // プレイヤーの後ろ側にあるものは拾わない
             var toLetter = rb.worldCenterOfMass - (Vector2)transform.position;
             if (toLetter.x * _facingSign < 0f)
             {
@@ -273,7 +275,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             nearestLetter = rb;
         }
 
-        // 何も見つからなければ終わり
+        // 見つからなければ終わり
         if (nearestLetter == null)
         {
             return;
@@ -282,15 +284,15 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 見つけた文字を持つ
         _heldLetter = nearestLetter;
 
-        // 持った瞬間に動きを止める
+        // 持つ瞬間に動きを止める
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
 
-        // 手元に固定したいのでKinematicにする
+        // 手持ち中はKinematicにする
         _heldLetter.bodyType = RigidbodyType2D.Kinematic;
         _holdState = HoldState.Holding;
 
-        // 持った瞬間に前方の持つ位置へ移動する
+        // 持つ位置へ移動
         _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
         _heldLetter.transform.rotation = Quaternion.identity;
 
@@ -305,34 +307,32 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 照準開始時は下限角度からスタートする
+        // 狙い開始時は下限角度からスタート
         _currentAimAngle = minAimAngle;
         _aimAngleDirection = 1f;
 
-        // 照準状態に入る
+        // 狙い状態に入る
         _holdState = HoldState.Aiming;
     }
 
     private void UpdateAimOscillation()
     {
-        // 設定した速度で照準角度を往復させる
+        // 設定した速度で投げ角度を往復させる
         _currentAimAngle += aimSwingSpeed * _aimAngleDirection * Time.deltaTime;
 
-        // 上限に達したら折り返す
+        // 上限に達したら反転
         if (_currentAimAngle >= maxAimAngle)
         {
             _currentAimAngle = maxAimAngle;
             _aimAngleDirection = -1f;
         }
-        // 下限に達したら折り返す
+        // 下限に達したら反転
         else if (_currentAimAngle <= minAimAngle)
         {
             _currentAimAngle = minAimAngle;
             _aimAngleDirection = 1f;
         }
     }
-
-
 
     private void UpdateHeldLetterPosition()
     {
@@ -341,10 +341,10 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 持っている間は常に決まった位置へ移動させる
+        // 持っている間は常に指定位置へ移動させる
         _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
 
-        // 見た目が傾かないように回転を戻す
+        // 傾かないように回転は固定
         _heldLetter.transform.rotation = Quaternion.identity;
     }
 
@@ -361,13 +361,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
 
-        // 決めた方向へ速度を与えて飛ばす
+        // 狙った方向へ速度を与える
         _heldLetter.linearVelocity = aimDirection * throwSpeed;
 
-        // 少し回転も加えて見た目を自然にする
+        // 少し回転も付けて投げた感じを出す
         _heldLetter.AddTorque(-Mathf.Sign(aimDirection.x) * throwTorque, ForceMode2D.Impulse);
 
-        // 手放したので参照を消す
+        // 投げ終わったので状態を戻す
         _heldLetter = null;
         _holdState = HoldState.None;
     }
@@ -379,7 +379,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 照準だけ解除して、持っている状態に戻す
+        // 狙いをやめて、持っている状態に戻す
         _holdState = HoldState.Holding;
     }
 
@@ -390,13 +390,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // その場に落とすためDynamicに戻す
+        // その場に落とす
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
 
-        // 手放したので初期状態に戻す
+        // 持っていない状態に戻す
         _heldLetter = null;
         _holdState = HoldState.None;
     }
@@ -419,11 +419,11 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector2 GetAimDirection()
     {
-        // 現在の角度から狙い方向を作る
+        // 今の角度から投げる方向を作る
         var radians = _currentAimAngle * Mathf.Deg2Rad;
         var direction = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 
-        // 左向きのときはX方向を反転して前方へ向ける
+        // 左向きのときはX方向を反転する
         if (_facingSign < 0f)
         {
             direction.x *= -1f;
@@ -431,7 +431,6 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         return direction.normalized;
     }
-
 
     private Vector3 GetHoldPosition(float distance, float height)
     {
@@ -448,13 +447,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void UpdateFacingDirection()
     {
-        // ほぼ止まっている時は向きを変えない
+        // ほぼ止まっているときは向きを変えない
         if (_playerRigidbody2D == null || Mathf.Abs(_playerRigidbody2D.linearVelocity.x) <= 0.01f)
         {
             return;
         }
 
-        // 横移動の向きを現在の向きとして記録する
+        // 移動方向を今の向きとして記録する
         _facingSign = Mathf.Sign(_playerRigidbody2D.linearVelocity.x);
     }
 
@@ -481,7 +480,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
                     continue;
                 }
 
-                // 持っている文字がプレイヤーに当たらないようにする
+                // 持っている間はプレイヤーと当たらないようにする
                 Physics2D.IgnoreCollision(playerCollider, letterCollider, true);
             }
         }
@@ -517,7 +516,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void CreateAimRenderers()
     {
-        // 矢印の棒部分と先端部分を別々に作る
+        // 矢印の線部分と先端部分を作る
         _aimShaft = CreateLineRenderer("AimArrowShaft", 2);
         _aimHead = CreateLineRenderer("AimArrowHead", 3);
     }
@@ -549,7 +548,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        // 文字を持っていない、または照準中でないなら矢印は表示しない
+        // 持っていない、または狙い中でないなら矢印は表示しない
         if (_heldLetter == null || _holdState != HoldState.Aiming)
         {
             _aimShaft.enabled = false;
@@ -571,7 +570,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 矢印の終点
         var arrowEnd = arrowStart + (Vector3)(aimDirection * aimArrowLength);
 
-        // 棒部分を更新
+        // 線部分を更新
         _aimShaft.SetPosition(0, arrowStart);
         _aimShaft.SetPosition(1, arrowEnd);
 
@@ -587,14 +586,14 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private Vector3 GetArrowHeadPoint(Vector3 arrowEnd, Vector2 aimDirection, float angleOffset)
     {
-        // 終点から少し斜め後ろに点を作って矢印の先端にする
+        // 終点から少し戻した位置に先端の線を作る
         var rotatedDirection = Quaternion.Euler(0f, 0f, angleOffset) * -aimDirection;
         return arrowEnd + (Vector3)(rotatedDirection.normalized * aimArrowHeadLength);
     }
 
     private void OnDrawGizmosSelected()
     {
-        // Sceneビューで拾える範囲が分かるように円を描く
+        // Sceneビューで拾える範囲が分かるように表示
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, pickupRadius);
     }

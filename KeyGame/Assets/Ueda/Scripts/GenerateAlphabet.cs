@@ -107,9 +107,11 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
+        var alphabetCuttable = go.AddComponent<AlphabetCuttable>();
         destroyOnFall.SetDestroyY(destroyY);
         destroyOnFall.SetOwner(this);
         alphabetWallReaction.SetAlphabetCharacter((char)('A' + alphabetIndex));
+        alphabetCuttable.SetOwner(this);
         currentAlphabetCount++;
         UpdateAlphabetCountText();
         nextSpawnTime = Time.time + alphabetCooldown;

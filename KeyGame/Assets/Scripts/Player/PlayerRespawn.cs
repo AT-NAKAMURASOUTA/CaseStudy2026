@@ -44,12 +44,21 @@ public sealed class PlayerRespawn : MonoBehaviour
     [SerializeField]
     private float edgeSoftness = 0.02f;
 
-    [Header("カメラを寄せる速さ")]
+    [Header("ミス演出時のズームサイズ")]
     [SerializeField]
-    private float cameraFocusSpeed = 12f;
+    private float missZoomSize = 3.5f;
 
+    [Header("通常追従のなめらかさ")]
     [SerializeField]
-    private float cameraReturnDuration = 0.45f;
+    private float cameraFollowSmoothTime = 0.05f;
+
+    [Header("演出中のカメラ移動のなめらかさ")]
+    [SerializeField]
+    private float cameraFocusSmoothTime = 0.04f;
+
+    [Header("復活後に通常追従へ戻るなめらかさ")]
+    [SerializeField]
+    private float cameraReturnToFollowSmoothTime = 0.08f;
 
     // プレイヤー本体の物理制御用
     private Rigidbody2D m_Rigidbody2D;
@@ -69,8 +78,9 @@ public sealed class PlayerRespawn : MonoBehaviour
     // 演出コルーチンを管理するために保持
     private Coroutine m_TransitionCoroutine;
 
-    // ゲーム開始時のカメラ位置を保存しておく
-    private Vector3 m_StartCameraPosition;
+    // ゲーム開始時のカメラサイズを保存しておく
+    private float m_StartOrthographicSize;
+    private Vector3 m_CameraFollowOffset;
 
     // 円の中心やカメラの注目先になるワールド座標
     private Vector3 m_FocusWorldPosition;
@@ -84,6 +94,8 @@ public sealed class PlayerRespawn : MonoBehaviour
 
     // リスポーン中の多重実行防止用
     private bool m_IsRespawning;
+    private Vector3 m_CameraMoveVelocity;
+    private bool m_IsReturningToFollow;
 
     private void Awake()
     {
@@ -101,7 +113,9 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         if (m_MainCamera != null)
         {
-            m_StartCameraPosition = m_MainCamera.transform.position;
+            m_StartOrthographicSize = m_MainCamera.orthographicSize;
+            m_CameraFollowOffset = m_MainCamera.transform.position - transform.position;
+            m_CameraFollowOffset.x = 0f;
         }
 
         if (m_SpriteRenderer != null)
@@ -114,12 +128,10 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         // 最初は完全に閉じた状態から始める
         SetHoleRadius(0f);
+        SetCameraZoom(missZoomSize);
 
         // 最初はプレイヤー位置を中心にしておく
         m_FocusWorldPosition = transform.position;
-
-        // カメラも一旦プレイヤー位置に寄せる
-        SetCameraToFocusPosition();
 
         // シェーダーに渡す円の中心位置を更新
         UpdateHoleCenter();
@@ -140,6 +152,22 @@ public sealed class PlayerRespawn : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        if (m_IsRespawning)
+        {
+            return;
+        }
+
+        if (m_IsReturningToFollow)
+        {
+            SmoothReturnToFollow();
+            return;
+        }
+
+        FollowPlayerWithCamera();
+    }
+
     public void TriggerMiss()
     {
         // すでにリスポーン処理中なら何もしない
@@ -149,6 +177,7 @@ public sealed class PlayerRespawn : MonoBehaviour
         }
 
         m_IsRespawning = true;
+        m_CameraMoveVelocity = Vector3.zero;
 
         // ミスした瞬間の位置を演出の注目先にする
         m_FocusWorldPosition = transform.position;
@@ -201,7 +230,7 @@ public sealed class PlayerRespawn : MonoBehaviour
             m_Rigidbody2D.simulated = true;
         }
 
-        // 開く演出の前にカメラと中心位置を合わせる
+        // 開く演出の前にカメラ位置と中心位置を合わせる
         SetCameraToFocusPosition();
         UpdateHoleCenter();
 
@@ -317,7 +346,12 @@ public sealed class PlayerRespawn : MonoBehaviour
         m_MainCamera.transform.position = cameraPosition;
     }
 
-    private void MoveCameraToTarget(float t)
+    private void MoveCameraToFocus()
+    {
+        MoveCameraToPosition(GetFocusCameraPosition(), cameraFocusSmoothTime);
+    }
+
+    private void FollowPlayerWithCamera()
     {
         if (m_MainCamera == null)
         {
@@ -329,13 +363,10 @@ public sealed class PlayerRespawn : MonoBehaviour
             return;
         }
 
-        // 現在位置から注目位置へ徐々に寄せる
-        Vector3 currentPosition = m_MainCamera.transform.position;
-        Vector3 targetPosition = new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, currentPosition.z);
-        m_MainCamera.transform.position = Vector3.Lerp(currentPosition, targetPosition, Mathf.Clamp01(t * cameraFocusSpeed));
+        m_MainCamera.transform.position = GetFollowCameraPosition();
     }
 
-    private IEnumerator ReturnCameraToStart()
+    private void SmoothReturnToFollow()
     {
         if (m_MainCamera == null)
         {
@@ -344,21 +375,71 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         if (m_MainCamera == null)
         {
-            yield break;
+            return;
         }
 
-        float elapsed = 0f;
+        Vector3 targetPosition = GetFollowCameraPosition();
+        MoveCameraToPosition(targetPosition, cameraReturnToFollowSmoothTime);
 
-        // 演出後、カメラを開始位置に戻す
-        while (elapsed < cameraReturnDuration)
+        if ((m_MainCamera.transform.position - targetPosition).sqrMagnitude <= 0.0001f)
         {
-            elapsed += Time.unscaledDeltaTime;
-            float t = cameraReturnDuration > 0f ? Mathf.Clamp01(elapsed / cameraReturnDuration) : 1f;
-            m_MainCamera.transform.position = Vector3.Lerp(m_MainCamera.transform.position, m_StartCameraPosition, t);
-            yield return null;
+            m_MainCamera.transform.position = targetPosition;
+            m_CameraMoveVelocity = Vector3.zero;
+            m_IsReturningToFollow = false;
+        }
+    }
+
+    private Vector3 GetFocusCameraPosition()
+    {
+        float z = m_MainCamera != null ? m_MainCamera.transform.position.z : 0f;
+        return new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, z);
+    }
+
+    private Vector3 GetFollowCameraPosition()
+    {
+        float z = m_MainCamera != null ? m_MainCamera.transform.position.z : 0f;
+        return new Vector3(
+            transform.position.x + m_CameraFollowOffset.x,
+            transform.position.y + m_CameraFollowOffset.y,
+            z
+        );
+    }
+
+    private void MoveCameraToPosition(Vector3 targetPosition, float smoothTime)
+    {
+        if (m_MainCamera == null)
+        {
+            m_MainCamera = Camera.main;
         }
 
-        m_MainCamera.transform.position = m_StartCameraPosition;
+        if (m_MainCamera == null)
+        {
+            return;
+        }
+
+        m_MainCamera.transform.position = Vector3.SmoothDamp(
+            m_MainCamera.transform.position,
+            targetPosition,
+            ref m_CameraMoveVelocity,
+            Mathf.Max(0.0001f, smoothTime),
+            Mathf.Infinity,
+            Time.unscaledDeltaTime
+        );
+    }
+
+    private void SetCameraZoom(float orthographicSize)
+    {
+        if (m_MainCamera == null)
+        {
+            m_MainCamera = Camera.main;
+        }
+
+        if (m_MainCamera == null)
+        {
+            return;
+        }
+
+        m_MainCamera.orthographicSize = orthographicSize;
     }
 
     private void SetHoleRadius(float radius)
@@ -381,21 +462,24 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         float elapsed = 0f;
 
-        // 半径を0から広げていく
+        // 半径を0から広げつつ、カメラを通常サイズへ戻す
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = duration > 0f ? Mathf.Clamp01(elapsed / duration) : 1f;
 
+            Vector3 targetCameraPosition = Vector3.Lerp(GetFocusCameraPosition(), GetFollowCameraPosition(), t);
+            MoveCameraToPosition(targetCameraPosition, cameraFocusSmoothTime);
+            SetCameraZoom(Mathf.Lerp(missZoomSize, m_StartOrthographicSize, t));
             SetHoleRadius(Mathf.Lerp(0f, openRadius, t));
             UpdateHoleCenter();
             yield return null;
         }
 
+        SetCameraZoom(m_StartOrthographicSize);
         SetHoleRadius(openRadius);
-
-        // 開いた後にカメラを元の位置へ戻す
-        yield return ReturnCameraToStart();
+        m_CameraMoveVelocity = Vector3.zero;
+        m_IsReturningToFollow = true;
     }
 
     private IEnumerator PlayCloseTransition(float duration)
@@ -407,20 +491,21 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         float elapsed = 0f;
 
-        // カメラを注目位置へ寄せつつ、円を閉じていく
+        // カメラ位置は変えずにズームインしつつ、円を閉じていく
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = duration > 0f ? Mathf.Clamp01(elapsed / duration) : 1f;
 
-            MoveCameraToTarget(t);
+            MoveCameraToFocus();
+            SetCameraZoom(Mathf.Lerp(m_StartOrthographicSize, missZoomSize, t));
             SetHoleRadius(Mathf.Lerp(openRadius, 0f, t));
             UpdateHoleCenter();
             yield return null;
         }
 
-        // 最後は確実に注目位置・半径0の状態にする
         SetCameraToFocusPosition();
+        SetCameraZoom(missZoomSize);
         SetHoleRadius(0f);
     }
 }
