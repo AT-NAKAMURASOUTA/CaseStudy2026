@@ -13,7 +13,7 @@ public class WindScript : MonoBehaviour
 
     [Header("風の方向を設定")]
     [SerializeField]
-    private Vector2 windDirection = Vector2.right;
+    private float windDirection = 1.0f;
 
     [Serializable]
     private struct TagWindStrength
@@ -37,39 +37,25 @@ public class WindScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (affectedObjects.Count > 0)
-        {
-            foreach (GameObject obj in affectedObjects)
-            {
-                if (obj != null)
-                {
-                    Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        //rb.AddForce(windDirection.normalized * windStrength, ForceMode2D.Force);
-
-                        // Tagごとの風の強さを適用
-                        if (tagWindStrengths.ContainsKey(obj.tag))
-                        {
-                            float tagStrength = tagWindStrengths[obj.tag];
-                            rb.AddForce(windDirection.normalized * tagStrength, ForceMode2D.Force);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 風の影響を受けるTagに該当するか確認
         if (activeTags.Contains(collision.gameObject.tag))
         {
             if (!affectedObjects.Contains(collision.gameObject))
             {
                 affectedObjects.Add(collision.gameObject);
+                //オブジェクトごとにそれぞれ風を適応
+                if (collision.TryGetComponent<PlayerMove>(out PlayerMove playerMove))
+                {
+                    float windStrength = tagWindStrengths[collision.tag];
+                    playerMove.InWindArea(windStrength * windDirection);
+                }
+                if (collision.TryGetComponent<AlphabetRigidbody>(out AlphabetRigidbody alphabetRigidbody))
+                {
+                    float windStrength = tagWindStrengths[collision.tag];
+                    alphabetRigidbody.InWindArea(windStrength * windDirection);
+                }
             }
         }
     }
@@ -79,6 +65,15 @@ public class WindScript : MonoBehaviour
         if (affectedObjects.Contains(collision.gameObject))
         {
             affectedObjects.Remove(collision.gameObject);
+            //オブジェクトごとにそれぞれ風の影響を解除
+            if (collision.TryGetComponent<PlayerMove>(out PlayerMove playerMove))
+            {
+                playerMove.ExitWindArea();
+            }
+            if (collision.TryGetComponent<AlphabetRigidbody>(out AlphabetRigidbody alphabetRigidbody))
+            {
+                alphabetRigidbody.ExitWindArea();
+            }
         }
     }
 }
