@@ -455,6 +455,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         // 移動方向を今の向きとして記録する
         _facingSign = Mathf.Sign(_playerRigidbody2D.linearVelocity.x);
+
+        // 持つ方向をSpriteの反転に反映させる
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            _facingSign = spriteRenderer.flipX ? -1f : 1f;
+        }
     }
 
     private void IgnoreHeldLetterCollisionWithPlayer()

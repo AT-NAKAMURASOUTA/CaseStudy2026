@@ -76,6 +76,9 @@ public sealed class PlayerMove : MonoBehaviour
     private float m_JumpAnimationElapsed;
 
 
+    // 風エリア用調整変数
+    private float m_WindAreaMoveSpeedModifier = 0f;
+
     // ------------------------------------------
     // オブジェクト作成時の処理
     // ------------------------------------------
@@ -183,8 +186,10 @@ public sealed class PlayerMove : MonoBehaviour
             nowMoveSpeed.y *= m_SpecialAreaAsset.GetLowGravityMagnification();
         }
 
-        //移動
-        m_Rigidbody2D.linearVelocity = nowMoveSpeed;
+        //移動                                      + 風エリアの補正 by 植田
+        m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
+
+        Debug.Log("wind power : " + m_WindAreaMoveSpeedModifier);
 
         // 跳躍処理
         if (m_JumpInput)
@@ -360,6 +365,18 @@ public sealed class PlayerMove : MonoBehaviour
         return true;
     }
 
+    //--------------------------------------------
+    // 風エリアに入ったときの速度の調整　（何かあれば植田まで）
+    //--------------------------------------------
+    public void InWindArea(float windStrength)
+    {
+        m_WindAreaMoveSpeedModifier = windStrength * m_MoveSpeed;
+    }
+
+    public void ExitWindArea()
+    {
+        m_WindAreaMoveSpeedModifier = 0.0f;
+    }
 
     // ------------------------------------------
     // デバッグ用: 地面との当たり判定の可視化

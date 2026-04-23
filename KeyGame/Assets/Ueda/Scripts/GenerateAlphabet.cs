@@ -105,6 +105,7 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
+        go.AddComponent<AlphabetRigidbody>();
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
         var alphabetCuttable = go.AddComponent<AlphabetCuttable>();
