@@ -189,8 +189,6 @@ public sealed class PlayerMove : MonoBehaviour
         //移動                                      + 風エリアの補正 by 植田
         m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
 
-        Debug.Log("wind power : " + m_WindAreaMoveSpeedModifier);
-
         // 跳躍処理
         if (m_JumpInput)
         {
