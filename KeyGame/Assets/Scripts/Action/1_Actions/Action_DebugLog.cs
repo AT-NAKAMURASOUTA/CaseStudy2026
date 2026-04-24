@@ -3,19 +3,19 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 
 
-/*  * ゴール処理クラス
- *  * ゴール時に、ログを表示させる
+/*  * アクション処理クラス
+ *  * デバッグ用のログを表示するアクション
  */
 
 
-public class GoalAction_DebugLog : BaseGoalAction
+public class Action_DebugLog : BaseAction
 {
     // ===========================================
-    // 派生クラスのゴール処理
+    // デバッグアクション処理
     // ===========================================
     public override UniTask Execute(CancellationToken token)
     {
-        Debug.Log("ゴール処理が実行されました。");
+        Debug.Log("アクション処理が実行されました。");
         return UniTask.CompletedTask;
     }
 }

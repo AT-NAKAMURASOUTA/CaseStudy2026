@@ -3,12 +3,12 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
-/*  * ゴール処理クラス
+/*  * アクション処理クラス
  *  * 次のシーンに進む
  */
 
 
-public class GoalAction_NextScene : BaseGoalAction
+public class Action_NextScene : BaseAction
 {
     // ===========================================
     // メンバー変数

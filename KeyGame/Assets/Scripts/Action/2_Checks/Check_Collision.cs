@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-/*  * ゴールかどうかを判定するオブジェクトにアタッチするクラス
+/*  * 物体と当たったときにタグを判定してアクションを実行するクラス
  */
 
 
@@ -9,17 +9,18 @@ using UnityEngine;
 // 必須コンポーネント定義
 // ==============================================
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(ActionsManager))]
 
 
-public class GoalCheck_Collision : MonoBehaviour
+public class Check_Collision : MonoBehaviour
 {
     // ==============================================
     // メンバー変数
     // ==============================================
-    // ゴールと判定するタグ
-    [SerializeField] private string m_GoalTag = "Player";
-    // ゴールマネージャー
-    private GoalManager m_GoalManager;
+    // アクションを実行するタグ
+    [SerializeField] private string m_Tag = "Player";
+    // アクションマネージャー
+    private ActionsManager m_ActionsManager;
 
 
     // ==============================================
@@ -27,8 +28,8 @@ public class GoalCheck_Collision : MonoBehaviour
     // ==============================================
     void Start()
     {
-        // ゴールマネージャーを取得
-        m_GoalManager = GoalManager.GetGoalManager();
+        // アクションマネージャーを取得
+        m_ActionsManager = GetComponent<ActionsManager>();
 
         // BoxCollider2Dを取得
         BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
@@ -38,15 +39,15 @@ public class GoalCheck_Collision : MonoBehaviour
 
 
     // ==============================================
-    // ゴール判定処理
+    // アクション判定処理
     // ==============================================
     void OnTriggerEnter2D(Collider2D other)
     {
-        // ゴールと判定するタグを持つオブジェクトが衝突した場合
-        if (other.CompareTag(m_GoalTag))
+        // 判定するタグを持つオブジェクトが衝突した場合
+        if (other.CompareTag(m_Tag))
         {
-            // ゴールマネージャーにゴールしたことを通知する
-            m_GoalManager.ExecuteGoal();
+            // アクションマネージャーに実行を指示
+            m_ActionsManager.ExecuteAction();
         }
     }
 }
