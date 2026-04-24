@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a393b96dc55bf64baa7b79da3baf997, type: 3}
+  m_Name: OutLinProperty
+  m_EditorClassIdentifier: 
+  outlineMaterial: {fileID: -876546973899608171, guid: b8094806688bd354e9ca78827f04ca1e, type: 3}
+  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineThickness: 0.01

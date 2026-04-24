@@ -48,7 +48,11 @@ public class GenerateAlphabet : MonoBehaviour
 
     [Header("アルファベットに渡す用のScriptableObjectのデータ")]
     [SerializeField] ScriptableObject_SpecialAreaData specialAreaData;
-     
+
+    [Header("アルファベットのアウトラインのプロパティ")]
+    [SerializeField]
+    private OutLinProperty outLinProperty;
+
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
     readonly private int NOKEY = -1;
@@ -110,6 +114,8 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
         go.AddComponent<AlphabetRigidbody>();
+        var outline = go.AddComponent<AlphabetOutLine>();
+        outline.outLinProperty = outLinProperty;
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
         var alphabetCuttable = go.AddComponent<AlphabetCuttable>();
