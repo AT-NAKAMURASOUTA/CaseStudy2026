@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 5
-  m_JumpForce: 7
+  m_JumpForce: 8
   m_MaxJumpCount: 1
   m_GroundLayer:
     serializedVersion: 2
@@ -365,7 +365,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   pickableObjectName: Alphabet
-  throwSpeed: 7
+  throwSpeed: 15
   throwTorque: 0.8
   minAimAngle: 30
   maxAimAngle: 90
