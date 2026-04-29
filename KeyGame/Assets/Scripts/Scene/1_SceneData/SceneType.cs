@@ -15,6 +15,6 @@ public enum SCENETYPE : int
     STAGE4, 
     STAGE5,
 
-
-    DEBUG
+    // デバッグ用列挙型
+    DEBUG,
 }
