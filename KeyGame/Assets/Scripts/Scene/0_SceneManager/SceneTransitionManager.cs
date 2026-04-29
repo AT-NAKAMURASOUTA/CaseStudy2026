@@ -3,51 +3,84 @@ using System;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 
 /* @file シーン遷移を管理するマネージャー
  * @brief シーン遷移
- * @momo Stateパターンで実装する予定
+ * @momo Stateパターンで実装
  *       シングルトンで制作、シーンを跨いでも削除されないように制作
+ *       現在は、Dictionaryを使っているため少し重いかもしれない、今後はEnumを添え字に使う可能性あり
 */
 
 public class SceneTransitionManager : MonoBehaviour
 {
     // 実態
     private static SceneTransitionManager m_Instance;
+    // シーンデータを取得
+    private Dictionary<SCENETYPE,string> m_SceneData = new Dictionary<SCENETYPE, string>();
     // 今のシーンの状態
-    private BaseSceneOS m_CurrentState;
+    private SCENETYPE m_CurrentSceneType;
     // チェンジフラグ
     private bool m_IsTransitioning = false;
-    // 初期化設定フラグ
-    private bool m_IsInitialized = false;
 
 
     // ===============================
-    // 最初のシーンを設定する
+    // 初期化設定
     // ===============================
-    public void SetStartScene(BaseSceneOS _startScene, ISceneData _data = null)
+    public void Init(SceneData _sceneData)
     {
-        if (m_IsInitialized) { return; }
+#if UNITY_EDITOR
+        bool IsInitDataNull = true;
+#endif
 
-        m_CurrentState = _startScene;
-        m_CurrentState.Enter(_data);
+        // Dictionaryを初期化
+        m_SceneData.Clear();
+
+        // ListからDictionaryに変換
+        foreach (SceneInfo sceneInfo in _sceneData.sceneInfos)
+        {
+            // シーンタイプが重複していないか確認
+            m_SceneData.Add(sceneInfo.sceneType, sceneInfo.sceneName);
+
+#if UNITY_EDITOR
+            // 現在のシーンを設定
+            String sceneName = SceneManager.GetActiveScene().name;
+            if (sceneInfo.sceneName == sceneName)
+            {
+                m_CurrentSceneType = sceneInfo.sceneType;
+                IsInitDataNull = false;
+
+                UnityEngine.Debug.Log($"現在のシーン: {sceneName} に対応するシーンタイプ: {sceneInfo.sceneType} が設定されました");
+            }
+#endif
+        }
+
+#if UNITY_EDITOR
+        // シーン初期化データが見つからない場合はエラー
+        if (IsInitDataNull)
+        {
+            UnityEngine.Debug.LogError("シーン初期化データが見つかりません");
+        }
+#else
+        // タイトルシーンを設定
+        m_CurrentSceneType = SCENETYPE.TITLE;
+#endif
     }
-
 
     // ===============================
     // シーン遷移処理
     // ===============================
-    public bool SceneTransition(BaseSceneOS _scene, ISceneData _data = null)
+    public bool SceneTransition(SCENETYPE _sceneType)
     {
-        if (m_IsTransitioning) { return false; } // シーン遷移中だと行わないようにする
+        // シーン遷移中だと行わないようにする
+        if (m_IsTransitioning) { return false; }
 
         // コルーチン開始
-        SceneTransitionRoutine(_scene, _data).Forget();
+        SceneTransitionRoutine(_sceneType).Forget();
 
         return true;
     }
-
 
     // ================================
     //  自分の実態を渡すゲッター
@@ -72,26 +105,20 @@ public class SceneTransitionManager : MonoBehaviour
         return m_Instance;
     }
 
-
     // =====================================
     // シーンを切り替える処理
     // =====================================
-    private async UniTask SceneTransitionRoutine(BaseSceneOS _sceneType, ISceneData _data)
+    private async UniTask SceneTransitionRoutine(SCENETYPE _nextScene)
     {
-        // 現在のシーンの終了処理
-        if (m_CurrentState != null)
-        {
-            m_CurrentState.Exit();
-        }
-
         // シーン作成のフラグ
         m_IsTransitioning = true;
 
-        // 新しいシーン状態を生成
-        m_CurrentState = _sceneType;
+        // 現在のシーンを設定
+        m_CurrentSceneType = _nextScene;
 
-        // 次のシーンの名前を取得
-        string nextSceneName = m_CurrentState.GetSceneName();
+        // シーン文字列を取得
+        string nextSceneName = m_SceneData[_nextScene];
+
         // シーンをロード開始
         AsyncOperation async = SceneManager.LoadSceneAsync(nextSceneName, LoadSceneMode.Single);
 
@@ -101,28 +128,16 @@ public class SceneTransitionManager : MonoBehaviour
             await UniTask.Yield();  
         }
 
-        // 新シーン開始処理
-        m_CurrentState.Enter(_data);
-
         // フラグ解除
         m_IsTransitioning = false;
     }
 
-
     // ==================================
     // リターン処理
     // ==================================
-    public void ReturenScene(ISceneData _data = null)
+    public void ReturenScene()
     {
-        if (m_CurrentState != null)
-        {
-            // シーン変更
-            SceneTransition(m_CurrentState, _data);
-        }
-        else
-        {
-            UnityEngine.Debug.Log("今のシーンに何も入っていない");
-        }
+        SceneTransition(m_CurrentSceneType);
     }
 
 }

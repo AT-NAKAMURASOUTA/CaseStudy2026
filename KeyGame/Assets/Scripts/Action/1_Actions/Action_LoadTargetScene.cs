@@ -13,7 +13,7 @@ public class Action_LoadTargetScene : BaseAction
     // メンバー変数
     // ===========================================
     // シーン名
-    [SerializeField] private BaseSceneOS m_TargetScene;
+    [SerializeField] private SCENETYPE m_TargetScene;
 
 
     // ===========================================
