@@ -6,7 +6,6 @@ using UnityEngine;
 /*  * アクション処理クラス
  *  * 特定のシーンに移行するアクション処理
  */
-
 public class Action_LoadTargetScene : BaseAction
 {
     // ===========================================

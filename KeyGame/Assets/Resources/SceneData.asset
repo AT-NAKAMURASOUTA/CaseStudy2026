@@ -15,5 +15,5 @@ MonoBehaviour:
   sceneInfos:
   - sceneType: 0
     sceneName: PrototypeScene
-  - sceneType: 0
+  - sceneType: 7
     sceneName: 
