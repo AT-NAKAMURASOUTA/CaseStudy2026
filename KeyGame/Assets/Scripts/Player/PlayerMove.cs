@@ -55,12 +55,19 @@ public sealed class PlayerMove : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private PlayerInput m_PlayerInput;
     private SpecialAreaCollision m_SpecialAreaCollision;//okada:特殊エリアの当たり判定
+
     // アニメーション制御用変数
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
     private Collider2D[] m_PlayerColliders;
     private PhysicsMaterial2D m_RuntimeNoFrictionMaterial;
     private static readonly int JumpStateHash = Animator.StringToHash("Base Layer.Jump");
+
+    // SE再生用変数
+    [Header("効果音")]
+    [SerializeField] private AudioClip m_JumpSE;
+
+    private AudioSource m_AudioSource;
 
     // Input情報取得変数
     private float m_MoveInput;
@@ -98,6 +105,9 @@ public sealed class PlayerMove : MonoBehaviour
 
         m_PlayerInput.actions["Jump"].performed += JumpInput;
 
+        m_AudioSource = GetComponent<AudioSource>();
+        if (m_AudioSource == null)
+            m_AudioSource = gameObject.AddComponent<AudioSource>();
 
 #if UNITY_EDITOR
         // エラーチェック
@@ -188,8 +198,6 @@ public sealed class PlayerMove : MonoBehaviour
         //移動                                      + 風エリアの補正 by 植田
         m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
 
-        Debug.Log("wind power : " + m_WindAreaMoveSpeedModifier);
-
         // 跳躍処理
         if (m_JumpInput)
         {
@@ -207,6 +215,9 @@ public sealed class PlayerMove : MonoBehaviour
                     m_Animator.Play(JumpStateHash, 0, 0f);
                     m_Animator.Update(0f);
                 }
+
+                if (m_AudioSource != null && m_JumpSE != null)
+                    m_AudioSource.PlayOneShot(m_JumpSE);
             }
 
             // フラグ更新

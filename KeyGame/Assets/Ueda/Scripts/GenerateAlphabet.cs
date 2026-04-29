@@ -14,6 +14,9 @@ public class GenerateAlphabet : MonoBehaviour
     [Header("生成する文字の大きさ")]
     [SerializeField]
     private float alphabetScale = 1.0f;
+    [Header("生成する文字のLayer")]
+    [SerializeField]
+    private LayerMask alphabetLayer;
 
     [Header("このY座標を下回ると削除")]
     [SerializeField]
@@ -45,7 +48,11 @@ public class GenerateAlphabet : MonoBehaviour
 
     [Header("アルファベットに渡す用のScriptableObjectのデータ")]
     [SerializeField] ScriptableObject_SpecialAreaData specialAreaData;
-     
+
+    [Header("アルファベットのアウトラインのプロパティ")]
+    [SerializeField]
+    private OutLinProperty outLinProperty;
+
     public List<Sprite> alphabetSprites = new List<Sprite>();
 
     readonly private int NOKEY = -1;
@@ -100,12 +107,15 @@ public class GenerateAlphabet : MonoBehaviour
         //生成
         GameObject go = new GameObject("Alphabet");
         go.tag = "AlphabetTag";//タグを設定
+        go.layer = Mathf.RoundToInt(Mathf.Log(alphabetLayer.value, 2));//レイヤーを設定
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
         go.AddComponent<AlphabetRigidbody>();
+        var outline = go.AddComponent<AlphabetOutLine>();
+        outline.outLinProperty = outLinProperty;
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
         var alphabetWallReaction = go.AddComponent<AlphabetWallReaction>();
         var alphabetCuttable = go.AddComponent<AlphabetCuttable>();
