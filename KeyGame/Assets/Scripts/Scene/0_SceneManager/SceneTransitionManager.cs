@@ -40,7 +40,6 @@ public class SceneTransitionManager : MonoBehaviour
         // ListからDictionaryに変換
         foreach (SceneInfo sceneInfo in _sceneData.sceneInfos)
         {
-            // シーンタイプが重複していないか確認
             m_SceneData.Add(sceneInfo.sceneType, sceneInfo.sceneName);
 
 #if UNITY_EDITOR
