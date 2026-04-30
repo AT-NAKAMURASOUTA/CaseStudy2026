@@ -7,7 +7,6 @@ using UnityEngine;
  * 
  * 止める条件
  * ・SceneDataに重複がある場合
- * ・SceneDataにDEBUGがある場合
 */
 
 [InitializeOnLoad]

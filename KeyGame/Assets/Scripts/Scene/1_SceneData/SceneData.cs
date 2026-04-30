@@ -12,7 +12,6 @@ public class SceneData : ScriptableObject
     // ====================================================
     // エディタ上でDataが更新されたときに呼ぶ処理
     // ・シーンタイプの重複チェック
-    // ・DEBUGの手動登録禁止
     // ====================================================
 #if UNITY_EDITOR
     private void OnValidate()
