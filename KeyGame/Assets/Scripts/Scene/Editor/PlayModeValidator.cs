@@ -31,9 +31,20 @@ public static class PlayModeValidator
 
         // SceneDataを取得
         SceneConfig sceneConfig = Resources.Load<SceneConfig>("SceneConfig");
-        SceneData sceneData = sceneConfig.GetSceneData();
+        if (sceneConfig == null) 
+        {
+            Debug.Log("SceneConfig が見つかりません");
+            EditorApplication.isPlaying = false;
+            return;
+        }
 
-        if (sceneData == null) return;
+        SceneData sceneData = sceneConfig.GetSceneData();
+        if (sceneData == null) 
+        {
+            Debug.Log("SceneData が nullです。");
+            EditorApplication.isPlaying = false;
+            return;
+        }
 
         // 重複がある場合はエラーログを出してPlayを停止
         if (DebugCheck(sceneData))
