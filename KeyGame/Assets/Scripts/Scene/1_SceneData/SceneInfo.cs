@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 /*  * シーン情報クラス
@@ -7,5 +8,5 @@ using UnityEngine;
 public class SceneInfo
 {
     public SCENETYPE sceneType;
-    public string sceneName;
+    public SceneAsset scene;
 }

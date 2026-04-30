@@ -40,12 +40,12 @@ public class SceneTransitionManager : MonoBehaviour
         // ListからDictionaryに変換
         foreach (SceneInfo sceneInfo in _sceneData.sceneInfos)
         {
-            m_SceneData.Add(sceneInfo.sceneType, sceneInfo.sceneName);
+            m_SceneData.Add(sceneInfo.sceneType, sceneInfo.scene.name);
 
 #if UNITY_EDITOR
             // 現在のシーンを設定
             String sceneName = SceneManager.GetActiveScene().name;
-            if (sceneInfo.sceneName == sceneName)
+            if (sceneInfo.scene.name == sceneName)
             {
                 m_CurrentSceneType = sceneInfo.sceneType;
                 IsInitDataNull = false;
