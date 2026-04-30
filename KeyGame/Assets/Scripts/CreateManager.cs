@@ -14,10 +14,10 @@ public class CreateManager
         SceneTransitionManager.GetInstance();
 
         // リソースから初期化データを取得
-        SceneData sceneData = Resources.Load<SceneData>("SceneData");
+        SceneConfig sceneData = Resources.Load<SceneConfig>("SceneConfig");
 
         // マネージャー初期化
-        SceneTransitionManager.GetInstance().Init(sceneData);
+        SceneTransitionManager.GetInstance().Init(sceneData.GetSceneData());
 
         Debug.Log("ゲーム開始時に各マネージャー呼び出し");
     }

@@ -30,7 +30,8 @@ public static class PlayModeValidator
         if (state != PlayModeStateChange.ExitingEditMode) return;
 
         // SceneDataを取得
-        SceneData sceneData = Resources.Load<SceneData>("SceneData");
+        SceneConfig sceneConfig = Resources.Load<SceneConfig>("SceneConfig");
+        SceneData sceneData = sceneConfig.GetSceneData();
 
         if (sceneData == null) return;
 
