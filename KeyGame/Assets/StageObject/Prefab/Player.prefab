@@ -293,7 +293,7 @@ MonoBehaviour:
   alphabetScale: 0.6
   alphabetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   destroyY: -10
   maxAlphabetCount: 3
   alphabetCooldown: 1
