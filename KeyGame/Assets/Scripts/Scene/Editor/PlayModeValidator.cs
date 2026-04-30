@@ -51,13 +51,6 @@ public static class PlayModeValidator
 
         foreach (var info in sceneData.sceneInfos)
         {
-            // DEBUGは禁止
-            if (info.sceneType == SCENETYPE.DEBUG)
-            {
-                Debug.LogError("SCENETYPE に DEBUG が設定されています。 Playを停止しました。");
-                return true;
-            }
-
             // すでに使用されているシーンタイプがあれば重複とみなす
             if (!used.Add(info.sceneType))
             {

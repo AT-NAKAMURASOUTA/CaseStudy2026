@@ -6,7 +6,7 @@ using UnityEngine;
 public enum SCENETYPE : int
 {
     TITLE = 0,
-    STGESELECT,
+    STAGESELECT,
     RESULT,
 
     STAGE1, 
@@ -14,7 +14,4 @@ public enum SCENETYPE : int
     STAGE3, 
     STAGE4, 
     STAGE5,
-
-    // デバッグ用列挙型
-    DEBUG,
 }

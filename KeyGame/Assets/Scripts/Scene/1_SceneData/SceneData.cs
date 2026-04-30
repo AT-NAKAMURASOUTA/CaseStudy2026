@@ -21,12 +21,6 @@ public class SceneData : ScriptableObject
 
         foreach (var info in sceneInfos)
         {
-            // DEBUGは禁止
-            if (info.sceneType == SCENETYPE.DEBUG)
-            {
-                Debug.LogError("DEBUG は手動登録できません。");
-            }
-
             // 重複チェック
             if (!usedTypes.Add(info.sceneType))
             {
