@@ -303,32 +303,32 @@ MonoBehaviour:
   specialAreaData: {fileID: 11400000, guid: d1a44b39756ee0c478c023de241d990b, type: 2}
   outLinProperty: {fileID: 11400000, guid: a2b696242a17e2542b064d3784560c69, type: 2}
   alphabetSprites:
-  - {fileID: 354403392, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 822874187, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -505612565, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -2112475858, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 67718273, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1544095759, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1780520138, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 949672491, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1178457391, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1132685130, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 528485059, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 1070156875, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 1934093712, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 2103631025, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -900878127, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1000543117, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -843282842, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 638431254, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -857191977, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1773383498, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1368558674, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: 1975361489, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -499955643, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1753508432, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -731150222, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
-  - {fileID: -1032122852, guid: aab6308c4503d0648a40b74ad7cd3d60, type: 3}
+  - {fileID: 432307596, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -352754543, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: 1108691675, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: 1472999266, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -2085664364, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: 838222368, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -1714057631, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -1919236951, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -1573891202, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -1507803242, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: 1427968972, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -1184535977, guid: fdf1bdd52db6f3345859d8ae7d42dd41, type: 3}
+  - {fileID: -162267423, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: 652471987, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -1504416646, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: 646504431, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: 1738304544, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -1128766047, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -887845253, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: 1580861472, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -106104465, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -850464199, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -693069319, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: -2009349716, guid: 5c4720a11d2db114b9e5f98821742504, type: 3}
+  - {fileID: 31840250, guid: faae1fda5aeea784489316d4ab8ba280, type: 3}
+  - {fileID: 1306785187, guid: faae1fda5aeea784489316d4ab8ba280, type: 3}
 --- !u!95 &7820395376628724191
 Animator:
   serializedVersion: 7
