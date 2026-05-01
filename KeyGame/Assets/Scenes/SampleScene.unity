@@ -996,7 +996,7 @@ GameObject:
   - component: {fileID: 1246973231}
   - component: {fileID: 1246973230}
   - component: {fileID: 1246973229}
-  - component: {fileID: 1246973228}
+  - component: {fileID: 1246973232}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -1074,18 +1074,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1246973228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1246973225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ce03d43b2770e445964c6e352e26e22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1246973229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GoalActions:
-  - {fileID: 1246973228}
+  - {fileID: 1246973232}
 --- !u!114 &1246973230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce040d16ff4beb48841a70d75080a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GoalTag: Player
+  m_Tag: Player
 --- !u!61 &1246973231
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1159,6 +1147,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1246973232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246973225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e68c167191ee934499ccf45f0c4caba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetScene: {fileID: 11400000, guid: 357a5b335b44c1b44902373070c3fdcb, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
