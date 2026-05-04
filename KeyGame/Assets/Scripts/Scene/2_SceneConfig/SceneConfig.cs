@@ -21,8 +21,24 @@ public class SceneConfig : ScriptableObject
     [SerializeField] private SceneData debugData;
     [SerializeField] private SceneData releaseData;
 
+    // シーンデータ取得
     public SceneData GetSceneData()
     {
         return buildMode == BuildMode.DEBUG ? debugData : releaseData;
     }
+
+    // ビルドモード取得
+    public BuildMode GetBuildMode()
+    {
+        return buildMode;
+    }
+
+#if UNITY_EDITOR
+    // ビルドモード設定
+    public void SetBuildMode(BuildMode mode)
+    {
+        buildMode = mode;
+    }
+#endif
+
 }
