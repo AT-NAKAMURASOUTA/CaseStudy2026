@@ -305,6 +305,14 @@ public sealed class PlayerRespawn : MonoBehaviour
         overlayTransform.SetAsLastSibling();
     }
 
+    private void SetTransitionOverlayVisible(bool visible)
+    {
+        if (m_TransitionOverlay != null)
+        {
+            m_TransitionOverlay.enabled = visible;
+        }
+    }
+
     private void UpdateHoleCenter()
     {
         if (m_TransitionMaterial == null)
@@ -460,6 +468,8 @@ public sealed class PlayerRespawn : MonoBehaviour
             yield break;
         }
 
+        SetTransitionOverlayVisible(true);
+
         float elapsed = 0f;
 
         // 半径を0から広げつつ、カメラを通常サイズへ戻す
@@ -480,6 +490,7 @@ public sealed class PlayerRespawn : MonoBehaviour
         SetHoleRadius(openRadius);
         m_CameraMoveVelocity = Vector3.zero;
         m_IsReturningToFollow = true;
+        SetTransitionOverlayVisible(false);
     }
 
     private IEnumerator PlayCloseTransition(float duration)
@@ -488,6 +499,8 @@ public sealed class PlayerRespawn : MonoBehaviour
         {
             yield break;
         }
+
+        SetTransitionOverlayVisible(true);
 
         float elapsed = 0f;
 
