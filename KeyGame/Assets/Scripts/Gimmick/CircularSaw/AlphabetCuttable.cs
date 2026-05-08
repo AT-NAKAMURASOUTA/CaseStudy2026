@@ -54,11 +54,8 @@ public sealed class AlphabetCuttable : MonoBehaviour
             return;
         }
 
-        // 切った位置をローカル座標に変換して文字のどの位置で分けるか決める
-        Vector3 localCutPoint = transform.InverseTransformPoint(worldCutPoint);
         Bounds spriteBounds = sourceSprite.bounds;
-        float normalizedSplit = Mathf.InverseLerp(spriteBounds.min.x, spriteBounds.max.x, localCutPoint.x);
-        normalizedSplit = Mathf.Clamp(normalizedSplit, 0.25f, 0.75f);
+        const float normalizedSplit = 0.5f;
 
         int splitPixel = Mathf.RoundToInt(sourceRect.width * normalizedSplit);
         splitPixel = Mathf.Clamp(splitPixel, 4, Mathf.RoundToInt(sourceRect.width) - 4);
@@ -71,7 +68,6 @@ public sealed class AlphabetCuttable : MonoBehaviour
         }
 
         m_WasCut = true;
-        m_Owner?.NotifyAlphabetDestroyed();
 
         float leftNormalizedWidth = normalizedSplit;
         float rightNormalizedWidth = 1f - normalizedSplit;
@@ -96,15 +92,19 @@ public sealed class AlphabetCuttable : MonoBehaviour
             SpriteMeshType.Tight);
 
         // 左右それぞれの破片を作る
-        CreateFragment("AlphabetFragment_Left", leftSprite, new Vector2(leftCenterLocalX, spriteBounds.center.y), -1f, worldCutPoint, bladeMotionDirection);
-        CreateFragment("AlphabetFragment_Right", rightSprite, new Vector2(rightCenterLocalX, spriteBounds.center.y), 1f, worldCutPoint, bladeMotionDirection);
+        GameObject leftFragment = CreateFragment("AlphabetFragment_Left", leftSprite, new Vector2(leftCenterLocalX, spriteBounds.center.y), -1f, worldCutPoint, bladeMotionDirection);
+        GameObject rightFragment = CreateFragment("AlphabetFragment_Right", rightSprite, new Vector2(rightCenterLocalX, spriteBounds.center.y), 1f, worldCutPoint, bladeMotionDirection);
+        m_Owner?.ReplaceAlphabetWithFragments(gameObject, leftFragment, rightFragment);
 
+        // 文字数は減らさず、元の一体だけを置き換える
         Destroy(gameObject);
     }
 
-    private void CreateFragment(string objectName, Sprite fragmentSprite, Vector2 localCenter, float directionSign, Vector2 worldCutPoint, Vector2 bladeMotionDirection)
+    private GameObject CreateFragment(string objectName, Sprite fragmentSprite, Vector2 localCenter, float directionSign, Vector2 worldCutPoint, Vector2 bladeMotionDirection)
     {
         GameObject fragmentObject = new GameObject(objectName);
+        fragmentObject.tag = gameObject.tag;
+        fragmentObject.layer = gameObject.layer;
         fragmentObject.transform.position = transform.TransformPoint(new Vector3(localCenter.x, localCenter.y, 0f));
         fragmentObject.transform.rotation = transform.rotation;
         fragmentObject.transform.localScale = transform.lossyScale;
@@ -115,11 +115,11 @@ public sealed class AlphabetCuttable : MonoBehaviour
         fragmentRenderer.sortingLayerID = m_SpriteRenderer.sortingLayerID;
         fragmentRenderer.sortingOrder = m_SpriteRenderer.sortingOrder;
         fragmentRenderer.color = m_SpriteRenderer.color;
-        fragmentRenderer.material = m_SpriteRenderer.sharedMaterial;
+        fragmentRenderer.sharedMaterial = m_SpriteRenderer.sharedMaterial;
 
-        // 破片用の物理設定
+        // 左右の破片を別々の物理オブジェクトとして動かす
         Rigidbody2D fragmentBody = fragmentObject.AddComponent<Rigidbody2D>();
-        fragmentBody.gravityScale = 1f;
+        fragmentBody.gravityScale = m_Rigidbody2D != null ? m_Rigidbody2D.gravityScale : 1f;
         fragmentBody.linearVelocity = m_Rigidbody2D != null ? m_Rigidbody2D.linearVelocity : Vector2.zero;
         fragmentBody.angularVelocity = directionSign * fragmentAngularVelocity;
         fragmentBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
@@ -143,7 +143,6 @@ public sealed class AlphabetCuttable : MonoBehaviour
         }
 
         fragmentBody.AddForce(impulse, ForceMode2D.Impulse);
-
-        fragmentObject.AddComponent<AlphabetCutFragment>();
+        return fragmentObject;
     }
 }

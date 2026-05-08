@@ -5,6 +5,11 @@ using TMPro;
 
 public class GenerateAlphabet : MonoBehaviour
 {
+    private sealed class AlphabetRecord
+    {
+        public readonly List<GameObject> Objects = new List<GameObject>();
+    }
+
     [Header("生成位置のオフセット（前方向）")]
     [SerializeField]
     private float forwardOffset = 1.0f;
@@ -26,7 +31,7 @@ public class GenerateAlphabet : MonoBehaviour
     [SerializeField]
     private int maxAlphabetCount = 3;
 
-    private int currentAlphabetCount = 0;
+    private readonly List<AlphabetRecord> alphabetRecords = new List<AlphabetRecord>();
 
     [Header("文字生成のクールタイム")]
     [SerializeField]
@@ -92,14 +97,21 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
-        if (currentAlphabetCount >= maxAlphabetCount)
+        if (Time.time < nextSpawnTime)
         {
             return;
         }
 
-        if (Time.time < nextSpawnTime)
+        CleanupAlphabetRecords();
+
+        if (maxAlphabetCount <= 0)
         {
             return;
+        }
+
+        if (alphabetRecords.Count >= maxAlphabetCount)
+        {
+            DestroyOldestAlphabet();
         }
 
         Vector3 spawnPosition = FindSpawnPosition();
@@ -123,7 +135,7 @@ public class GenerateAlphabet : MonoBehaviour
         destroyOnFall.SetOwner(this);
         alphabetWallReaction.SetAlphabetCharacter((char)('A' + alphabetIndex));
         alphabetCuttable.SetOwner(this);
-        currentAlphabetCount++;
+        RegisterAlphabet(go);
         UpdateAlphabetCountText();
         nextSpawnTime = Time.time + alphabetCooldown;
 
@@ -186,8 +198,139 @@ public class GenerateAlphabet : MonoBehaviour
 
     public void NotifyAlphabetDestroyed()
     {
-        currentAlphabetCount = Mathf.Max(0, currentAlphabetCount - 1);
+        CleanupAlphabetRecords();
         UpdateAlphabetCountText();
+    }
+
+    public void NotifyAlphabetDestroyed(GameObject alphabetObject)
+    {
+        RemoveAlphabetRecord(alphabetObject, false);
+        CleanupAlphabetRecords();
+        UpdateAlphabetCountText();
+    }
+
+    public void ReplaceAlphabetWithFragments(GameObject sourceAlphabet, GameObject leftFragment, GameObject rightFragment)
+    {
+        AlphabetRecord record = FindAlphabetRecord(sourceAlphabet);
+        if (record == null)
+        {
+            record = new AlphabetRecord();
+            alphabetRecords.Add(record);
+        }
+
+        record.Objects.Clear();
+        AddTrackedObject(record, leftFragment);
+        AddTrackedObject(record, rightFragment);
+        CleanupAlphabetRecords();
+        UpdateAlphabetCountText();
+    }
+
+    private void RegisterAlphabet(GameObject alphabetObject)
+    {
+        AlphabetRecord record = new AlphabetRecord();
+        AddTrackedObject(record, alphabetObject);
+        alphabetRecords.Add(record);
+    }
+
+    private void AddTrackedObject(AlphabetRecord record, GameObject alphabetObject)
+    {
+        if (record == null || alphabetObject == null)
+        {
+            return;
+        }
+
+        record.Objects.Add(alphabetObject);
+    }
+
+    private AlphabetRecord FindAlphabetRecord(GameObject alphabetObject)
+    {
+        if (alphabetObject == null)
+        {
+            return null;
+        }
+
+        foreach (AlphabetRecord record in alphabetRecords)
+        {
+            if (record == null)
+            {
+                continue;
+            }
+
+            foreach (GameObject trackedObject in record.Objects)
+            {
+                if (trackedObject == alphabetObject)
+                {
+                    return record;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private void RemoveAlphabetRecord(GameObject alphabetObject, bool destroyObjects)
+    {
+        AlphabetRecord record = FindAlphabetRecord(alphabetObject);
+        if (record == null)
+        {
+            return;
+        }
+
+        if (destroyObjects)
+        {
+            DestroyAlphabetObjects(record);
+        }
+
+        alphabetRecords.Remove(record);
+    }
+
+    private void DestroyOldestAlphabet()
+    {
+        CleanupAlphabetRecords();
+        if (alphabetRecords.Count == 0)
+        {
+            return;
+        }
+
+        AlphabetRecord oldestRecord = alphabetRecords[0];
+        DestroyAlphabetObjects(oldestRecord);
+        alphabetRecords.RemoveAt(0);
+        UpdateAlphabetCountText();
+    }
+
+    private void DestroyAlphabetObjects(AlphabetRecord record)
+    {
+        if (record == null)
+        {
+            return;
+        }
+
+        foreach (GameObject alphabetObject in record.Objects)
+        {
+            if (alphabetObject != null)
+            {
+                Destroy(alphabetObject);
+            }
+        }
+    }
+
+    private void CleanupAlphabetRecords()
+    {
+        for (int i = alphabetRecords.Count - 1; i >= 0; i--)
+        {
+            AlphabetRecord record = alphabetRecords[i];
+            if (record == null)
+            {
+                alphabetRecords.RemoveAt(i);
+                continue;
+            }
+
+            record.Objects.RemoveAll(alphabetObject => alphabetObject == null);
+            if (record.Objects.Count == 0)
+            {
+                alphabetRecords.RemoveAt(i);
+            }
+        }
     }
 
     private void UpdateAlphabetCountText()
@@ -197,7 +340,8 @@ public class GenerateAlphabet : MonoBehaviour
             return;
         }
 
-        int remainingCount = maxAlphabetCount - currentAlphabetCount;
+        CleanupAlphabetRecords();
+        int remainingCount = Mathf.Max(0, maxAlphabetCount - alphabetRecords.Count);
         alphabetCountText.text = $"{remainingCount}";
 
     }
