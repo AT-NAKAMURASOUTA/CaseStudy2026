@@ -18,6 +18,7 @@ public sealed class AlphabetCuttable : MonoBehaviour
 
     private SpriteRenderer m_SpriteRenderer;
     private Rigidbody2D m_Rigidbody2D;
+    private GenerateAlphabet m_Owner;
     private bool m_WasCut;
 
     private void Awake()
@@ -26,9 +27,9 @@ public sealed class AlphabetCuttable : MonoBehaviour
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
-    public void SetOwner(GenerateAlphabet _)
+    public void SetOwner(GenerateAlphabet owner)
     {
-        // 切断では文字数を減らさない。落下時のカウント管理はDestroyOnFallが担当する。
+        m_Owner = owner;
     }
 
     public void Cut(Vector2 worldCutPoint)
@@ -91,14 +92,15 @@ public sealed class AlphabetCuttable : MonoBehaviour
             SpriteMeshType.Tight);
 
         // 左右それぞれの破片を作る
-        CreateFragment("AlphabetFragment_Left", leftSprite, new Vector2(leftCenterLocalX, spriteBounds.center.y), -1f, worldCutPoint, bladeMotionDirection);
-        CreateFragment("AlphabetFragment_Right", rightSprite, new Vector2(rightCenterLocalX, spriteBounds.center.y), 1f, worldCutPoint, bladeMotionDirection);
+        GameObject leftFragment = CreateFragment("AlphabetFragment_Left", leftSprite, new Vector2(leftCenterLocalX, spriteBounds.center.y), -1f, worldCutPoint, bladeMotionDirection);
+        GameObject rightFragment = CreateFragment("AlphabetFragment_Right", rightSprite, new Vector2(rightCenterLocalX, spriteBounds.center.y), 1f, worldCutPoint, bladeMotionDirection);
+        m_Owner?.ReplaceAlphabetWithFragments(gameObject, leftFragment, rightFragment);
 
         // 文字数は減らさず、元の一体だけを置き換える
         Destroy(gameObject);
     }
 
-    private void CreateFragment(string objectName, Sprite fragmentSprite, Vector2 localCenter, float directionSign, Vector2 worldCutPoint, Vector2 bladeMotionDirection)
+    private GameObject CreateFragment(string objectName, Sprite fragmentSprite, Vector2 localCenter, float directionSign, Vector2 worldCutPoint, Vector2 bladeMotionDirection)
     {
         GameObject fragmentObject = new GameObject(objectName);
         fragmentObject.tag = gameObject.tag;
@@ -141,5 +143,6 @@ public sealed class AlphabetCuttable : MonoBehaviour
         }
 
         fragmentBody.AddForce(impulse, ForceMode2D.Impulse);
+        return fragmentObject;
     }
 }

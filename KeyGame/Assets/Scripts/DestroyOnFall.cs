@@ -22,7 +22,7 @@ public class DestroyOnFall : MonoBehaviour
     {
         if (transform.position.y < destroyY)
         {
-            owner?.NotifyAlphabetDestroyed();
+            owner?.NotifyAlphabetDestroyed(gameObject);
             Destroy(gameObject);
         }
     }
