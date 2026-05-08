@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4253542989530201791}
   - component: {fileID: 5345572561501541213}
   - component: {fileID: 3938743912653915092}
-  - component: {fileID: 7937666696815485549}
+  - component: {fileID: 7753449229517216001}
   m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ce040d16ff4beb48841a70d75080a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GoalTag: Player
+  m_Tag: Player
 --- !u!114 &3938743912653915092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GoalActions:
-  - {fileID: 7937666696815485549}
---- !u!114 &7937666696815485549
+  - {fileID: 7753449229517216001}
+--- !u!114 &7753449229517216001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,6 +173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1086418239135733533}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ce03d43b2770e445964c6e352e26e22, type: 3}
+  m_Script: {fileID: 11500000, guid: e68c167191ee934499ccf45f0c4caba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_TargetScene: 0
