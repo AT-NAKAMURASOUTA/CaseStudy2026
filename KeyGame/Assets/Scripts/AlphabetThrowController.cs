@@ -243,16 +243,17 @@ public sealed class AlphabetThrowController : MonoBehaviour
                 continue;
             }
 
-            // 指定した名前で始まるオブジェクトだけ拾う
-            if (!hit.gameObject.name.StartsWith(pickableObjectName))
-            {
-                continue;
-            }
-
             var rb = hit.attachedRigidbody;
 
             // Rigidbody2Dが無いものは対象外
             if (rb == null)
+            {
+                continue;
+            }
+
+            // 指定した名前で始まるオブジェクトだけ拾う
+            if (!hit.gameObject.name.StartsWith(pickableObjectName) &&
+                !rb.gameObject.name.StartsWith(pickableObjectName))
             {
                 continue;
             }
@@ -471,7 +472,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        var letterColliders = _heldLetter.GetComponents<Collider2D>();
+        var letterColliders = _heldLetter.GetComponentsInChildren<Collider2D>();
 
         foreach (var playerCollider in _playerColliders)
         {
@@ -500,7 +501,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
             return;
         }
 
-        var letterColliders = _heldLetter.GetComponents<Collider2D>();
+        var letterColliders = _heldLetter.GetComponentsInChildren<Collider2D>();
 
         foreach (var playerCollider in _playerColliders)
         {
