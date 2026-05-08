@@ -20,6 +20,9 @@ public class SceneData : ScriptableObject
 
         foreach (var info in sceneInfos)
         {
+            // シーン名を自動で設定
+            info.sceneName = info.scene.name;
+
             // 重複チェック
             if (!usedTypes.Add(info.sceneType))
             {
