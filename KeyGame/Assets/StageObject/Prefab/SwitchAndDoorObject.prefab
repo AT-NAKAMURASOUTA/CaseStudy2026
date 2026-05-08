@@ -48,7 +48,7 @@ PrefabInstance:
     - target: {fileID: 69044498856771891, guid: 7387c862cce3afc48b82182c0b5f781e, type: 3}
       propertyPath: switchObject.Array.data[0].switchReference
       value: 
-      objectReference: {fileID: 7635871047990767575}
+      objectReference: {fileID: 5760674232566789848}
     - target: {fileID: 3442639428048423771, guid: 7387c862cce3afc48b82182c0b5f781e, type: 3}
       propertyPath: m_Name
       value: DoorObject
@@ -165,8 +165,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5761175860425515305, guid: b02d3ea6c5077eb4e9b32a23087589f6, type: 3}
   m_PrefabInstance: {fileID: 6576925938676630501}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7635871047990767575 stripped
+--- !u!1 &5760674232566789848 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 3656358888341662770, guid: b02d3ea6c5077eb4e9b32a23087589f6, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1492919065243301181, guid: b02d3ea6c5077eb4e9b32a23087589f6, type: 3}
   m_PrefabInstance: {fileID: 6576925938676630501}
   m_PrefabAsset: {fileID: 0}
