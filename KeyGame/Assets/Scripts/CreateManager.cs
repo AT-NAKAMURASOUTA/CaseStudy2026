@@ -22,7 +22,10 @@ public class CreateManager
         if (sceneConfig == null)
         {
             Debug.LogError("SceneConfig が見つかりません");
+
+#if UNITY_EDITOR
             EditorApplication.isPlaying = false;
+#endif
             return;
         }
 

@@ -14,16 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneInfos:
   - sceneType: 0
+    sceneName: StageSelectScene
+    scene: {fileID: 102900000, guid: e5510de66cb49d340a7c4f6738bf3718, type: 3}
+  - sceneType: 1
+    sceneName: StageSelectScene
     scene: {fileID: 102900000, guid: e5510de66cb49d340a7c4f6738bf3718, type: 3}
   - sceneType: 3
+    sceneName: Stage1-1
     scene: {fileID: 102900000, guid: d29bf1a7aad1e134fbb859413fd53cce, type: 3}
   - sceneType: 4
+    sceneName: Stage1-2
     scene: {fileID: 102900000, guid: 352117d38c832564392b9b3675e0cb22, type: 3}
   - sceneType: 5
+    sceneName: stage1-3
     scene: {fileID: 102900000, guid: 5740eb59a8d52df40b9da46a05b9f66c, type: 3}
   - sceneType: 6
+    sceneName: Stage1-4
     scene: {fileID: 102900000, guid: 95a2ea2904c0e324e8fa69b7d3ee96c9, type: 3}
   - sceneType: 7
+    sceneName: stage1-5
     scene: {fileID: 102900000, guid: 9bb0c4ed4f46ac1448a1f70b0c809a38, type: 3}
   - sceneType: 8
+    sceneName: Stage1-6
     scene: {fileID: 102900000, guid: d0831071411c26d4b93cf7ebe5574089, type: 3}
