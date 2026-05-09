@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
+
 public class TriangleMesh : MonoBehaviour
 {
     private void OnValidate()
@@ -57,5 +59,9 @@ public class TriangleMesh : MonoBehaviour
             new Vector2(1,0),
             new Vector2(0,1)
         };
+
+        // 動かないように追加
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Static;
     }
 }
