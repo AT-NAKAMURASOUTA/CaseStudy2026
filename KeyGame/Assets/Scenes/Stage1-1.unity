@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &72382144 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3138143236200266398, guid: b693e67020c09044eb0dfd2290f24e35, type: 3}
+  m_PrefabInstance: {fileID: 4000000005}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2180,7 +2185,7 @@ PrefabInstance:
     - target: {fileID: 1268231604384898024, guid: b693e67020c09044eb0dfd2290f24e35, type: 3}
       propertyPath: targetObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 72382144}
     - target: {fileID: 2656561299757739638, guid: b693e67020c09044eb0dfd2290f24e35, type: 3}
       propertyPath: m_Name
       value: HangLever
