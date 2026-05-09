@@ -127,6 +127,9 @@ public class SceneTransitionManager : MonoBehaviour
             await UniTask.Yield();  
         }
 
+        // コメント追加
+        UnityEngine.Debug.Log($"シーン遷移: {_nextScene} ({nextSceneName}) に遷移しました");
+
         // フラグ解除
         m_IsTransitioning = false;
     }
