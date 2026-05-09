@@ -376,4 +376,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collision: {fileID: 5542444354770764261}
-  onDownNum: 0.25
+  onTransform: {fileID: 5761175860425515305}
