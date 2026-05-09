@@ -32,8 +32,31 @@ public class SwitchOnFlag : MonoBehaviour
 
         for(int i = 0;i < data.maxSize;i++)
         {
+
+            if (switchObject[i].switchReference == null)
+            {//
+
+#if UNITY_EDITOR
+                Debug.Log("ゲームオブジェクトのアタッチが外れている可能性があります");
+#endif
+                //Nullなので、
+                data.maxSize--;
+                break;
+            }
+
             //ヒット用のスクリプト取得
             SwitchCollision script = switchObject[i].switchReference.GetComponent<SwitchCollision>();
+
+            if(script==null)
+            {
+#if UNITY_EDITOR
+                Debug.Log("アタッチされているゲームオブジェクトに「SwitchCollision」スクリプトありません。" +
+                    "アタッチしているオブジェクト間違っていませんか？");
+#endif
+                //Nullなので、
+                data.maxSize--;
+                continue;
+            }
 
             //当たり判定当たっていたら、カウント
             data.nowOnCount += script.GetCollisionFlag() ? 1 : 0;
