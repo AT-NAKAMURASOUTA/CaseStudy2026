@@ -8,5 +8,9 @@ using UnityEngine;
 public class SceneInfo
 {
     public SCENETYPE sceneType;
+    [HideInInspector] public string sceneName;
+
+#if UNITY_EDITOR
     public SceneAsset scene;
+#endif
 }

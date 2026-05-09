@@ -13,6 +13,8 @@ public class Action_LoadTargetScene : BaseAction
     // ===========================================
     // シーン名
     [SerializeField] private SCENETYPE m_TargetScene;
+    [SerializeField] private bool m_UseRestartStage;
+    [SerializeField] private bool m_QuitGame;
 
 
     // ===========================================
@@ -20,8 +22,20 @@ public class Action_LoadTargetScene : BaseAction
     // ===========================================
     public override UniTask Execute(CancellationToken token)
     {
+        if (m_QuitGame)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+            return UniTask.CompletedTask;
+        }
+
         // シーン遷移処理
-        SceneTransitionManager.GetInstance().SceneTransition(m_TargetScene);
+        SCENETYPE targetScene = m_UseRestartStage ? StageMenuState.RestartStage : m_TargetScene;
+
+        SceneTransitionManager.GetInstance().SceneTransition(targetScene);
         return UniTask.CompletedTask;
     }
 

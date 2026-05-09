@@ -176,4 +176,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e68c167191ee934499ccf45f0c4caba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TargetScene: 0
+  m_TargetScene: 1
