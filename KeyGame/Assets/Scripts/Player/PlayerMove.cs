@@ -168,7 +168,8 @@ public sealed class PlayerMove : MonoBehaviour
     void Start()
     {
         // 跳躍回数の初期化
-        m_JumpCount = m_MaxJumpCount;
+        m_WasGrounded = CheckIsGrounded();
+        m_JumpCount = m_WasGrounded ? m_MaxJumpCount : Mathf.Max(0, m_MaxJumpCount - 1);
     }
 
 
@@ -198,6 +199,22 @@ public sealed class PlayerMove : MonoBehaviour
         //移動                                      + 風エリアの補正 by 植田
         m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
 
+        // 着地判定処理
+        bool isGrounded = CheckIsGrounded();
+
+        if (isGrounded && !m_WasGrounded)
+        {
+            // 地面に接触している場合、跳躍回数をリセット
+            m_JumpCount = m_MaxJumpCount;
+            m_IsJumpAnimating = false;
+            m_JumpAnimationElapsed = 0f;
+        }
+        else if (!isGrounded && m_WasGrounded)
+        {
+            // ジャンプせずに足場から落ちた場合、地上ジャンプ分は消費済みにする
+            m_JumpCount = Mathf.Max(0, m_MaxJumpCount - 1);
+        }
+
         // 跳躍処理
         if (m_JumpInput)
         {
@@ -222,17 +239,6 @@ public sealed class PlayerMove : MonoBehaviour
 
             // フラグ更新
             m_JumpInput = false;
-        }
-
-        // 着地判定処理
-        bool isGrounded = Physics2D.OverlapCircle(transform.position + m_CheckPos, m_CheckRadius, m_GroundLayer);
-
-        if (isGrounded && !m_WasGrounded)
-        {
-            // 地面に接触している場合、跳躍回数をリセット
-            m_JumpCount = m_MaxJumpCount;
-            m_IsJumpAnimating = false;
-            m_JumpAnimationElapsed = 0f;
         }
 
         // アニメーション制御
@@ -284,6 +290,11 @@ public sealed class PlayerMove : MonoBehaviour
     public void JumpInput(InputAction.CallbackContext context)
     {
         m_JumpInput = true;
+    }
+
+    private bool CheckIsGrounded()
+    {
+        return Physics2D.OverlapCircle(transform.position + m_CheckPos, m_CheckRadius, m_GroundLayer);
     }
 
     private void UpdateJumpAnimationPlayback(bool isGrounded)
