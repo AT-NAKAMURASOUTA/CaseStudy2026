@@ -3,18 +3,24 @@ using UnityEngine;
 
 public class SwitchDownUpdate : MonoBehaviour
 {
-    
+    /*
+    スイッチが押されたときに、ボタン部分が押されていることを分かりやすくする
+    演出の処理
+    */
 
+    
+    //スイッチの当たり判定
     [SerializeField] SwitchCollision collision;
     [Header("ボタン押されたときの位置")]
     [SerializeField] Transform onTransform;
 
 
 
-    Vector3 startPos;//
+    Vector3 startPos;//初期位置
 
     void Start()
     {
+        //スタート位置を取得
         startPos = new Vector3(
             transform.position.x,
             transform.position.y, 
@@ -27,16 +33,18 @@ public class SwitchDownUpdate : MonoBehaviour
         if(collision.GetCollisionFlag())
         {//ボタン押されている！
 
-            float angle = transform.eulerAngles.z;
-
-
+            //長いので変数名短縮
             var pos = onTransform.position;
-            //沈み
+            
+            //ボタン部分より、土台部分（自身）の方が大きいので、
+            //ボタンを自身の中心点へ移動することで、
+            //押されたことを分かりやすくする
             transform.position = new Vector3(pos.x, pos.y, pos.z);
         }
         else
         {//押されていない
 
+            //ボタン部分の初期位置に移動させる
             transform.position = new Vector3(startPos.x, startPos.y, startPos.z);
         }
     }
