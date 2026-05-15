@@ -22,4 +22,6 @@ public enum SCENETYPE : int
     STAGE11,
     STAGE12,
 
+    MENU,
+
 }
