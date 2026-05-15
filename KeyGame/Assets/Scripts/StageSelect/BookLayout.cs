@@ -24,12 +24,6 @@ public class BookLayout : MonoBehaviour
     [Tooltip("ボタンサイズ")]
     [SerializeField] private Vector2 m_ButtonSize = new Vector2(100, 50);
 
-    [Header("Gizmos 設定")]
-    [Tooltip("左ページ描画")]
-    [SerializeField] private bool m_DrawLeftPage = true;
-    [Tooltip("右ページ描画")]
-    [SerializeField] private bool m_DrawRightPage = true;
-
     // ボタンの位置リスト
     private System.Collections.Generic.List<Vector2> m_ButtonPositions = new();
 
