@@ -35,8 +35,11 @@ public sealed class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask m_GroundLayer;
     [Tooltip("地面との判定相対位置")]
     [SerializeField] private Vector3 m_CheckPos = new Vector3(0.0f, -0.5f, 0.0f);
-    [Tooltip("地面との判定半径")]
-    [SerializeField] private float m_CheckRadius = 0.1f;
+    [Tooltip("地面との判定四角形サイズ")]
+    [SerializeField] private Vector2 m_CheckBoxSize = new Vector2(0.1f, 0.1f);
+    [Tooltip("地面との判定する斜辺の角度")]
+    [SerializeField] private float m_CheckBoxAngle = 45f;
+
     [Header("ジャンプアニメ調整")]
     [SerializeField] private float m_TakeoffAnimationDuration = 0.16f;
     [SerializeField] private float m_TakeoffAnimationEndNormalizedTime = 0.22f;
@@ -168,7 +171,8 @@ public sealed class PlayerMove : MonoBehaviour
     void Start()
     {
         // 跳躍回数の初期化
-        m_JumpCount = m_MaxJumpCount;
+        m_WasGrounded = CheckIsGrounded();
+        m_JumpCount = m_WasGrounded ? m_MaxJumpCount : Mathf.Max(0, m_MaxJumpCount - 1);
     }
 
 
@@ -198,6 +202,22 @@ public sealed class PlayerMove : MonoBehaviour
         //移動                                      + 風エリアの補正 by 植田
         m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
 
+        // 着地判定処理
+        bool isGrounded = CheckIsGrounded();
+
+        if (isGrounded && !m_WasGrounded)
+        {
+            // 地面に接触している場合、跳躍回数をリセット
+            m_JumpCount = m_MaxJumpCount;
+            m_IsJumpAnimating = false;
+            m_JumpAnimationElapsed = 0f;
+        }
+        else if (!isGrounded && m_WasGrounded)
+        {
+            // ジャンプせずに足場から落ちた場合、地上ジャンプ分は消費済みにする
+            m_JumpCount = Mathf.Max(0, m_MaxJumpCount - 1);
+        }
+
         // 跳躍処理
         if (m_JumpInput)
         {
@@ -205,6 +225,7 @@ public sealed class PlayerMove : MonoBehaviour
             {
                 // ジャンプ処理
                 m_Rigidbody2D.linearVelocityY = m_JumpForce;
+                Debug.Log("Jump! JumpCount: " + m_JumpCount);
 
                 m_JumpCount--;
                 m_IsJumpAnimating = true;
@@ -222,17 +243,6 @@ public sealed class PlayerMove : MonoBehaviour
 
             // フラグ更新
             m_JumpInput = false;
-        }
-
-        // 着地判定処理
-        bool isGrounded = Physics2D.OverlapCircle(transform.position + m_CheckPos, m_CheckRadius, m_GroundLayer);
-
-        if (isGrounded && !m_WasGrounded)
-        {
-            // 地面に接触している場合、跳躍回数をリセット
-            m_JumpCount = m_MaxJumpCount;
-            m_IsJumpAnimating = false;
-            m_JumpAnimationElapsed = 0f;
         }
 
         // アニメーション制御
@@ -284,6 +294,32 @@ public sealed class PlayerMove : MonoBehaviour
     public void JumpInput(InputAction.CallbackContext context)
     {
         m_JumpInput = true;
+    }
+
+    private bool CheckIsGrounded()
+    {
+        // プレイヤーの位置 + オフセットを判定の起点とする
+        Vector2 origin = (Vector2)transform.position + (Vector2)m_CheckPos;
+        // 判定の距離は、四角形の半分のサイズ + 少し余裕を持たせる
+        float castDistance = 0.05f;
+
+        // BoxCastを使って、地面レイヤーとの当たり判定を行う
+        RaycastHit2D hit = Physics2D.BoxCast(
+            origin,
+            m_CheckBoxSize,
+            0f,
+            Vector2.down,
+            castDistance,
+            m_GroundLayer);
+
+        // 当たっていない場合は地面にいないと判断
+        if (!hit.collider) { return false; }
+
+        // 当たっている場合、傾斜の角度を計算して、地面とみなすか判断
+        float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+
+        // 傾斜が指定した角度以下なら地面とみなす
+        return slopeAngle <= m_CheckBoxAngle;
     }
 
     private void UpdateJumpAnimationPlayback(bool isGrounded)
@@ -355,11 +391,12 @@ public sealed class PlayerMove : MonoBehaviour
     private bool TryGetGroundDistance(out float groundDistance)
     {
         Vector2 origin = (Vector2)transform.position + (Vector2)m_CheckPos;
-        float castDistance = m_CheckRadius + m_GroundProbeExtraDistance;
+        float castDistance = m_CheckBoxSize.y + m_GroundProbeExtraDistance;
 
-        RaycastHit2D hit = Physics2D.CircleCast(
+        RaycastHit2D hit = Physics2D.BoxCast(
             origin,
-            m_CheckRadius,
+            m_CheckBoxSize,
+            0f,
             Vector2.down,
             castDistance,
             m_GroundLayer
@@ -371,7 +408,7 @@ public sealed class PlayerMove : MonoBehaviour
             return false;
         }
 
-        groundDistance = Mathf.Max(0f, hit.distance - m_CheckRadius);
+        groundDistance = Mathf.Max(0f, hit.distance - m_CheckBoxSize.y / 2);
         return true;
     }
 
@@ -395,7 +432,7 @@ public sealed class PlayerMove : MonoBehaviour
     {
         // 赤色表示
         Gizmos.color = Color.red;
-        // プレイヤーの位置 + オフセットに円を描画
-        Gizmos.DrawWireSphere(transform.position + m_CheckPos, m_CheckRadius);
+        // プレイヤーの位置 + オフセットに四角形を描画
+        Gizmos.DrawWireCube(transform.position + m_CheckPos, m_CheckBoxSize);
     }
 }
