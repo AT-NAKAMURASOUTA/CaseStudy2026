@@ -15,12 +15,12 @@ public class BookLayout : MonoBehaviour
     public Vector2 m_PageSize = new Vector2(750, 700);
     [Tooltip("左ページの中心位置")]
     public Vector2 m_PageCenter = new Vector2(-425, 0);
-    [Tooltip("ページ内のボタン横最大数")]
+    [Tooltip("1ページ内のボタン横最大数")]
     [SerializeField] private int m_ButtonMaxCountX = 3;
+    [Tooltip("1ページ内のボタンの最大数")]
+    [SerializeField] private int m_ButtonMaxNumber = 6;
 
     [Header("ボタン設定")]
-    [Tooltip("ボタンを押したときのシーン設定配列")]
-    [SerializeField] private SCENETYPE[] m_NextScene;
     [Tooltip("ボタンサイズ")]
     [SerializeField] private Vector2 m_ButtonSize = new Vector2(100, 50);
 
@@ -30,6 +30,14 @@ public class BookLayout : MonoBehaviour
     [Tooltip("右ページ描画")]
     [SerializeField] private bool m_DrawRightPage = true;
 
+    // ボタンの位置リスト
+    private System.Collections.Generic.List<Vector2> m_ButtonPositions = new();
+
+    enum PageSide
+    {
+        Left = -1,
+        Right = 1
+    }
 
     // ===========================================
     // 更新
@@ -43,45 +51,61 @@ public class BookLayout : MonoBehaviour
             UnityEngine.Debug.LogError("ページサイズがボタンの合計幅より小さいです。");
             return;
         }
-        if(m_NextScene.Length == 0)
-        {
-            UnityEngine.Debug.LogError("シーン設定が空です。");
-            return;
-        }
 
+        // ボタンの位置計算
+        CalculateButtonPositions();
+    }
 
+    // ===========================================
+    // 値が変更されたときに自動で更新
+    // ===========================================
+    private void OnValidate()
+    {
+        Refresh();
     }
 
     // ===========================================
     // ボタンの位置を計算する関数
     // ===========================================
-    private Vector3 ButtonPosition(int index)
+    private void CalculateButtonPositions()
     {
-        // ページ内のローカルインデックスを計算
-        int col = index % m_ButtonMaxCountX;
-        int row = index / m_ButtonMaxCountX;
+        // 初期化
+        m_ButtonPositions.Clear();
 
-        int rows = Mathf.CeilToInt((float)m_NextScene.Length / m_ButtonMaxCountX);
+        // 行数計算
+        int rowCount = Mathf.CeilToInt((float)m_ButtonMaxNumber / m_ButtonMaxCountX);
+        // 横間隔
+        float spacingX =
+            (m_PageSize.x - (m_ButtonSize.x * m_ButtonMaxCountX)) / (m_ButtonMaxCountX - 1);
+        // 縦間隔
+        float spacingY =
+            (m_PageSize.y - (m_ButtonSize.y * rowCount)) / (rowCount - 1);
 
-        // ボタンの横配置に必要なスペースを計算
-        float freeSpaceX = m_PageSize.x - m_ButtonMaxCountX * m_ButtonSize.x;
-        float spacingX = freeSpaceX / (m_ButtonMaxCountX - 1);
+        // 位置計算
+        for (int i = 0; i < m_ButtonMaxNumber; i++)
+        {
+            // Button添え字を取得
+            int col = i % m_ButtonMaxCountX;
+            int row = i / m_ButtonMaxCountX;
 
-        // ボタンの縦配置に必要なスペースを計算
-        float freeSpaceY = m_PageSize.y - m_ButtonSize.y;
-        float spacingY = freeSpaceY * 0.5f;
+            // 左上基準
+            float startX = -m_PageSize.x / 2;
+            float startY = m_PageSize.y / 2;
 
-        // ページの左上を基準にして、ボタンの開始位置を計算
-        float startX = m_PageCenter.x - m_PageSize.x * 0.5f;
-        float startY = m_PageCenter.y + m_PageSize.y * 0.5f;
+            float x =
+                startX
+                + (m_ButtonSize.x / 2)
+                + col * (m_ButtonSize.x + spacingX);
 
-        float x = startX
-            + spacingX * (col + 1)
-            + m_ButtonSize.x * col;
+            float y =
+                startY
+                - (m_ButtonSize.y / 2)
+                - row * (m_ButtonSize.y + spacingY);
 
-        float y = startY - row * m_ButtonSize.y;
+            Vector2 pos = new Vector2(x, y);
 
-        return new Vector3(x, y, 0);
+            m_ButtonPositions.Add(pos);
+        }
     }
 
     // ===========================================
@@ -98,10 +122,14 @@ public class BookLayout : MonoBehaviour
 
         // 本の境界線を描画
         DrawBookBoundary(center);
-        
+
         // 本のページ範囲を描画
-        if(m_DrawLeftPage) DrawLeftPageBoundary(center);
-        if(m_DrawRightPage) DrawRightPageBoundary(center);
+        DrawPageBoundary(center, PageSide.Left);
+        DrawPageBoundary(center, PageSide.Right);
+
+        // ボタン位置描画
+        DrawButtonPosition(PageSide.Left);
+        DrawButtonPosition(PageSide.Right);
     }
 
     // ===========================================
@@ -121,32 +149,40 @@ public class BookLayout : MonoBehaviour
     // ===========================================
     // 本の左ページ範囲を描画する関数
     // ===========================================
-    private void DrawLeftPageBoundary(Vector3 center)
+    private void DrawPageBoundary(Vector3 center, PageSide _side)
     {
         // 左ページの中心位置を計算
-        Vector3 leftcenter = center + new Vector3(m_PageCenter.x, m_PageCenter.y, 0);
+        Vector3 pageCenter = center + new Vector3(m_PageCenter.x * (int)_side, m_PageCenter.y, 0);
 
         // サイズを取得
         Vector3 size = new Vector3(m_PageSize.x, m_PageSize.y, 0);
 
         // 描画
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(leftcenter, size);
+        if(_side == PageSide.Left)
+        {
+             Gizmos.color = Color.blue;
+        }
+        else
+        {
+             Gizmos.color = Color.green;
+        }
+        Gizmos.DrawWireCube(pageCenter, size);
     }
 
-    // ==========================================
-    // 本の右ページ範囲を描画する関数
-    // ==========================================
-    private void DrawRightPageBoundary(Vector3 center)
+    // ============================================
+    // ボタンの位置を計算
+    // ============================================
+    private void DrawButtonPosition(PageSide _side)
     {
-        // 右ページの中心位置を計算
-        Vector3 rightcenter = center + new Vector3(-m_PageCenter.x, m_PageCenter.y, 0);
+        Gizmos.color = Color.yellow;
 
-        // サイズを取得
-        Vector3 size = new Vector3(m_PageSize.x, m_PageSize.y, 0);
+        Vector2 startPos = new(m_PageCenter.x * (int)_side, m_PageCenter.y);
 
-        // 描画
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(rightcenter, size);
+        foreach (Vector2 pos in m_ButtonPositions)
+        {
+            Gizmos.DrawWireCube(
+                transform.position + (Vector3)pos + (Vector3)startPos,
+                m_ButtonSize);
+        }
     }
 }
