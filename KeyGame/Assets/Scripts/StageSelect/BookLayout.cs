@@ -1,8 +1,8 @@
+using NUnit.Framework;
 using UnityEngine;
 
 
-/*  * ボタンを配置するためのスクリプト
- *  * ボタンの配置、サイズ、間隔などを管理
+/*  * ボタンをの位置を計算するスクリプト
  */
 
 public class BookLayout : MonoBehaviour
@@ -178,5 +178,19 @@ public class BookLayout : MonoBehaviour
                 transform.position + (Vector3)pos + (Vector3)startPos,
                 m_ButtonSize);
         }
+    }
+
+    // ===========================================
+    // ゲッター
+    // ===========================================
+    // ボタンの位置リストを取得
+    public System.Collections.Generic.List<Vector2> GetButtonPosition()
+    {
+        return m_ButtonPositions;
+    }
+    // ボタンの最大数を取得
+    public int GetButtonMaxNumber()
+    {
+        return m_ButtonMaxNumber;
     }
 }
