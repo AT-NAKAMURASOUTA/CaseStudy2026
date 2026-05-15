@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks.Triggers;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -58,13 +59,13 @@ public class SwitchOnFlag : MonoBehaviour
             //ヒット用のスクリプト取得
             SwitchCollision script = switchObject[i].switchReference.GetComponent<SwitchCollision>();
 
-            if(script == null)
+            if(script == null && 
+                (script = switchObject[i].switchReference.transform.GetChild(1).GetComponent<SwitchCollision>())
+                == null)
             {//スイッチCollisionのスクリプトがない！
 
-#if UNITY_EDITOR
-                Debug.Log("-アタッチされているゲームオブジェクトに「SwitchCollision」スクリプトありません。" +
-                    "アタッチしているオブジェクト間違っていませんか？-");
-#endif
+                Debug.Log("アタッチされている物はSwitchオブジェクトですか？　確認してください");
+
                 //Nullなので、最大数は減らしとく
                 data.maxSize--;
                 continue;
