@@ -39,4 +39,16 @@ public class Action_LoadTargetScene : BaseAction
         return UniTask.CompletedTask;
     }
 
+    // ===========================================
+    // 初期処理
+    // ===========================================
+    public void Init(
+        SCENETYPE sceneType,
+        bool useRestart = false,
+        bool quitGame = false)
+    {
+        m_TargetScene = sceneType;
+        m_UseRestartStage = useRestart;
+        m_QuitGame = quitGame;
+    }
 }
