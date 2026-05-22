@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 575050848}
   - component: {fileID: 575050847}
   - component: {fileID: 575050846}
+  - component: {fileID: 575050849}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged

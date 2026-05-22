@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SwitchCollision : MonoBehaviour
 {
+    /*
+    スイッチの当たり判定処理
+    */
 
     enum ButtonType
     {
@@ -9,6 +12,7 @@ public class SwitchCollision : MonoBehaviour
         INFINITE,//無限に押せる
     }
 
+    //ボタンタイプ
     [SerializeField]
     ButtonType type;
 
@@ -30,6 +34,8 @@ public class SwitchCollision : MonoBehaviour
             case ButtonType.ONE_PUSH://1回しかおさない時は無視
                 return;
         }
+
+        //無限に押せるボタンの処理
 
         if (collision.gameObject.tag == "Player" ||
             collision.gameObject.tag == "AlphabetTag")

@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class Switch_NormalDoorUpdate : MonoBehaviour
 {
+
+    /*
+    １回すべてのボタンが押されたら永遠に扉が開く「扉Object」の処理
+    */
+
+
+
+
     //スイッチの当たり判定
     SwitchOnFlag collisionData;
 
@@ -18,6 +26,8 @@ public class Switch_NormalDoorUpdate : MonoBehaviour
         //判定する必要ないのでリターン
         if (onData.maxSize == 0) return;
 
+
+        //全てのボタンが押された！
         if (onData.nowOnCount == onData.maxSize)
         {
             //削除

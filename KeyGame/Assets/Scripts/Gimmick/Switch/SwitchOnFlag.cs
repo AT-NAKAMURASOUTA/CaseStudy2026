@@ -1,10 +1,20 @@
+using Cysharp.Threading.Tasks.Triggers;
 using System;
 using System.Linq;
 using UnityEngine;
 
 public class SwitchOnFlag : MonoBehaviour
 {
+    /*
+    アタッチしたゲームオブジェクト（Script＿SwitchCollision）。
+    これから、ボタンが押されているかのフラグを取得し、
+    アタッチされたボタンの最大数と、押された数を計測する
+    */
 
+
+
+
+    //Inspectorで配列アタッチできるように構造体化
     [System.Serializable]
     public struct SwitchReference
     {
@@ -15,12 +25,14 @@ public class SwitchOnFlag : MonoBehaviour
     [SerializeField] SwitchReference[] switchObject;
     
 
-    //スイッチにが起動しているもの
+    //「最大数==現在押されている数」で、全てのボタンが起動している
     public struct SwitchOnData
     {
-        public int maxSize;//対応しているボタンの数
+        public int maxSize;//対応しているボタンの最大数
         public int nowOnCount;//現在押されている数
     }
+
+
 
     //何個対応しているスイッチ押されているか返す
     public SwitchOnData GetSwichOnData()
@@ -34,10 +46,10 @@ public class SwitchOnFlag : MonoBehaviour
         {
 
             if (switchObject[i].switchReference == null)
-            {//
+            {//配列にNullがある！
 
 #if UNITY_EDITOR
-                Debug.Log("ゲームオブジェクトのアタッチが外れている可能性があります");
+                Debug.Log("-ゲームオブジェクトのアタッチが外れている可能性があります-");
 #endif
                 //Nullなので、
                 data.maxSize--;
@@ -47,13 +59,14 @@ public class SwitchOnFlag : MonoBehaviour
             //ヒット用のスクリプト取得
             SwitchCollision script = switchObject[i].switchReference.GetComponent<SwitchCollision>();
 
-            if(script==null)
-            {
-#if UNITY_EDITOR
-                Debug.Log("アタッチされているゲームオブジェクトに「SwitchCollision」スクリプトありません。" +
-                    "アタッチしているオブジェクト間違っていませんか？");
-#endif
-                //Nullなので、
+            if(script == null && 
+                (script = switchObject[i].switchReference.transform.GetChild(1).GetComponent<SwitchCollision>())
+                == null)
+            {//スイッチCollisionのスクリプトがない！
+
+                Debug.Log("アタッチされている物はSwitchオブジェクトですか？　確認してください");
+
+                //Nullなので、最大数は減らしとく
                 data.maxSize--;
                 continue;
             }

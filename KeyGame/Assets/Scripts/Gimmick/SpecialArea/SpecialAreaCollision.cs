@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class SpecialAreaCollision : MonoBehaviour
 {
+    /*
+    加速エリア、低重力エリアに触れているかの処理
+    
+    //この２つに影響するObject（Playerやアルファベット）にアタッチする
+    */
+
     //加速エリアに触れているかのフラグ
     bool accelerationHitFlag = false;
     //低重力エリアに触れているかのフラグ

@@ -407,6 +407,9 @@ MonoBehaviour:
   overlayColor: {r: 0, g: 0, b: 0, a: 1}
   edgeSoftness: 0.02
   missZoomSize: 3.5
+  cameraFollowOffset: {x: 0, y: 3.5}
+  cameraOrthographicSize: 8
+  cameraZ: -20
   cameraFollowSmoothTime: 0.05
   cameraFocusSmoothTime: 0.04
   cameraReturnToFollowSmoothTime: 0.08

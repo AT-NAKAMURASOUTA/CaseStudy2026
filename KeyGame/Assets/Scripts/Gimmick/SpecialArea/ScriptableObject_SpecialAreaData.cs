@@ -3,6 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/SpecialArea")]
 public class ScriptableObject_SpecialAreaData : ScriptableObject
 {
+
+    /*
+    加速エリア、低重力エリアの降下数値
+
+    敵、自身、アルファベット全て共通なのでScriptableObjectで共通化
+    */
+
     //加速度量
     public float accelerationMagnification = 1.3f;
     //低重力量
