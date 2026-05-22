@@ -159,69 +159,109 @@ public class BookLayout : MonoBehaviour
         RectTransform rectTransform = GetComponent<RectTransform>();
         if (rectTransform == null) return;
 
-        // キャンバスのローカル座標の中心をワールド座標に変換
-        Vector3 center = rectTransform.TransformPoint(Vector3.zero);
-
         // 本の境界線を描画
-        DrawBookBoundary(center);
+        DrawBookBoundary(rectTransform);
 
         // 本のページ範囲を描画
-        DrawPageBoundary(center, PageSide.Left);
-        DrawPageBoundary(center, PageSide.Right);
+        DrawPageBoundary(rectTransform, PageSide.Left);
+        DrawPageBoundary(rectTransform, PageSide.Right);
 
         // ボタン位置描画
-        DrawButtonPosition();
+        DrawButtonPosition(rectTransform);
     }
 
     // ===========================================
     // 本の境界線を描画する関数
     // ===========================================
-    private void DrawBookBoundary(Vector3 center)
+    private void DrawBookBoundary(RectTransform rectTransform)
     {
-        // 境界線ライン描画
-        Vector3 top = center + Vector3.up * 1000f;
-        Vector3 bottom = center + Vector3.down * 1000f;
+        Gizmos.color = Color.red;
+
+
+        Vector3 top =
+            rectTransform.TransformPoint(
+                new Vector3(0, 1000f, 0));
+
+        Vector3 bottom =
+            rectTransform.TransformPoint(
+                new Vector3(0, -1000f, 0));
 
         // 描画
-        Gizmos.color = Color.red;
         Gizmos.DrawLine(top, bottom);
     }
 
     // ===========================================
     // 本の左ページ範囲を描画する関数
     // ===========================================
-    private void DrawPageBoundary(Vector3 center, PageSide _side)
+    private void DrawPageBoundary(RectTransform rectTransform, PageSide _side)
     {
-        // 左ページの中心位置を計算
-        Vector3 pageCenter = center + new Vector3(m_PageCenter.x * (int)_side, m_PageCenter.y, 0);
+        // ページの中心位置
+        Vector2 localCenter =
+                new Vector2(
+                    m_PageCenter.x * (int)_side,
+                    m_PageCenter.y);
+        float halfX = m_PageSize.x * 0.5f;
+        float halfY = m_PageSize.y * 0.5f;
 
-        // サイズを取得
-        Vector3 size = new Vector3(m_PageSize.x, m_PageSize.y, 0);
+        // ローカル座標で四隅作成
+        Vector3 lt = new Vector3(
+            localCenter.x - halfX,
+            localCenter.y + halfY,
+            0);
+        Vector3 rt = new Vector3(
+            localCenter.x + halfX,
+            localCenter.y + halfY,
+            0);
+        Vector3 rb = new Vector3(
+            localCenter.x + halfX,
+            localCenter.y - halfY,
+            0);
+        Vector3 lb = new Vector3(
+            localCenter.x - halfX,
+            localCenter.y - halfY,
+            0);
 
-        // 描画
-        if(_side == PageSide.Left)
+        // ワールド座標に変換
+        lt = rectTransform.TransformPoint(lt);
+        rt = rectTransform.TransformPoint(rt);
+        rb = rectTransform.TransformPoint(rb);
+        lb = rectTransform.TransformPoint(lb);
+
+        // 色設定
+        if (_side == PageSide.Left)
         {
-             Gizmos.color = Color.blue;
+            Gizmos.color = Color.blue;
         }
         else
         {
-             Gizmos.color = Color.green;
+            Gizmos.color = Color.green;
         }
-        Gizmos.DrawWireCube(pageCenter, size);
+
+        // 2D四角形描画
+        Gizmos.DrawLine(lt, rt);
+        Gizmos.DrawLine(rt, rb);
+        Gizmos.DrawLine(rb, lb);
+        Gizmos.DrawLine(lb, lt);
     }
 
     // ============================================
     // ボタンの位置を計算
     // ============================================
-    private void DrawButtonPosition()
+    private void DrawButtonPosition(RectTransform rectTransform)
     {
         Gizmos.color = Color.yellow;
 
         foreach (Vector2 pos in m_ButtonPositions)
         {
+            // ボタンの位置をワールド座標に変換
+            Vector3 worldPos =
+                rectTransform.TransformPoint(pos);
+            Vector3 worldSize =
+                rectTransform.TransformVector(m_ButtonSize);
+
             Gizmos.DrawWireCube(
-                transform.position + (Vector3)pos,
-                m_ButtonSize);
+                worldPos,
+                worldSize);
         }
     }
 
