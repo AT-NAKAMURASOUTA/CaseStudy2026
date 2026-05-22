@@ -16,10 +16,16 @@ public class BookLayout : MonoBehaviour
     public Vector2 m_PageSize = new Vector2(750, 700);
     [Tooltip("左ページの中心位置")]
     public Vector2 m_PageCenter = new Vector2(-425, 0);
+
+    [Header("ボタンの最大横数(＊ページ毎の設定です)")]
     [Tooltip("1ページ内のボタン横最大数")]
     [SerializeField] private int m_ButtonMaxCountX = 3;
+    [Header("ボタンの最大数(＊本全体の設定です)")]
     [Tooltip("ボタンの最大数")]
     [SerializeField] private int m_ButtonMaxNumber = 6;
+
+    [Header("次のステージボタン位置")]
+    [SerializeField] private Vector2 m_NextButtonPosition = new Vector2(200, -300);
 
     [Header("ボタン設定")]
     [Tooltip("ボタンサイズ")]
@@ -263,6 +269,18 @@ public class BookLayout : MonoBehaviour
                 worldPos,
                 worldSize);
         }
+
+        // 次のステージボタンの位置をワールド座標に変換
+        Vector3 wPos =
+            rectTransform.TransformPoint(m_NextButtonPosition);
+        Vector3 wSize =
+            rectTransform.TransformVector(m_ButtonSize);
+
+        Gizmos.color = Color.magenta;
+
+        Gizmos.DrawWireCube(
+            wPos,
+            wSize);
     }
 
     // ===========================================
@@ -282,5 +300,10 @@ public class BookLayout : MonoBehaviour
     public Vector2 GetButtonSize()
     {
         return m_ButtonSize;
+    }
+    // 次のステージボタンの位置を取得
+    public Vector2 GetNextButtonPosition()
+    {
+        return m_NextButtonPosition;
     }
 }

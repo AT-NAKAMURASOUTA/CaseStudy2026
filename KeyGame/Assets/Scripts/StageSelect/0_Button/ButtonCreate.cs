@@ -1,8 +1,7 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 /*  * ボタンを生成するスクリプト
  */
@@ -17,14 +16,16 @@ public class ButtonCreate : MonoBehaviour
     [Tooltip("ボタンのプレハブ")]
     [SerializeField] private GameObject m_ButtonPrefab;
     [Tooltip("ボタンのデータ")]
-    [SerializeField] private System.Collections.Generic.List<ButtonData> m_ButtonData;
+    [SerializeField] private List<StageButtonData> m_ButtonData;
 
     // ボタンの位置リスト
-    private System.Collections.Generic.List<Vector2> m_ButtonPositions;
+    private List<Vector2> m_ButtonPositions;
     // ボタンの数
     private int m_ButtonCount;
     // ボタンのサイズ
     private Vector2 m_ButtonSize;
+    // 次のボタンの位置
+    private Vector2 m_NextButtonPosition;
     // 生成ボタンにつけるタグ
     private const string m_ButtonTag = "StageSelectButton";
 
@@ -42,6 +43,7 @@ public class ButtonCreate : MonoBehaviour
         m_ButtonPositions = layout.GetButtonPosition();
         m_ButtonCount = layout.GetButtonMaxNumber();
         m_ButtonSize = layout.GetButtonSize();
+        m_NextButtonPosition = layout.GetNextButtonPosition();
 
         // エラーチェック
         if (m_ButtonPrefab == null)
@@ -89,7 +91,10 @@ public class ButtonCreate : MonoBehaviour
     // ===========================================
     private void ButtonsCreate()
     {
-        for (int i = 0; i < m_ButtonData.Count; i++)
+        // Stage1 のデータを取得
+        List<ButtonData> buttonData = m_ButtonData[0].stageDataList;
+
+        for (int i = 0; i < buttonData.Count; i++)
         {
             // ボタンの生成
             GameObject button = Instantiate(m_ButtonPrefab, transform);
@@ -106,7 +111,7 @@ public class ButtonCreate : MonoBehaviour
             Action_LoadTargetScene loadScene = button.GetComponent<Action_LoadTargetScene>();
             if (loadScene != null)
             {
-                loadScene.Init(m_ButtonData[i].NextScene);
+                loadScene.Init(buttonData[i].NextScene);
             }
             else
             {
@@ -116,9 +121,9 @@ public class ButtonCreate : MonoBehaviour
             // 画像設定
             Image image = button.GetComponent<Image>();
 
-            if (m_ButtonData[i].Texture != null)
+            if (buttonData[i].Texture != null)
             {
-                image.sprite = m_ButtonData[i].Texture;
+                image.sprite = buttonData[i].Texture;
             }
             else
             {
@@ -127,5 +132,16 @@ public class ButtonCreate : MonoBehaviour
                 Debug.LogWarning("ボタンにImageがアタッチされていません。");
             }
         }
+
+        // 次のボタン生成
+        GameObject nextButton = Instantiate(m_ButtonPrefab, transform);
+        nextButton.transform.localPosition = m_NextButtonPosition;
+        // ボタンのサイズ設定
+        RectTransform nextRect = nextButton.GetComponent<RectTransform>();
+        nextRect.sizeDelta = m_ButtonSize;
+        // ボタンの名前設定
+        nextButton.gameObject.name = $"NextStage_Button";
+        // ボタンのタグ設定
+        nextButton.gameObject.tag = m_ButtonTag;    
     }
 }
