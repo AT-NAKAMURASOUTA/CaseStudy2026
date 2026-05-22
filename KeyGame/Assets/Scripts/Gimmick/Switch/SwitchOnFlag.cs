@@ -16,7 +16,7 @@ public class SwitchOnFlag : MonoBehaviour
 
     //Inspectorで配列アタッチできるように構造体化
     [System.Serializable]
-    public struct SwitchReference
+    private struct SwitchReference
     {
         public GameObject switchReference;
     }
