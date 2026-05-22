@@ -532,11 +532,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5618821380885449889, guid: b72e17bbb7e6558478f76c20076f4c8a, type: 3}
       propertyPath: m_TargetScene
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7009817353091970093, guid: b72e17bbb7e6558478f76c20076f4c8a, type: 3}
       propertyPath: m_Name
-      value: StartStage1_Button
+      value: StartStageSelect_Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

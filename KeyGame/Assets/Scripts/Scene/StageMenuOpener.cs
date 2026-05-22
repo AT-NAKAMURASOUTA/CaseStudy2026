@@ -42,6 +42,9 @@ public sealed class StageMenuOpener : MonoBehaviour
             case "Stage1-6":
                 stageType = SCENETYPE.STAGE6;
                 return true;
+            case "StageSelectScene":
+                stageType = SCENETYPE.STAGESELECT;
+                return true;
             default:
                 stageType = default;
                 return false;
