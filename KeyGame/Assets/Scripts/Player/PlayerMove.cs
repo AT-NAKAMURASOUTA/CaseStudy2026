@@ -58,6 +58,7 @@ public sealed class PlayerMove : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private PlayerInput m_PlayerInput;
     private SpecialAreaCollision m_SpecialAreaCollision;//okada:特殊エリアの当たり判定
+    private SpecialAreaVelocityUpdate m_SpecialAreaVelocityUpdate;//特殊エリアの速度増減効果の処理をまとめたもの
 
     // アニメーション制御用変数
     private Animator m_Animator;
@@ -100,6 +101,7 @@ public sealed class PlayerMove : MonoBehaviour
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_PlayerColliders = GetComponents<Collider2D>();
         m_SpecialAreaCollision = this.gameObject.AddComponent<SpecialAreaCollision>();//追加
+        m_SpecialAreaVelocityUpdate = new SpecialAreaVelocityUpdate();//追加
         ApplyNoFrictionMaterial();
 
         // InputAction に関数を登録
@@ -183,21 +185,13 @@ public sealed class PlayerMove : MonoBehaviour
     {
         // 移動処理
         Vector2 nowMoveSpeed = new Vector2(m_MoveSpeed * m_MoveInput, m_Rigidbody2D.linearVelocity.y);
+
+        //特殊エリアの効果を反映
+        nowMoveSpeed = m_SpecialAreaVelocityUpdate.SpecialAreaUpdate(
+            nowMoveSpeed, 
+            m_SpecialAreaCollision,
+            m_SpecialAreaAsset);
         
-        //横移動の補正
-        if(m_SpecialAreaCollision.GetAccelerationCollision())
-        {//加速する
-
-            //ScriptableObjectにSetしてある値（倍率）を使う
-            nowMoveSpeed.x *= m_SpecialAreaAsset.GetAccelerationMagnification();
-        }
-        //縦移動
-        if(m_SpecialAreaCollision.GetLowGravityCollision())
-        {//落下速度遅く、上昇速度遅く
-
-            //ScriptableObjectにSetしてある値（倍率）を使う
-            nowMoveSpeed.y *= m_SpecialAreaAsset.GetLowGravityMagnification();
-        }
 
         //移動                                      + 風エリアの補正 by 植田
         m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
