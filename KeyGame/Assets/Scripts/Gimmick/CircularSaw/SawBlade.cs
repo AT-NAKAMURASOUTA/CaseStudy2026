@@ -96,13 +96,16 @@ public sealed class SawBlade : MonoBehaviour
         }
 
         // 接触位置と刃の接線方向を求めて切る向きを渡す
-        Vector2 cutPoint = other.ClosestPoint(transform.position);
-        Vector2 radial = cutPoint - (Vector2)transform.position;
+        Vector2 bladeCenter = transform.position;
+        Vector2 alphabetCenter = cuttable.transform.position;
+        Vector2 radial = alphabetCenter - bladeCenter;
         if (radial.sqrMagnitude <= 0.0001f)
         {
             radial = Vector2.right;
         }
         radial.Normalize();
+
+        Vector2 cutPoint = bladeCenter + radial * bladeRadius;
 
         // 時計回り回転に合わせた接線方向
         Vector2 tangential = new Vector2(radial.y, -radial.x);

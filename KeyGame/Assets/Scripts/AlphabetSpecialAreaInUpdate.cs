@@ -86,4 +86,9 @@ public class AlphabetSpecialAreaInUpdate : MonoBehaviour
     {
         assetData = data; 
     }
+
+    public ScriptableObject_SpecialAreaData GetScriptableObject()
+    {
+        return assetData;
+    }
 }

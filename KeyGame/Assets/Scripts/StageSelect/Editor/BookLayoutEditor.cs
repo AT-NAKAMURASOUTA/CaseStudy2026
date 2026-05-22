@@ -6,15 +6,21 @@ using UnityEngine;
 /*  * ボタンレイアウトにつけるボタン
  */
 
-[CustomEditor(typeof(ButtonLayout))]
-public class ButtonLayoutEditor : Editor
+[CustomEditor(typeof(BookLayout))]
+public class BookLayoutEditor : Editor
 {
+    // ===========================================
+    // メンバー変数
+    // ===========================================
+    private BookLayout m_BookLayout;
+
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
         // スクリプト取得
-        ButtonLayout script = (ButtonLayout)target;
+        BookLayout script = (BookLayout)target;
 
         // スペースを追加
         GUILayout.Space(10);
@@ -25,6 +31,7 @@ public class ButtonLayoutEditor : Editor
             script.Refresh();
         }
     }
+
 }
 
 #endif
