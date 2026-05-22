@@ -48,6 +48,16 @@ public sealed class PlayerRespawn : MonoBehaviour
     [SerializeField]
     private float missZoomSize = 3.5f;
 
+    [Header("通常時のカメラ設定")]
+    [SerializeField]
+    private Vector2 cameraFollowOffset = new Vector2(0f, 2f);
+
+    [SerializeField]
+    private float cameraOrthographicSize = 5f;
+
+    [SerializeField]
+    private float cameraZ = -20f;
+
     [Header("通常追従のなめらかさ")]
     [SerializeField]
     private float cameraFollowSmoothTime = 0.05f;
@@ -110,12 +120,14 @@ public sealed class PlayerRespawn : MonoBehaviour
         // 開始時点の状態を保存
         m_StartPosition = transform.position;
         m_StartRotation = transform.rotation;
+        m_FocusWorldPosition = transform.position;
 
         if (m_MainCamera != null)
         {
-            m_StartOrthographicSize = m_MainCamera.orthographicSize;
-            m_CameraFollowOffset = m_MainCamera.transform.position - transform.position;
-            m_CameraFollowOffset.x = 0f;
+            m_StartOrthographicSize = cameraOrthographicSize;
+            m_CameraFollowOffset = new Vector3(cameraFollowOffset.x, cameraFollowOffset.y, 0f);
+            FollowPlayerWithCamera();
+            SetCameraZoom(m_StartOrthographicSize);
         }
 
         if (m_SpriteRenderer != null)
@@ -128,10 +140,6 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         // 最初は完全に閉じた状態から始める
         SetHoleRadius(0f);
-        SetCameraZoom(missZoomSize);
-
-        // 最初はプレイヤー位置を中心にしておく
-        m_FocusWorldPosition = transform.position;
 
         // シェーダーに渡す円の中心位置を更新
         UpdateHoleCenter();
@@ -351,6 +359,7 @@ public sealed class PlayerRespawn : MonoBehaviour
         Vector3 cameraPosition = m_MainCamera.transform.position;
         cameraPosition.x = m_FocusWorldPosition.x;
         cameraPosition.y = m_FocusWorldPosition.y;
+        cameraPosition.z = cameraZ;
         m_MainCamera.transform.position = cameraPosition;
     }
 
@@ -399,17 +408,15 @@ public sealed class PlayerRespawn : MonoBehaviour
 
     private Vector3 GetFocusCameraPosition()
     {
-        float z = m_MainCamera != null ? m_MainCamera.transform.position.z : 0f;
-        return new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, z);
+        return new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, cameraZ);
     }
 
     private Vector3 GetFollowCameraPosition()
     {
-        float z = m_MainCamera != null ? m_MainCamera.transform.position.z : 0f;
         return new Vector3(
             transform.position.x + m_CameraFollowOffset.x,
             transform.position.y + m_CameraFollowOffset.y,
-            z
+            cameraZ
         );
     }
 
@@ -447,7 +454,15 @@ public sealed class PlayerRespawn : MonoBehaviour
             return;
         }
 
-        m_MainCamera.orthographicSize = orthographicSize;
+        if (!m_MainCamera.orthographic)
+        {
+            m_MainCamera.orthographic = true;
+        }
+
+        if (!Mathf.Approximately(m_MainCamera.orthographicSize, orthographicSize))
+        {
+            m_MainCamera.orthographicSize = orthographicSize;
+        }
     }
 
     private void SetHoleRadius(float radius)
@@ -478,9 +493,7 @@ public sealed class PlayerRespawn : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = duration > 0f ? Mathf.Clamp01(elapsed / duration) : 1f;
 
-            Vector3 targetCameraPosition = Vector3.Lerp(GetFocusCameraPosition(), GetFollowCameraPosition(), t);
-            MoveCameraToPosition(targetCameraPosition, cameraFocusSmoothTime);
-            SetCameraZoom(Mathf.Lerp(missZoomSize, m_StartOrthographicSize, t));
+            FollowPlayerWithCamera();
             SetHoleRadius(Mathf.Lerp(0f, openRadius, t));
             UpdateHoleCenter();
             yield return null;
