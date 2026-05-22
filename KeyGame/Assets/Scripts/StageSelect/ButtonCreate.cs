@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /*  * ボタンを生成するスクリプト
  */
@@ -20,9 +21,12 @@ public class ButtonCreate : MonoBehaviour
 
     // ボタンの位置リスト
     private System.Collections.Generic.List<Vector2> m_ButtonPositions;
+    // ボタンの数
     private int m_ButtonCount;
-    // 生成したボタンのリスト
-    private List<GameObject> m_CreatedButtons = new();
+    // ボタンのサイズ
+    private Vector2 m_ButtonSize;
+    // 生成ボタンにつけるタグ
+    private const string m_ButtonTag = "StageSelectButton";
 
     // ===========================================
     // 作成
@@ -37,6 +41,7 @@ public class ButtonCreate : MonoBehaviour
         BookLayout layout = GetComponent<BookLayout>();
         m_ButtonPositions = layout.GetButtonPosition();
         m_ButtonCount = layout.GetButtonMaxNumber();
+        m_ButtonSize = layout.GetButtonSize();
 
         // エラーチェック
         if (m_ButtonPrefab == null)
@@ -44,7 +49,7 @@ public class ButtonCreate : MonoBehaviour
             UnityEngine.Debug.LogError("ボタンのプレハブが設定されていません。");
             return;
         }
-        if(m_ButtonData.Count == 0)
+        if (m_ButtonData.Count == 0)
         {
             UnityEngine.Debug.LogError("ボタンのデータが設定されていません。");
             return;
@@ -53,24 +58,53 @@ public class ButtonCreate : MonoBehaviour
         {
             UnityEngine.Debug.LogError("ボタンの位置が設定されていません。");
             return;
-        }        if (m_ButtonData.Count != m_ButtonPositions.Count)
+        }
+        if (m_ButtonData.Count != m_ButtonCount)
         {
-            UnityEngine.Debug.LogError("ボタンのデータと位置の数が一致していません。");
-            return;
+            UnityEngine.Debug.LogWarning("ボタンのデータと位置の数が一致していません。\nボタンデータ数のみ生成します");
         }
 
         // ボタンの生成
+        ButtonsCreate();
+    }
+
+    // ===========================================
+    // ボタン削除関数
+    // ===========================================
+    private void ClearButtons()
+    {
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = transform.GetChild(i);
+
+            if (child.CompareTag(m_ButtonTag))
+            {
+                DestroyImmediate(child.gameObject);
+            }
+        }
+    }
+
+    // ===========================================
+    // ボタンを下に配置する関数
+    // ===========================================
+    private void ButtonsCreate()
+    {
         for (int i = 0; i < m_ButtonData.Count; i++)
         {
             // ボタンの生成
             GameObject button = Instantiate(m_ButtonPrefab, transform);
             button.transform.localPosition = m_ButtonPositions[i];
-
-            m_CreatedButtons.Add(button);
+            // ボタンのサイズ設定
+            RectTransform rect = button.GetComponent<RectTransform>();
+            rect.sizeDelta = m_ButtonSize;
+            // ボタンの名前設定
+            button.gameObject.name = $"Stage{i + 1}_Button";
+            // ボタンのタグ設定
+            button.gameObject.tag = m_ButtonTag;
 
             // ボタンのデータを設定
             Action_LoadTargetScene loadScene = button.GetComponent<Action_LoadTargetScene>();
-            if(loadScene != null)
+            if (loadScene != null)
             {
                 loadScene.Init(m_ButtonData[i].NextScene);
             }
@@ -82,33 +116,16 @@ public class ButtonCreate : MonoBehaviour
             // 画像設定
             Image image = button.GetComponent<Image>();
 
-            if (image != null)
+            if (m_ButtonData[i].Texture != null)
             {
                 image.sprite = m_ButtonData[i].Texture;
             }
             else
             {
-                Debug.LogWarning(
-                    "ボタンにImageがアタッチされていません。");
+                TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                text.text = $"Stage {i + 1}";
+                Debug.LogWarning("ボタンにImageがアタッチされていません。");
             }
         }
-
-    }
-
-    // ===========================================
-    // ボタン削除関数
-    // ===========================================
-    private void ClearButtons()
-    {
-        // 既存のボタンを削除
-        foreach (var button in m_CreatedButtons)
-        {
-            if (button != null)
-            {
-                DestroyImmediate(button);
-            }
-        }
-        // 生成したボタンのリストをクリア
-        m_CreatedButtons.Clear();
     }
 }

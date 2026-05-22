@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 
 /*  * ボタンをの位置を計算するスクリプト
@@ -17,7 +18,7 @@ public class BookLayout : MonoBehaviour
     public Vector2 m_PageCenter = new Vector2(-425, 0);
     [Tooltip("1ページ内のボタン横最大数")]
     [SerializeField] private int m_ButtonMaxCountX = 3;
-    [Tooltip("1ページ内のボタンの最大数")]
+    [Tooltip("ボタンの最大数")]
     [SerializeField] private int m_ButtonMaxNumber = 6;
 
     [Header("ボタン設定")]
@@ -66,39 +67,86 @@ public class BookLayout : MonoBehaviour
         // 初期化
         m_ButtonPositions.Clear();
 
+        // 配置順に応じて位置計算
+        CalculateButtonPositionRight();
+    }
+
+    // ===========================================
+    // 位置計算 (右)
+    // ===========================================
+    private void CalculateButtonPositionRight()
+    {
         // 行数計算
-        int rowCount = Mathf.CeilToInt((float)m_ButtonMaxNumber / m_ButtonMaxCountX);
-        // 横間隔
+        int rowCount = Mathf.CeilToInt((float)m_ButtonMaxNumber / (m_ButtonMaxCountX * 2));
+
+        // １ページ内の横間隔
         float spacingX =
-            (m_PageSize.x - (m_ButtonSize.x * m_ButtonMaxCountX)) / (m_ButtonMaxCountX - 1);
+            (m_PageSize.x - (m_ButtonSize.x * m_ButtonMaxCountX)) / ((m_ButtonMaxCountX) + 1);
+
         // 縦間隔
         float spacingY =
-            (m_PageSize.y - (m_ButtonSize.y * rowCount)) / (rowCount - 1);
+            (m_PageSize.y - (m_ButtonSize.y * rowCount)) / (rowCount + 1);
+
+        // ボタンの数
+        int buttonNumber = m_ButtonMaxNumber;
+        // ボタン計算終了フラグ
+        bool end = false;
+
+        // ボタンの開始位置
+        float startX =
+            (-m_PageSize.x / 2)
+            + spacingX
+            + (m_ButtonSize.x / 2);
+        float startY =
+            (m_PageSize.y / 2)
+            - spacingY
+            - (m_ButtonSize.y / 2);
 
         // 位置計算
-        for (int i = 0; i < m_ButtonMaxNumber; i++)
+        for (int j = 0; j < rowCount; j++)
         {
-            // Button添え字を取得
-            int col = i % m_ButtonMaxCountX;
-            int row = i / m_ButtonMaxCountX;
+            // 縦位置
+            float y = startY
+                - j * (m_ButtonSize.y + spacingY);
 
-            // 左上基準
-            float startX = -m_PageSize.x / 2;
-            float startY = m_PageSize.y / 2;
+            for (int i = 0; i < m_ButtonMaxCountX * 2; i++)
+            {
+                // インデックス
+                int localIndex;
+                // ページの中心位置
+                Vector2 pageCentPos;
+                if (i - m_ButtonMaxCountX < 0)
+                {
+                    pageCentPos = m_PageCenter;
+                    localIndex = i;
+                }
+                else
+                {
+                    pageCentPos = new Vector2(-m_PageCenter.x, m_PageCenter.y);
+                    localIndex = i - m_ButtonMaxCountX;
+                }
 
-            float x =
-                startX
-                + (m_ButtonSize.x / 2)
-                + col * (m_ButtonSize.x + spacingX);
+                // 横位置
+                float x = startX
+                    + localIndex * (m_ButtonSize.x + spacingX);
 
-            float y =
-                startY
-                - (m_ButtonSize.y / 2)
-                - row * (m_ButtonSize.y + spacingY);
+                // ボタンの位置
+                Vector2 pos = new Vector2(x, y) + pageCentPos;
+                m_ButtonPositions.Add(pos);
 
-            Vector2 pos = new Vector2(x, y);
+                // ボタンの数が最大数に達したら終了
+                buttonNumber--;
+                if (buttonNumber == 0)
+                {
+                    end = true;
+                }
+            }
 
-            m_ButtonPositions.Add(pos);
+            // 終了
+            if (end)
+            {
+                break;
+            }
         }
     }
 
@@ -122,8 +170,7 @@ public class BookLayout : MonoBehaviour
         DrawPageBoundary(center, PageSide.Right);
 
         // ボタン位置描画
-        DrawButtonPosition(PageSide.Left);
-        DrawButtonPosition(PageSide.Right);
+        DrawButtonPosition();
     }
 
     // ===========================================
@@ -166,16 +213,14 @@ public class BookLayout : MonoBehaviour
     // ============================================
     // ボタンの位置を計算
     // ============================================
-    private void DrawButtonPosition(PageSide _side)
+    private void DrawButtonPosition()
     {
         Gizmos.color = Color.yellow;
-
-        Vector2 startPos = new(m_PageCenter.x * (int)_side, m_PageCenter.y);
 
         foreach (Vector2 pos in m_ButtonPositions)
         {
             Gizmos.DrawWireCube(
-                transform.position + (Vector3)pos + (Vector3)startPos,
+                transform.position + (Vector3)pos,
                 m_ButtonSize);
         }
     }
@@ -192,5 +237,10 @@ public class BookLayout : MonoBehaviour
     public int GetButtonMaxNumber()
     {
         return m_ButtonMaxNumber;
+    }
+    // ボタンのサイズを取得
+    public Vector2 GetButtonSize()
+    {
+        return m_ButtonSize;
     }
 }
