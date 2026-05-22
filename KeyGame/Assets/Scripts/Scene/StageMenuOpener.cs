@@ -25,22 +25,22 @@ public sealed class StageMenuOpener : MonoBehaviour
         switch (SceneManager.GetActiveScene().name)
         {
             case "Stage1-1":
-                stageType = SCENETYPE.STAGE1;
+                stageType = SCENETYPE.STAGE1_1;
                 return true;
             case "Stage1-2":
-                stageType = SCENETYPE.STAGE2;
+                stageType = SCENETYPE.STAGE1_2;
                 return true;
             case "stage1-3":
-                stageType = SCENETYPE.STAGE3;
+                stageType = SCENETYPE.STAGE1_3;
                 return true;
             case "Stage1-4":
-                stageType = SCENETYPE.STAGE4;
+                stageType = SCENETYPE.STAGE1_4;
                 return true;
             case "stage1-5":
-                stageType = SCENETYPE.STAGE5;
+                stageType = SCENETYPE.STAGE1_5;
                 return true;
             case "Stage1-6":
-                stageType = SCENETYPE.STAGE6;
+                stageType = SCENETYPE.STAGE1_6;
                 return true;
             case "StageSelectScene":
                 stageType = SCENETYPE.STAGESELECT;
