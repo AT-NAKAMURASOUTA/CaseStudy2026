@@ -486,24 +486,46 @@ public sealed class PlayerRespawn : MonoBehaviour
         SetTransitionOverlayVisible(true);
 
         float elapsed = 0f;
+        Vector3 startCameraPosition = m_MainCamera != null
+            ? m_MainCamera.transform.position
+            : GetFocusCameraPosition();
 
         // 半径を0から広げつつ、カメラを通常サイズへ戻す
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
             float t = duration > 0f ? Mathf.Clamp01(elapsed / duration) : 1f;
+            float easedT = Mathf.SmoothStep(0f, 1f, t);
 
-            FollowPlayerWithCamera();
+            MoveCameraDuringRespawnOpen(startCameraPosition, easedT);
+            SetCameraZoom(Mathf.Lerp(missZoomSize, m_StartOrthographicSize, easedT));
             SetHoleRadius(Mathf.Lerp(0f, openRadius, t));
             UpdateHoleCenter();
             yield return null;
         }
 
+        FollowPlayerWithCamera();
         SetCameraZoom(m_StartOrthographicSize);
         SetHoleRadius(openRadius);
         m_CameraMoveVelocity = Vector3.zero;
-        m_IsReturningToFollow = true;
+        m_IsReturningToFollow = false;
         SetTransitionOverlayVisible(false);
+    }
+
+    private void MoveCameraDuringRespawnOpen(Vector3 startCameraPosition, float t)
+    {
+        if (m_MainCamera == null)
+        {
+            m_MainCamera = Camera.main;
+        }
+
+        if (m_MainCamera == null)
+        {
+            return;
+        }
+
+        Vector3 targetPosition = GetFollowCameraPosition();
+        m_MainCamera.transform.position = Vector3.Lerp(startCameraPosition, targetPosition, t);
     }
 
     private IEnumerator PlayCloseTransition(float duration)
