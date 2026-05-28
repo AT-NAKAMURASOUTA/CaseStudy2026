@@ -12,6 +12,26 @@ using UnityEditor;
 
 public class TriangleMesh : MonoBehaviour
 {
+    [SerializeField]
+    private Vector2[] points =
+    {
+        new Vector2(0, 0),
+        new Vector2(1, 0),
+        new Vector2(0, 1)
+    };
+
+    public void SetPoints(Vector2 first, Vector2 second, Vector2 third)
+    {
+        points = new[]
+        {
+            first,
+            second,
+            third
+        };
+
+        CreateMesh();
+    }
+
     private void OnValidate()
     {
 #if UNITY_EDITOR
@@ -27,6 +47,16 @@ public class TriangleMesh : MonoBehaviour
 
     private void CreateMesh()
     {
+        if (points == null || points.Length != 3)
+        {
+            points = new[]
+            {
+                new Vector2(0, 0),
+                new Vector2(1, 0),
+                new Vector2(0, 1)
+            };
+        }
+
         // レイヤー自動設定
         gameObject.layer = LayerMask.NameToLayer("Floor");
 
@@ -34,9 +64,9 @@ public class TriangleMesh : MonoBehaviour
 
         mesh.vertices = new Vector3[]
         {
-            new Vector3(0, 0, 0),
-            new Vector3(1, 0, 0),
-            new Vector3(0, 1, 0)
+            new Vector3(points[0].x, points[0].y, 0),
+            new Vector3(points[1].x, points[1].y, 0),
+            new Vector3(points[2].x, points[2].y, 0)
         };
 
         mesh.triangles = new int[]
@@ -62,9 +92,9 @@ public class TriangleMesh : MonoBehaviour
 
         collider.points = new Vector2[]
         {
-            new Vector2(0,0),
-            new Vector2(1,0),
-            new Vector2(0,1)
+            points[0],
+            points[1],
+            points[2]
         };
 
         // 動かないように追加
