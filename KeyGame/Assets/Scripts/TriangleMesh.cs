@@ -1,5 +1,9 @@
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 [ExecuteAlways]
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
@@ -10,7 +14,10 @@ public class TriangleMesh : MonoBehaviour
 {
     private void OnValidate()
     {
-        CreateMesh();
+#if UNITY_EDITOR
+        // 安全なタイミングで、関数を呼び出す
+        EditorApplication.delayCall += DelayCreateMesh;
+#endif
     }
 
     private void Awake()
@@ -64,4 +71,14 @@ public class TriangleMesh : MonoBehaviour
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Static;
     }
+
+#if UNITY_EDITOR
+    // メッシュの作成を遅延させる関数
+    private void DelayCreateMesh()
+    {
+        if (this == null) return;
+
+        CreateMesh();
+    }
+#endif
 }
