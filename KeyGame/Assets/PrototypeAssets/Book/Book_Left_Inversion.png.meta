@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 38ef094f60fdda04aa32fd9f194b195b
+guid: 1fc7640f8c6cd7e44aa4175e602e6b9a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2353571312451627304
-    second: Book_0
+      213: 4308116708258651029
+    second: Book_Left_Inversion_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Book_0
+      name: Book_Left_Inversion_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1191
-        height: 842
+        y: 35
+        width: 578
+        height: 807
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: ad8fbb603bec6c04e8d54e70d813d266
-      internalID: 2353571312451627304
+      spriteID: 59b9eae125189cb30800000000000000
+      internalID: 4308116708258651029
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0e7aaace95a10614985569fef3981047
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Book_0: 2353571312451627304
-      RightPage: 509543574
+      Book_Left_Inversion_0: 4308116708258651029
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
