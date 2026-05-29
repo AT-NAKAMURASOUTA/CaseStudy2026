@@ -122,6 +122,11 @@ public sealed class AlphabetThrowController : MonoBehaviour
         CreateAimRenderers();
     }
 
+    private void OnDisable()
+    {
+        SetHeldLetterCutProtection(false);
+    }
+
     private void Update()
     {
         // カメラ参照が切れていたら取り直す
@@ -292,6 +297,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 手持ち中はKinematicにする
         _heldLetter.bodyType = RigidbodyType2D.Kinematic;
         _holdState = HoldState.Holding;
+        SetHeldLetterCutProtection(true);
 
         // 持つ位置へ移動
         _heldLetter.transform.position = GetHoldPosition(holdDistance, holdHeight);
@@ -359,6 +365,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         var aimDirection = GetAimDirection();
 
         // 物理挙動を戻して投げられる状態にする
+        SetHeldLetterCutProtection(false);
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
 
@@ -392,6 +399,7 @@ public sealed class AlphabetThrowController : MonoBehaviour
         }
 
         // その場に落とす
+        SetHeldLetterCutProtection(false);
         _heldLetter.bodyType = RigidbodyType2D.Dynamic;
         RestoreHeldLetterCollisionWithPlayer();
         _heldLetter.linearVelocity = Vector2.zero;
@@ -520,6 +528,27 @@ public sealed class AlphabetThrowController : MonoBehaviour
                 Physics2D.IgnoreCollision(playerCollider, letterCollider, false);
             }
         }
+    }
+
+    private void SetHeldLetterCutProtection(bool isProtected)
+    {
+        if (_heldLetter == null)
+        {
+            return;
+        }
+
+        AlphabetCuttable cuttable = _heldLetter.GetComponent<AlphabetCuttable>();
+        if (cuttable == null)
+        {
+            cuttable = _heldLetter.GetComponentInParent<AlphabetCuttable>();
+        }
+
+        if (cuttable == null)
+        {
+            return;
+        }
+
+        cuttable.SetHeldByPlayer(isProtected);
     }
 
     private void CreateAimRenderers()

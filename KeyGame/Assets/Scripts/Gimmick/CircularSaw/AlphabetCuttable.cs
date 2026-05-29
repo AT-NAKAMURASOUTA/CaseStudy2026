@@ -22,6 +22,7 @@ public sealed class AlphabetCuttable : MonoBehaviour
     private Collider2D m_Collider2D;
     private GenerateAlphabet m_Owner;
     private bool m_WasCut;
+    private bool m_IsHeldByPlayer;
 
     private void Awake()
     {
@@ -35,6 +36,11 @@ public sealed class AlphabetCuttable : MonoBehaviour
         m_Owner = owner;
     }
 
+    public void SetHeldByPlayer(bool isHeld)
+    {
+        m_IsHeldByPlayer = isHeld;
+    }
+
     public void Cut(Vector2 worldCutPoint)
     {
         Cut(worldCutPoint, Vector2.zero);
@@ -43,7 +49,7 @@ public sealed class AlphabetCuttable : MonoBehaviour
     public void Cut(Vector2 worldCutPoint, Vector2 bladeMotionDirection)
     {
         // すでに切断済みまたはスプライトが取れていない場合は何もしない
-        if (m_WasCut || m_SpriteRenderer == null || m_SpriteRenderer.sprite == null)
+        if (m_IsHeldByPlayer || m_WasCut || m_SpriteRenderer == null || m_SpriteRenderer.sprite == null)
         {
             return;
         }
