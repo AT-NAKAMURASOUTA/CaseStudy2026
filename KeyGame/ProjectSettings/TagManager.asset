@@ -7,7 +7,7 @@ TagManager:
   - AccelerationAreaTag
   - LowGravityTag
   - AlphabetTag
-  - StageSelectButton
+  - StageSelect
   layers:
   - Default
   - TransparentFX

@@ -136,6 +136,9 @@ public sealed class AlphabetCuttable : MonoBehaviour
         fragmentBody.angularVelocity = directionSign * fragmentAngularVelocity;
         CopyAreaComponents(fragmentObject);
 
+        // 風の影響を受けるようにする
+        fragmentObject.AddComponent<AlphabetRigidbody>();
+
         // 切れた位置から外側へ飛ぶ向きを求める
         Vector2 outwardDirection = ((Vector2)fragmentObject.transform.position - worldCutPoint).normalized;
         if (outwardDirection.sqrMagnitude <= 0.001f)
