@@ -121,7 +121,7 @@ public class MoveFloor : MonoBehaviour
         Vector3 moveVec = vecAB.normalized * (isForward ? 1 : -1) * moveSpeed;
         transform.Translate(moveVec * Time.deltaTime);
 
-        Debug.Log("AC+AB : AB " + (lenAC + lenBC) + " : " + lenAB);
+        //Debug.Log("AC+AB : AB " + (lenAC + lenBC) + " : " + lenAB);
 
         if (lenAC + lenBC > lenAB * 1.01)
         {
