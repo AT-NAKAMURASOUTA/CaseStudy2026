@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7964889138089064234}
   - component: {fileID: 5956137239135262601}
   - component: {fileID: 4413640119096432104}
+  - component: {fileID: 5531623989869840349}
   m_Layer: 6
   m_Name: Door
   m_TagString: Untagged
@@ -164,6 +165,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   endPos: {fileID: 7084770117437700565}
   moveMaxCount: 20
+--- !u!114 &5531623989869840349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418362609640941225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19a5e43b690cea47bcb76a732b4500c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectReference: []
 --- !u!1 &6289525861082980992
 GameObject:
   m_ObjectHideFlags: 0
