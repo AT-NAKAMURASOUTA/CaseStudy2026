@@ -185,6 +185,8 @@ public class MoveFloor : MonoBehaviour
     {
         if (targetTags.Contains(collision.gameObject.tag))
         {
+            if (!collision.gameObject.activeInHierarchy) return;
+
             collision.transform.SetParent(null);
         }
     }
