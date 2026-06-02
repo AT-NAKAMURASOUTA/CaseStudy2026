@@ -14,17 +14,13 @@ public class SwitchDownUpdate : MonoBehaviour
     [Header("ボタン押されたときの位置")]
     [SerializeField] Transform onTransform;
 
-
-
-    Vector3 startPos;//初期位置
+    //差分
+    Vector3 diffPos;//
 
     void Start()
     {
-        //スタート位置を取得
-        startPos = new Vector3(
-            transform.position.x,
-            transform.position.y, 
-            transform.position.z);//
+        //ボタンと本体との差分を求める
+        diffPos = transform.position - onTransform.position;
     }
 
     // Update is called once per frame
@@ -45,7 +41,7 @@ public class SwitchDownUpdate : MonoBehaviour
         {//押されていない
 
             //ボタン部分の初期位置に移動させる
-            transform.position = new Vector3(startPos.x, startPos.y, startPos.z);
+            transform.position = onTransform.position + diffPos;
         }
     }
 }
