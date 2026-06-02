@@ -12,22 +12,22 @@ EditorBuildSettings:
     path: Assets/Scenes/StageSelectScene.unity
     guid: e5510de66cb49d340a7c4f6738bf3718
   - enabled: 1
-    path: Assets/Scenes/Stage1-1.unity
+    path: Assets/Scenes/world1/Stage1-1.unity
     guid: d29bf1a7aad1e134fbb859413fd53cce
   - enabled: 1
-    path: Assets/Scenes/Stage1-2.unity
+    path: Assets/Scenes/world1/Stage1-2.unity
     guid: 352117d38c832564392b9b3675e0cb22
   - enabled: 1
-    path: Assets/Scenes/stage1-3.unity
+    path: Assets/Scenes/world1/stage1-3.unity
     guid: 5740eb59a8d52df40b9da46a05b9f66c
   - enabled: 1
-    path: Assets/Scenes/Stage1-4.unity
+    path: Assets/Scenes/world1/Stage1-4.unity
     guid: 95a2ea2904c0e324e8fa69b7d3ee96c9
   - enabled: 1
-    path: Assets/Scenes/stage1-5.unity
+    path: Assets/Scenes/world1/stage1-5.unity
     guid: 9bb0c4ed4f46ac1448a1f70b0c809a38
   - enabled: 1
-    path: Assets/Scenes/Stage1-6.unity
+    path: Assets/Scenes/world1/Stage1-6.unity
     guid: d0831071411c26d4b93cf7ebe5574089
   - enabled: 1
     path: Assets/Scenes/MenuScene.unity
