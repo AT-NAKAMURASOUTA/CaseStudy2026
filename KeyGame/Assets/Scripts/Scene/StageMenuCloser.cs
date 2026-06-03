@@ -18,6 +18,7 @@ public sealed class StageMenuCloser : MonoBehaviour
         GameObject restartButton = GameObject.Find(RestartStageButtonName);
         if (restartButton == null)
         {
+            Debug.Log("初期化に失敗: " + RestartStageButtonName + "が見つかりませんでした。");
             return;
         }
 
@@ -28,14 +29,17 @@ public sealed class StageMenuCloser : MonoBehaviour
     {
         if (Time.frameCount == m_OpenFrame)
         {
+            Debug.Log("StageMenuCloser: 開いたフレームはスキップします。");
             return;
         }
 
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            Debug.Log("StageMenuCloser: Escapeキーが押されていません。");
             return;
         }
 
         SceneTransitionManager.GetInstance().SceneTransition(StageMenuState.RestartStage);
+        Debug.Log("StageMenuCloser: " + StageMenuState.RestartStage);
     }
 }

@@ -142,4 +142,12 @@ public class SceneTransitionManager : MonoBehaviour
         SceneTransition(m_CurrentSceneType);
     }
 
+    // ==================================
+    // 現在のシーンを取得
+    // ==================================
+    public SCENETYPE GetCurrentSceneType()
+    {
+        return m_CurrentSceneType;
+    }
+
 }
