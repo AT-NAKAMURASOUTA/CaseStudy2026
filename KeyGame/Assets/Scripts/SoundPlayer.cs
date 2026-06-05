@@ -1,13 +1,13 @@
 using UnityEngine;
 
-/* * Playerが失敗したときのSEを鳴らすクラス
+/* * SEを鳴らすクラス
  */
 
 [RequireComponent(typeof(AudioSource))]
-public class PlayerFailureSE : MonoBehaviour
+public class SoundPlayer : MonoBehaviour
 {
-    // 失敗したときのSE
-    [SerializeField] private AudioClip m_FailureSE;
+    // SE
+    [SerializeField] private AudioClip m_SE;
     // SEを鳴らすためのAudioSource
     private AudioSource m_AudioSource;
 
@@ -15,9 +15,9 @@ public class PlayerFailureSE : MonoBehaviour
     void Start()
     {
         m_AudioSource = GetComponent<AudioSource>();
-        if(m_FailureSE == null)
+        if(m_SE == null)
         {
-            Debug.LogError("PlayerFailureSE: 失敗SEが設定されていません。");
+            Debug.LogError("PlayerSE: SEが設定されていません。");
             return;
         }
     }
@@ -25,8 +25,8 @@ public class PlayerFailureSE : MonoBehaviour
     // ==============================
     // 実行
     // ==============================
-    public void FailurePlayerSE()
+    public void PlaySE()
     {
-        m_AudioSource.PlayOneShot(m_FailureSE);
+        m_AudioSource.PlayOneShot(m_SE);
     }
 }
