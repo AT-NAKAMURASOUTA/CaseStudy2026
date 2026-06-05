@@ -153,7 +153,9 @@ MonoBehaviour:
   m_GroundProbeExtraDistance: 0.4
   m_SpecialAreaAsset: {fileID: 11400000, guid: d1a44b39756ee0c478c023de241d990b, type: 2}
   m_PhysicsMaterialOverride: {fileID: 0}
-  m_JumpSE: {fileID: 0}
+  m_WalkSE: {fileID: 8300000, guid: 195bf176c1425a547b3159f94f19af55, type: 3}
+  m_WalkSEInterval: 0.35
+  m_JumpSE: {fileID: 8300000, guid: 0c97144ce8f94ce479af3b0470bbbd2c, type: 3}
 --- !u!114 &5632856676799909312
 MonoBehaviour:
   m_ObjectHideFlags: 0

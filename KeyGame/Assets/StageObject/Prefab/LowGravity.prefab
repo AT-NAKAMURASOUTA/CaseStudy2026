@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1498447622929826829}
   - component: {fileID: 3941469182800599178}
   - component: {fileID: 939234680114973687}
+  - component: {fileID: -1326583892956679688}
   m_Layer: 0
   m_Name: LowGravity
   m_TagString: LowGravityTag
@@ -134,3 +135,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-1326583892956679688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677515556523211974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af709fbbcd0534547962234670f7ca8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BGMSource: {fileID: 0}
+  m_PitchInArea: 0.5
