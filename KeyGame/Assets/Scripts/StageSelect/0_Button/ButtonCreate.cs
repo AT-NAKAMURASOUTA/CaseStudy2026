@@ -181,6 +181,12 @@ public class ButtonCreate : MonoBehaviour
                 if (buttonData[index].Texture != null)
                 {
                     image.sprite = buttonData[index].Texture;
+                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                    {
+                        // テキストを空にする
+                        text.text = string.Empty;
+                    }
                 }
                 else
                 {
@@ -247,6 +253,12 @@ public class ButtonCreate : MonoBehaviour
                 if (buttonData[index].Texture != null)
                 {
                     image.sprite = buttonData[index].Texture;
+                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                    {
+                        // テキストを空にする
+                        text.text = string.Empty;
+                    }
                 }
                 else
                 {
@@ -332,6 +344,12 @@ public class ButtonCreate : MonoBehaviour
                     if (buttonData[index].Texture != null)
                     {
                         image.sprite = buttonData[index].Texture;
+                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                        if (text != null)
+                        {
+                            // テキストを空にする
+                            text.text = string.Empty;
+                        }
                     }
                     else
                     {
@@ -401,6 +419,12 @@ public class ButtonCreate : MonoBehaviour
                     if (buttonData[index].Texture != null)
                     {
                         image.sprite = buttonData[index].Texture;
+                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                        if (text != null)
+                        {
+                            // テキストを空にする
+                            text.text = string.Empty;
+                        }
                     }
                     else
                     {
