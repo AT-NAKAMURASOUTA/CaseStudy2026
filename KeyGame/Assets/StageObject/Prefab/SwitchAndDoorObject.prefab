@@ -53,6 +53,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoorObject
       objectReference: {fileID: 0}
+    - target: {fileID: 3897201131115387939, guid: 7387c862cce3afc48b82182c0b5f781e, type: 3}
+      propertyPath: switchObject.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897201131115387939, guid: 7387c862cce3afc48b82182c0b5f781e, type: 3}
+      propertyPath: switchObject.Array.data[0].switchReference
+      value: 
+      objectReference: {fileID: 7635871047990767575}
     - target: {fileID: 7278203790546627503, guid: 7387c862cce3afc48b82182c0b5f781e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.18
@@ -168,5 +176,10 @@ Transform:
 --- !u!1 &5760674232566789848 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1492919065243301181, guid: b02d3ea6c5077eb4e9b32a23087589f6, type: 3}
+  m_PrefabInstance: {fileID: 6576925938676630501}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7635871047990767575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3656358888341662770, guid: b02d3ea6c5077eb4e9b32a23087589f6, type: 3}
   m_PrefabInstance: {fileID: 6576925938676630501}
   m_PrefabAsset: {fileID: 0}
