@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
+[RequireComponent(typeof(SoundPlayer))]
 public sealed class PlayerRespawn : MonoBehaviour
 {
     [Header("このY座標より下に落ちたらミス")]
@@ -107,12 +108,16 @@ public sealed class PlayerRespawn : MonoBehaviour
     private Vector3 m_CameraMoveVelocity;
     private bool m_IsReturningToFollow;
 
+    // 失敗SE
+    private SoundPlayer m_SoundPlayer;
+
     private void Awake()
     {
         // 必要なコンポーネントを取得
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_MainCamera = Camera.main;
+        m_SoundPlayer = GetComponent<SoundPlayer>();
     }
 
     private void Start()
@@ -206,6 +211,8 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         // 閉じる → リスポーン → 開く の流れを開始
         m_TransitionCoroutine = StartCoroutine(RespawnSequence());
+        // 失敗SEを鳴らす
+        m_SoundPlayer.PlaySE();
     }
 
     private IEnumerator RespawnSequence()

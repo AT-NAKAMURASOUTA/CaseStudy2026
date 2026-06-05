@@ -24,7 +24,7 @@ public sealed class ActionsManager : MonoBehaviour
     // ==============================================
     // アクション処理呼び出し
     // ==============================================
-    public void ExecuteAction()
+    public async void ExecuteAction()
     {
         // ゴール処理が既に実行されている場合は何もしない
         if (m_IsGoal)
@@ -41,14 +41,17 @@ public sealed class ActionsManager : MonoBehaviour
         m_Cts = new CancellationTokenSource();
 
         // ゴール処理の呼び出し
-        ActionCall(m_Cts.Token).Forget();
+        await ActionCall(m_Cts.Token);
+
+        // フラグ更新
+        m_IsGoal = true;
     }
 
 
     // ==============================================
     // ゴール処理の呼び出し
     // ==============================================
-    private async UniTaskVoid ActionCall(CancellationToken token)
+    private async UniTask ActionCall(CancellationToken token)
     {
         // アクション処理を順番に呼び出す
         foreach (var action in m_GoalActions)

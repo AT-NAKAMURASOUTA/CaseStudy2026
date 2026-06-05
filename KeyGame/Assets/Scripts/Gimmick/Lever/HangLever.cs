@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SoundPlayer))]
 public sealed class HangLever : MonoBehaviour
 {
     [Header("文字を引っかける時間")]
@@ -32,6 +33,9 @@ public sealed class HangLever : MonoBehaviour
     private float m_HangTimer;
     private bool m_IsActivated;
 
+    // サウンドプレイヤー
+    SoundPlayer m_SoundPlayer;
+
     private void Reset()
     {
         EnsureVisualColliders();
@@ -42,6 +46,8 @@ public sealed class HangLever : MonoBehaviour
     {
         EnsureVisualColliders();
         ApplyArmAngle(true);
+
+        m_SoundPlayer = GetComponent<SoundPlayer>();
     }
 
     private void OnValidate()
@@ -101,6 +107,9 @@ public sealed class HangLever : MonoBehaviour
         m_IsActivated = true;
         m_HangTimer = 0f;
         m_HangingLetterIds.Clear();
+
+        // サウンドを鳴らす
+        m_SoundPlayer.PlaySE();
 
         // 対象を非表示にして通れるように
         if (targetObject != null)

@@ -4,19 +4,23 @@ using UnityEngine.SceneManagement;
 
 public sealed class StageMenuOpener : MonoBehaviour
 {
+    SceneTransitionManager m_SceneManager;
+
+    private void Start()
+    {
+        // シーンマネージャーを取得
+        m_SceneManager = SceneTransitionManager.GetInstance();
+    }
+
     private void Update()
     {
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            Debug.Log("Escapeキーが押されていません。");
             return;
         }
 
-        if (!TryGetCurrentStageType(out SCENETYPE stageType))
-        {
-            return;
-        }
-
-        StageMenuState.SetRestartStage(stageType);
+        StageMenuState.SetRestartStage(m_SceneManager.GetCurrentSceneType());
         SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.MENU);
     }
 

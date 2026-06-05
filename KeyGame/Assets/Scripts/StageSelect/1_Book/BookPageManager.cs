@@ -155,6 +155,26 @@ public class BookPageManager : MonoBehaviour
     // =============================================
     private void CreateStageView()
     {
+        // ページがない場合
+        if (m_Pages == null || m_Pages.Length == 0)
+        {
+            m_StageViews = new StageView[1];
+
+            GameObject[] buttons = new GameObject[m_FirstButton.Length + m_LastButton.Length];
+
+            m_FirstButton.CopyTo(buttons, 0);
+            m_LastButton.CopyTo(buttons, m_FirstButton.Length);
+
+            m_StageViews[0] = new StageView()
+            {
+                pages = System.Array.Empty<PageAnimation>(),
+                buttons = buttons
+            };
+
+            return;
+        }
+
+
         // StageViewを作成
         m_StageViews = new StageView[m_Pages.Length + 1];
 

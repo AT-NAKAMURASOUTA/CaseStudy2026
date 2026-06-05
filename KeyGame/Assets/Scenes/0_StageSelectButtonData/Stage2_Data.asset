@@ -14,14 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageDataList:
   - Texture: {fileID: 0}
-    NextScene: 8
+    NextScene: 9
   - Texture: {fileID: 0}
-    NextScene: 7
+    NextScene: 10
   - Texture: {fileID: 0}
-    NextScene: 6
-  - Texture: {fileID: 0}
-    NextScene: 5
-  - Texture: {fileID: 0}
-    NextScene: 4
-  - Texture: {fileID: 0}
-    NextScene: 3
+    NextScene: 11
