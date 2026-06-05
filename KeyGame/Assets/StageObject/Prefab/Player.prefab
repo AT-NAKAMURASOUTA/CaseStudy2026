@@ -18,9 +18,9 @@ GameObject:
   - component: {fileID: 7820395376628724191}
   - component: {fileID: 8908283196701488870}
   - component: {fileID: 6354096494059707083}
-  - component: {fileID: 7462749273671201123}
   - component: {fileID: 8332959883881011175}
   - component: {fileID: 6697763330747103348}
+  - component: {fileID: -94172637859940741}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -156,7 +156,6 @@ MonoBehaviour:
   m_SpecialAreaAsset: {fileID: 11400000, guid: d1a44b39756ee0c478c023de241d990b, type: 2}
   m_PhysicsMaterialOverride: {fileID: 0}
   m_WalkSE: {fileID: 8300000, guid: 195bf176c1425a547b3159f94f19af55, type: 3}
-  m_WalkSEInterval: 0.35
   m_JumpSE: {fileID: 8300000, guid: 0c97144ce8f94ce479af3b0470bbbd2c, type: 3}
 --- !u!114 &5632856676799909312
 MonoBehaviour:
@@ -239,6 +238,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 0fb56c24-29c8-44bd-b095-697ce60acb6e
     m_ActionName: 'UI/PreviousPage[/Keyboard/leftArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a8503e3d-e319-4d55-ab27-70871148d56b
+    m_ActionName: 'UI/Menu[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -425,18 +428,6 @@ MonoBehaviour:
   cameraFollowSmoothTime: 0.05
   cameraFocusSmoothTime: 0.04
   cameraReturnToFollowSmoothTime: 0.08
---- !u!114 &7462749273671201123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4633012459042416869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f1a0d2c5904d458531bfecde7d81ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &8332959883881011175
 AudioSource:
   m_ObjectHideFlags: 0
@@ -547,3 +538,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SE: {fileID: 8300000, guid: 8d733b55bee762148b4da64bc4bf55e8, type: 3}
+--- !u!114 &-94172637859940741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4633012459042416869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58bbc434654fd942b1b41b62a1aa0c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MenuPrefab: {fileID: 814949705127981127, guid: bb96d78ee5cd93f40a5397b027f97278, type: 3}

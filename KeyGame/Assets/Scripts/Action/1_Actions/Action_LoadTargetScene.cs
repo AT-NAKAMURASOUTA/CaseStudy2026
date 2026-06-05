@@ -33,9 +33,17 @@ public class Action_LoadTargetScene : BaseAction
         }
 
         // シーン遷移処理
-        SCENETYPE targetScene = m_UseRestartStage ? StageMenuState.RestartStage : m_TargetScene;
+        if (m_UseRestartStage)
+        {
+            // リターン
+            SceneTransitionManager.GetInstance().ReturenScene();
+        }
+        else
+        {
+            // シーン遷移
+            SceneTransitionManager.GetInstance().SceneTransition(m_TargetScene);
+        }
 
-        SceneTransitionManager.GetInstance().SceneTransition(targetScene);
         return UniTask.CompletedTask;
     }
 
