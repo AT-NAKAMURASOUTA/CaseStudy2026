@@ -188,6 +188,12 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // スペースが押されていなければ何もしない
         if (!Keyboard.current.spaceKey.wasPressedThisFrame)
         {
+            //下矢印キーが押されてるならholdStateを戻す
+            if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+            {
+                //名前はあれだけど、段階を戻す奴です。
+                HandleRightClick();
+            }
             return;
         }
 
