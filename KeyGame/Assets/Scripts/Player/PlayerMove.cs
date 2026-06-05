@@ -69,8 +69,10 @@ public sealed class PlayerMove : MonoBehaviour
 
     // SE再生用変数
     [Header("効果音")]
+    [SerializeField] private AudioClip m_WalkSE;
     [SerializeField] private AudioClip m_JumpSE;
 
+    private AudioSource m_WalkAudioSource;
     private AudioSource m_AudioSource;
 
     // Input情報取得変数
@@ -110,9 +112,24 @@ public sealed class PlayerMove : MonoBehaviour
 
         m_PlayerInput.actions["Jump"].performed += JumpInput;
 
+        // --- SE用 AudioSource（ジャンプなどの短い効果音）を確実に用意 ---
         m_AudioSource = GetComponent<AudioSource>();
         if (m_AudioSource == null)
             m_AudioSource = gameObject.AddComponent<AudioSource>();
+        m_AudioSource.playOnAwake = false;
+        m_AudioSource.loop = false;
+        m_AudioSource.spatialBlend = 0f; // 2Dサウンド
+        m_AudioSource.volume = 1.0f;
+        m_AudioSource.clip = null; // PlayOneShot を使うので clip は空にしておく
+
+        // --- 歩行音用の別 AudioSource を必ず新規作成して競合を避ける ---
+        m_WalkAudioSource = gameObject.AddComponent<AudioSource>();
+        m_WalkAudioSource.playOnAwake = false;
+        m_WalkAudioSource.loop = true;
+        m_WalkAudioSource.spatialBlend = 0f;
+        m_WalkAudioSource.volume = 1.0f;
+        m_WalkAudioSource.clip = m_WalkSE;
+
 
 #if UNITY_EDITOR
         // エラーチェック
@@ -198,7 +215,6 @@ public sealed class PlayerMove : MonoBehaviour
 
         // 着地判定処理
         bool isGrounded = CheckIsGrounded();
-
         if (isGrounded && !m_WasGrounded)
         {
             // 地面に接触している場合、跳躍回数をリセット
@@ -231,12 +247,44 @@ public sealed class PlayerMove : MonoBehaviour
                     m_Animator.Update(0f);
                 }
 
+                // ジャンプSE再生
+                if (m_AudioSource == null)
+                {
+                    Debug.LogWarning("m_AudioSource is null - cannot play jump SE");
+                }
+                if (m_JumpSE == null)
+                {
+                    Debug.LogWarning("m_JumpSE is null - assign clip in Inspector");
+                }
                 if (m_AudioSource != null && m_JumpSE != null)
+                {
+                    Debug.Log("Play Jump SE");
                     m_AudioSource.PlayOneShot(m_JumpSE);
+                }
             }
 
             // フラグ更新
             m_JumpInput = false;
+        }
+
+        // 歩行SE制御: 地面にいる && 左右入力がある とき再生、そうでなければ停止
+        bool isWalking = (m_MoveInput != 0f) && isGrounded;
+        if (m_WalkSE != null && m_WalkAudioSource != null)
+        {
+            if (isWalking)
+            {
+                if (!m_WalkAudioSource.isPlaying)
+                {
+                    m_WalkAudioSource.Play();
+                }
+            }
+            else
+            {
+                if (m_WalkAudioSource.isPlaying)
+                {
+                    m_WalkAudioSource.Stop();
+                }
+            }
         }
 
         // アニメーション制御
@@ -271,8 +319,6 @@ public sealed class PlayerMove : MonoBehaviour
 
         // フラグ更新
         m_WasGrounded = isGrounded;
-
-
     }
 
 
