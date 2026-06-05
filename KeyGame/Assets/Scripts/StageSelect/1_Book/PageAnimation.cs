@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /*  * PageAnimationのスクリプト
  */
 
+[RequireComponent(typeof(AudioSource))]
 public class PageAnimation : MonoBehaviour
 {
     // ========================================
@@ -56,6 +57,7 @@ public class PageAnimation : MonoBehaviour
         {
             t = 0;
             page.SetPageSprite(PageSide.Right);
+            page.m_AudioSource.PlayOneShot(page.m_FlipSE);
         }
 
         public void Update(PageAnimation page)
@@ -120,6 +122,7 @@ public class PageAnimation : MonoBehaviour
         {
             t = 0;
             page.SetPageSprite(PageSide.Left);
+            page.m_AudioSource.PlayOneShot(page.m_FlipSE);
         }
 
         public void Update(PageAnimation page)
@@ -189,6 +192,9 @@ public class PageAnimation : MonoBehaviour
     [Header("アニメーション設定")]
     [SerializeField] private float m_AnimationSpeed = 0.5f;
 
+    [Header("SE設定")]
+    [SerializeField] private AudioClip m_FlipSE;
+
     // 非公開のメンバー変数
     // 表にあるボタンオブジェクト
     [SerializeField, HideInInspector] private GameObject[] m_FrontButton;
@@ -207,6 +213,8 @@ public class PageAnimation : MonoBehaviour
     private PageSide m_CurrentPageSide = PageSide.Right;
     // アニメーション終了フラグ
     private bool m_IsAnimationEnd = false;
+    // AudioSourceコンポーネント
+    private AudioSource m_AudioSource;
 
     // ========================================
     // 初期化 (Awake)
@@ -246,6 +254,14 @@ public class PageAnimation : MonoBehaviour
         // スプライトを設定
         m_Image = GetComponent<Image>();
         m_Image.sprite = m_RightPageSprite;
+
+        // AudioSourceを取得
+        m_AudioSource = GetComponent<AudioSource>();
+        if(m_FlipSE == null)
+        {
+            Debug.LogError("ページめくりのSEが設定されていません。");
+            return;
+        }
 
         // 裏ボタンを180度回転させる
         for (int i = 0; i < m_BackButton.Length; i++)
