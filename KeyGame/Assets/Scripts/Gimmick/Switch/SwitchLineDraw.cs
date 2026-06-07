@@ -47,7 +47,7 @@ public class SwitchLineDraw : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //ラインなし
         if (listData.Count <= 1) return;
