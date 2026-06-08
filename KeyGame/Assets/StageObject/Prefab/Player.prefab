@@ -240,8 +240,8 @@ MonoBehaviour:
     m_ActionName: 'UI/PreviousPage[/Keyboard/leftArrow]'
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a8503e3d-e319-4d55-ab27-70871148d56b
-    m_ActionName: 'UI/Menu[/Keyboard/escape]'
+    m_ActionId: faf4adf1-e8f7-4f35-bd54-6c395b8d1298
+    m_ActionName: 'Player/Menu[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -423,7 +423,7 @@ MonoBehaviour:
   edgeSoftness: 0.02
   missZoomSize: 3.5
   cameraFollowOffset: {x: 0, y: 3.5}
-  cameraOrthographicSize: 8
+  cameraOrthographicSize: 14
   cameraZ: -20
   cameraFollowSmoothTime: 0.05
   cameraFocusSmoothTime: 0.04
