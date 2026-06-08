@@ -372,7 +372,17 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      StageFont_0: 5011716858747044826
+      StageFont_1: 2120018449477538559
+      StageFont_2: -5318290967014125279
+      StageFont_3: -392159338734589691
+      StageFont_4: 4218071839678591192
+      StageFont_5: -7295366817775733621
+      StageFont_6: -4879250871169573684
+      StageFont_7: -1946103947343835162
+      StageFont_8: -6346351623423832969
+      StageFont_9: 2669632927218720580
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

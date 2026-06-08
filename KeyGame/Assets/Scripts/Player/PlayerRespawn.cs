@@ -5,6 +5,9 @@ using System.Collections;
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class PlayerRespawn : MonoBehaviour
 {
+    private const string TransitionCanvasName = "TransitionCanvas";
+    private const int TransitionCanvasSortingOrder = 10000;
+
     [Header("このY座標より下に落ちたらミス")]
     [SerializeField]
     private float missY = -10f;
@@ -261,7 +264,7 @@ public sealed class PlayerRespawn : MonoBehaviour
         // Canvasが未設定ならシーン内から探す
         if (targetCanvas == null)
         {
-            targetCanvas = FindFirstObjectByType<Canvas>();
+            targetCanvas = FindOrCreateTransitionCanvas();
         }
 
         if (targetCanvas == null)
@@ -318,6 +321,42 @@ public sealed class PlayerRespawn : MonoBehaviour
 
         // 一番手前に表示
         overlayTransform.SetAsLastSibling();
+    }
+
+    private Canvas FindOrCreateTransitionCanvas()
+    {
+        GameObject existingCanvasObject = GameObject.Find(TransitionCanvasName);
+        if (existingCanvasObject != null && existingCanvasObject.TryGetComponent(out Canvas existingCanvas))
+        {
+            ConfigureTransitionCanvas(existingCanvas);
+            return existingCanvas;
+        }
+
+        GameObject canvasObject = new GameObject(
+            TransitionCanvasName,
+            typeof(RectTransform),
+            typeof(Canvas),
+            typeof(CanvasScaler),
+            typeof(GraphicRaycaster)
+        );
+
+        Canvas canvas = canvasObject.GetComponent<Canvas>();
+        ConfigureTransitionCanvas(canvas);
+
+        CanvasScaler scaler = canvasObject.GetComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920f, 1080f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = 0.5f;
+
+        return canvas;
+    }
+
+    private void ConfigureTransitionCanvas(Canvas canvas)
+    {
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = TransitionCanvasSortingOrder;
     }
 
     private void SetTransitionOverlayVisible(bool visible)
