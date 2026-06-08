@@ -1,0 +1,1855 @@
+fileFormatVersion: 2
+guid: c4f11343f3995d6418cc69342418893e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6037625416918277871
+    second: Book_Decoration_0
+  - first:
+      213: -8425069621710532503
+    second: Book_Decoration_1
+  - first:
+      213: -7650661037118249022
+    second: Book_Decoration_2
+  - first:
+      213: 7760474330051994284
+    second: Book_Decoration_3
+  - first:
+      213: -6778341479296308258
+    second: Book_Decoration_4
+  - first:
+      213: 6313777497227690816
+    second: Book_Decoration_5
+  - first:
+      213: 5022552029798868502
+    second: Book_Decoration_6
+  - first:
+      213: 7150959208015875548
+    second: Book_Decoration_7
+  - first:
+      213: 1296578711114598662
+    second: Book_Decoration_8
+  - first:
+      213: -7196840789410084550
+    second: Book_Decoration_9
+  - first:
+      213: 2523327069265026782
+    second: Book_Decoration_10
+  - first:
+      213: 8076057305330839202
+    second: Book_Decoration_11
+  - first:
+      213: 8123557644185620805
+    second: Book_Decoration_12
+  - first:
+      213: 629250285842847325
+    second: Book_Decoration_13
+  - first:
+      213: -5699776639729794896
+    second: Book_Decoration_14
+  - first:
+      213: -2791180368255011441
+    second: Book_Decoration_15
+  - first:
+      213: 6693853293274817137
+    second: Book_Decoration_16
+  - first:
+      213: -5794310961208897580
+    second: Book_Decoration_17
+  - first:
+      213: -1149283417266574147
+    second: Book_Decoration_18
+  - first:
+      213: -3029502968585643610
+    second: Book_Decoration_19
+  - first:
+      213: -6019394337408934251
+    second: Book_Decoration_20
+  - first:
+      213: -9199952961480459101
+    second: Book_Decoration_21
+  - first:
+      213: -7506927465128111513
+    second: Book_Decoration_22
+  - first:
+      213: 7406054975652394055
+    second: Book_Decoration_23
+  - first:
+      213: 4654523079006966350
+    second: Book_Decoration_24
+  - first:
+      213: -118067415878528852
+    second: Book_Decoration_25
+  - first:
+      213: -4338477614207750239
+    second: Book_Decoration_26
+  - first:
+      213: 795957434810919049
+    second: Book_Decoration_27
+  - first:
+      213: 1441143912116471515
+    second: Book_Decoration_28
+  - first:
+      213: 5829097060093112224
+    second: Book_Decoration_29
+  - first:
+      213: -197154762304799409
+    second: Book_Decoration_30
+  - first:
+      213: -2526479322001333269
+    second: Book_Decoration_31
+  - first:
+      213: 6939004660270435946
+    second: Book_Decoration_32
+  - first:
+      213: -3545995181057353800
+    second: Book_Decoration_33
+  - first:
+      213: -8471858530120548112
+    second: Book_Decoration_34
+  - first:
+      213: 5600875092451036
+    second: Book_Decoration_35
+  - first:
+      213: 5497101885689253577
+    second: Book_Decoration_36
+  - first:
+      213: -4345619183799365783
+    second: Book_Decoration_37
+  - first:
+      213: -2193980499790467655
+    second: Book_Decoration_38
+  - first:
+      213: -8952726896614062848
+    second: Book_Decoration_39
+  - first:
+      213: -3311259419003197899
+    second: Book_Decoration_40
+  - first:
+      213: 2338175764891294538
+    second: Book_Decoration_41
+  - first:
+      213: 7121407413012691879
+    second: Book_Decoration_42
+  - first:
+      213: -6968426945530501907
+    second: Book_Decoration_43
+  - first:
+      213: -1474344831009142813
+    second: Book_Decoration_44
+  - first:
+      213: -7057549370718045268
+    second: Book_Decoration_45
+  - first:
+      213: -5145584679970680828
+    second: Book_Decoration_46
+  - first:
+      213: 5286025553981561207
+    second: Book_Decoration_47
+  - first:
+      213: 3625609264758830830
+    second: Book_Decoration_48
+  - first:
+      213: 4276652994374760649
+    second: Book_Decoration_49
+  - first:
+      213: -7619859420955334908
+    second: Book_Decoration_50
+  - first:
+      213: -4688954218948263754
+    second: Book_Decoration_51
+  - first:
+      213: -156651697063413248
+    second: Book_Decoration_52
+  - first:
+      213: 7507316640456864234
+    second: Book_Decoration_53
+  - first:
+      213: 6846361415548282581
+    second: Book_Decoration_54
+  - first:
+      213: 561581701287796995
+    second: Book_Decoration_55
+  - first:
+      213: -2339247640992687091
+    second: Book_Decoration_56
+  - first:
+      213: -6385307163994338249
+    second: Book_Decoration_57
+  - first:
+      213: -2895942513722734535
+    second: Book_Decoration_58
+  - first:
+      213: -2668010499054198348
+    second: Book_Decoration_59
+  - first:
+      213: -3990495800381784008
+    second: Book_Decoration_60
+  - first:
+      213: -8240925205530851893
+    second: Book_Decoration_61
+  - first:
+      213: 5237702188353531863
+    second: Book_Decoration_62
+  - first:
+      213: -4484684411888121032
+    second: Book_Decoration_63
+  - first:
+      213: 1128666875128199278
+    second: Book_Decoration_64
+  - first:
+      213: 3280817156170597046
+    second: Book_Decoration_65
+  - first:
+      213: 427271224819619522
+    second: Book_Decoration_66
+  - first:
+      213: -4263791982136742241
+    second: Book_Decoration_67
+  - first:
+      213: 6036315933547856517
+    second: Book_Decoration_68
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Book_Decoration_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1193
+        width: 1600
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11167b90cab063ca0800000000000000
+      internalID: -6037625416918277871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1183
+        width: 1600
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 960520621d3241b80800000000000000
+      internalID: -8425069621710532503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1173
+        width: 1600
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c725a9525463d590800000000000000
+      internalID: -7650661037118249022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_3
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 1000
+        width: 94
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca26943594eb2bb60800000000000000
+      internalID: 7760474330051994284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_4
+      rect:
+        serializedVersion: 2
+        x: 158
+        y: 1000
+        width: 96
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edb6f38765e7ee1a0800000000000000
+      internalID: -6778341479296308258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_5
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 1000
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0438c119e2b0f9750800000000000000
+      internalID: 6313777497227690816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_6
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 1000
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6162412e570b3b540800000000000000
+      internalID: 5022552029798868502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_7
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 1000
+        width: 83
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdd4815238f4d3360800000000000000
+      internalID: 7150959208015875548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_8
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 1000
+        width: 83
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 609c15bd77f5ef110800000000000000
+      internalID: 1296578711114598662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_9
+      rect:
+        serializedVersion: 2
+        x: 780
+        y: 1000
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a398b2abe6faf1c90800000000000000
+      internalID: -7196840789410084550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_10
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 1000
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ede5bafa998a40320800000000000000
+      internalID: 2523327069265026782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_11
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 1000
+        width: 29
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ae61f5945be31070800000000000000
+      internalID: 8076057305330839202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_12
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 1000
+        width: 83
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 541d71e03acacb070800000000000000
+      internalID: 8123557644185620805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_13
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 1000
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d56d9721dcb8bb800800000000000000
+      internalID: 629250285842847325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_14
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 1000
+        width: 71
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b006d9485356e0b0800000000000000
+      internalID: -5699776639729794896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_15
+      rect:
+        serializedVersion: 2
+        x: 1452
+        y: 1000
+        width: 118
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f85bd1e4e3cb349d0800000000000000
+      internalID: -2791180368255011441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_16
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 796
+        width: 94
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 172693cca1855ec50800000000000000
+      internalID: 6693853293274817137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_17
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dfcdfe51e8769fa0800000000000000
+      internalID: -5794310961208897580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_18
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 796
+        width: 96
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbc249732dcec00f0800000000000000
+      internalID: -1149283417266574147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_19
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 769
+        width: 95
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a9167fd91b05f5d0800000000000000
+      internalID: -3029502968585643610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_20
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59e1eb30eb0d67ca0800000000000000
+      internalID: -6019394337408934251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_21
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac77a46683335080800000000000000
+      internalID: -9199952961480459101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_22
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7625a6e6e3902d790800000000000000
+      internalID: -7506927465128111513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_23
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74476cae2c797c660800000000000000
+      internalID: 7406054975652394055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_24
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 796
+        width: 96
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4251136410389040800000000000000
+      internalID: 4654523079006966350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_25
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 796
+        width: 118
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca013019f4a8c5ef0800000000000000
+      internalID: -118067415878528852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_26
+      rect:
+        serializedVersion: 2
+        x: 1237
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1afa92b9891aac3c0800000000000000
+      internalID: -4338477614207750239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_27
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9886c3ed11fcb0b00800000000000000
+      internalID: 795957434810919049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_28
+      rect:
+        serializedVersion: 2
+        x: 1475
+        y: 796
+        width: 95
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd64be7a0c8fff310800000000000000
+      internalID: 1441143912116471515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_29
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 599
+        width: 93
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0afaf1c64ec15e050800000000000000
+      internalID: 5829097060093112224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_30
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 599
+        width: 54
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4dbb0bc9c0934df0800000000000000
+      internalID: -197154762304799409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_31
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 599
+        width: 93
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be3adb7417420fcd0800000000000000
+      internalID: -2526479322001333269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_32
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 599
+        width: 74
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6e033e59fb4c4060800000000000000
+      internalID: 6939004660270435946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_33
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 599
+        width: 78
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b754d99b281acec0800000000000000
+      internalID: -3545995181057353800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_34
+      rect:
+        serializedVersion: 2
+        x: 687
+        y: 599
+        width: 93
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f04dcc7d89ed6a80800000000000000
+      internalID: -8471858530120548112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_35
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 599
+        width: 94
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cde115a57f5e31000800000000000000
+      internalID: 5600875092451036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_36
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 599
+        width: 83
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ce43a64a01a94c40800000000000000
+      internalID: 5497101885689253577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_37
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 599
+        width: 94
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96f048c506241b3c0800000000000000
+      internalID: -4345619183799365783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_38
+      rect:
+        serializedVersion: 2
+        x: 1261
+        y: 599
+        width: 95
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bdead11c5a6d81e0800000000000000
+      internalID: -2193980499790467655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_39
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 631
+        width: 29
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 005cb34325681c380800000000000000
+      internalID: -8952726896614062848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_40
+      rect:
+        serializedVersion: 2
+        x: 1490
+        y: 635
+        width: 80
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 536e52b2a1b0c02d0800000000000000
+      internalID: -3311259419003197899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_41
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 598
+        width: 28
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4bd5c0587ed27020800000000000000
+      internalID: 2338175764891294538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_42
+      rect:
+        serializedVersion: 2
+        x: 1516
+        y: 602
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ab7471bf4254d260800000000000000
+      internalID: 7121407413012691879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_43
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 323
+        width: 300
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de4e4640d9c2b4f90800000000000000
+      internalID: -6968426945530501907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_44
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 402
+        width: 341
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e7444700331a8be0800000000000000
+      internalID: -1474344831009142813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_45
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 275
+        width: 331
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cabb1956d3c8e0e90800000000000000
+      internalID: -7057549370718045268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_46
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 280
+        width: 498
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 400d7acfef53798b0800000000000000
+      internalID: -5145584679970680828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_47
+      rect:
+        serializedVersion: 2
+        x: 1258
+        y: 323
+        width: 301
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77955ba1c3cbb5940800000000000000
+      internalID: 5286025553981561207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_48
+      rect:
+        serializedVersion: 2
+        x: 819
+        y: 273
+        width: 363
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee6b050ca60c05230800000000000000
+      internalID: 3625609264758830830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_49
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 89
+        width: 303
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c8715d5d39b95b30800000000000000
+      internalID: 4276652994374760649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_50
+      rect:
+        serializedVersion: 2
+        x: 413
+        y: 76
+        width: 339
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4072b877a32d04690800000000000000
+      internalID: -7619859420955334908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_51
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 77
+        width: 327
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b005832bfc7deeb0800000000000000
+      internalID: -4688954218948263754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_52
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 89
+        width: 302
+        height: 142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00ab21b8c1673ddf0800000000000000
+      internalID: -156651697063413248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_53
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae17fc285b85f2860800000000000000
+      internalID: 7507316640456864234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_54
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 4
+        width: 12
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d622b11f69230f50800000000000000
+      internalID: 6846361415548282581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_55
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3016e99f4932bc700800000000000000
+      internalID: 561581701287796995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_56
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0cd5f41aa2598fd0800000000000000
+      internalID: -2339247640992687091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_57
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73c4c5417f4d267a0800000000000000
+      internalID: -6385307163994338249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_58
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 4
+        width: 26
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 938ca9b80ab8fc7d0800000000000000
+      internalID: -2895942513722734535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_59
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 4
+        width: 25
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b1acda369259fad0800000000000000
+      internalID: -2668010499054198348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_60
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8304e8c4639ee98c0800000000000000
+      internalID: -3990495800381784008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_61
+      rect:
+        serializedVersion: 2
+        x: 220
+        y: 4
+        width: 28
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc545c7103a52ad80800000000000000
+      internalID: -8240925205530851893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_62
+      rect:
+        serializedVersion: 2
+        x: 249
+        y: 4
+        width: 27
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7df2918c36e00b840800000000000000
+      internalID: 5237702188353531863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_63
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 4
+        width: 24
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83b4dabc94333c1c0800000000000000
+      internalID: -4484684411888121032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_64
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 4
+        width: 27
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6834c10b84d9af00800000000000000
+      internalID: 1128666875128199278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_65
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 36
+        width: 1267
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b24e8e22ddc78d20800000000000000
+      internalID: 3280817156170597046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_66
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 25
+        width: 1267
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c69e1a4ae8fde500800000000000000
+      internalID: 427271224819619522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_67
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 15
+        width: 1267
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9ea49468c7f3d4c0800000000000000
+      internalID: -4263791982136742241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Book_Decoration_68
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 4
+        width: 1267
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 582862b1c5d45c350800000000000000
+      internalID: 6036315933547856517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
