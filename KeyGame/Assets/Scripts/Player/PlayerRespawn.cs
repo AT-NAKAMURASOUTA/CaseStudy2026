@@ -62,6 +62,16 @@ public sealed class PlayerRespawn : MonoBehaviour
     [SerializeField]
     private float cameraZ = -20f;
 
+    [Header("Camera Bounds")]
+    [SerializeField]
+    private bool useCameraBounds;
+
+    [SerializeField]
+    private Vector2 cameraBoundsMin = new Vector2(-20f, -10f);
+
+    [SerializeField]
+    private Vector2 cameraBoundsMax = new Vector2(20f, 10f);
+
     [Header("通常追従のなめらかさ")]
     [SerializeField]
     private float cameraFollowSmoothTime = 0.05f;
@@ -406,7 +416,7 @@ public sealed class PlayerRespawn : MonoBehaviour
         cameraPosition.x = m_FocusWorldPosition.x;
         cameraPosition.y = m_FocusWorldPosition.y;
         cameraPosition.z = cameraZ;
-        m_MainCamera.transform.position = cameraPosition;
+        m_MainCamera.transform.position = ClampCameraPosition(cameraPosition);
     }
 
     private void MoveCameraToFocus()
@@ -454,16 +464,45 @@ public sealed class PlayerRespawn : MonoBehaviour
 
     private Vector3 GetFocusCameraPosition()
     {
-        return new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, cameraZ);
+        return ClampCameraPosition(new Vector3(m_FocusWorldPosition.x, m_FocusWorldPosition.y, cameraZ));
     }
 
     private Vector3 GetFollowCameraPosition()
     {
-        return new Vector3(
+        return ClampCameraPosition(new Vector3(
             transform.position.x + m_CameraFollowOffset.x,
             transform.position.y + m_CameraFollowOffset.y,
             cameraZ
-        );
+        ));
+    }
+
+    private Vector3 ClampCameraPosition(Vector3 position)
+    {
+        if (!useCameraBounds)
+        {
+            return position;
+        }
+
+        Vector2 min = Vector2.Min(cameraBoundsMin, cameraBoundsMax);
+        Vector2 max = Vector2.Max(cameraBoundsMin, cameraBoundsMax);
+
+        float halfHeight = cameraOrthographicSize;
+        float halfWidth = halfHeight * (16f / 9f);
+        if (m_MainCamera != null)
+        {
+            halfHeight = m_MainCamera.orthographicSize;
+            halfWidth = halfHeight * m_MainCamera.aspect;
+        }
+
+        float minX = min.x + halfWidth;
+        float maxX = max.x - halfWidth;
+        float minY = min.y + halfHeight;
+        float maxY = max.y - halfHeight;
+
+        position.x = minX <= maxX ? Mathf.Clamp(position.x, minX, maxX) : (min.x + max.x) * 0.5f;
+        position.y = minY <= maxY ? Mathf.Clamp(position.y, minY, maxY) : (min.y + max.y) * 0.5f;
+
+        return position;
     }
 
     private void MoveCameraToPosition(Vector3 targetPosition, float smoothTime)
