@@ -4,11 +4,10 @@ using UnityEngine.SceneManagement;
 
 public sealed class StageMenuOpener : MonoBehaviour
 {
-    SceneTransitionManager m_SceneManager;
+    private SceneTransitionManager m_SceneManager;
 
     private void Start()
     {
-        // シーンマネージャーを取得
         m_SceneManager = SceneTransitionManager.GetInstance();
     }
 
@@ -16,11 +15,14 @@ public sealed class StageMenuOpener : MonoBehaviour
     {
         if (Keyboard.current == null || !Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            Debug.Log("Escapeキーが押されていません。");
             return;
         }
 
-        StageMenuState.SetRestartStage(m_SceneManager.GetCurrentSceneType());
+        SCENETYPE returnScene = TryGetCurrentStageType(out SCENETYPE sceneType)
+            ? sceneType
+            : m_SceneManager.GetCurrentSceneType();
+
+        StageMenuState.SetRestartStage(returnScene);
         SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.MENU);
     }
 
@@ -28,6 +30,9 @@ public sealed class StageMenuOpener : MonoBehaviour
     {
         switch (SceneManager.GetActiveScene().name)
         {
+            case "StageSelectScene":
+                stageType = SCENETYPE.STAGESELECT;
+                return true;
             case "Stage1-1":
                 stageType = SCENETYPE.STAGE1_1;
                 return true;
@@ -46,8 +51,23 @@ public sealed class StageMenuOpener : MonoBehaviour
             case "Stage1-6":
                 stageType = SCENETYPE.STAGE1_6;
                 return true;
-            case "StageSelectScene":
-                stageType = SCENETYPE.STAGESELECT;
+            case "Stage2-1":
+                stageType = SCENETYPE.STAGE2_1;
+                return true;
+            case "Stage2-2":
+                stageType = SCENETYPE.STAGE2_2;
+                return true;
+            case "Stage2-3":
+                stageType = SCENETYPE.STAGE2_3;
+                return true;
+            case "Stage2-4":
+                stageType = SCENETYPE.STAGE2_4;
+                return true;
+            case "Stage2-5":
+                stageType = SCENETYPE.STAGE2_5;
+                return true;
+            case "Stage2-6":
+                stageType = SCENETYPE.STAGE2_6;
                 return true;
             default:
                 stageType = default;
