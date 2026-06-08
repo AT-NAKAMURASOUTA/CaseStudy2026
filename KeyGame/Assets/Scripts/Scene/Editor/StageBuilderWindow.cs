@@ -1726,12 +1726,18 @@ public sealed class StageBuilderWindow : EditorWindow
         Transform blocker = leverObject.transform.Find("LeverBlocker");
         Transform armOffset = armPivot != null ? armPivot.Find("ArmOffset") : null;
         Transform armVisual = armOffset != null ? armOffset.Find("ArmVisual") : null;
+        int floorLayer = LayerMask.NameToLayer("Floor");
 
         leverObject.transform.position = new Vector3(baseCenter.x, baseCenter.y, leverObject.transform.position.z);
         leverObject.transform.localScale = Vector3.one;
 
         if (baseVisual != null)
         {
+            if (floorLayer >= 0)
+            {
+                baseVisual.gameObject.layer = floorLayer;
+            }
+
             baseVisual.localPosition = Vector3.zero;
             SetSpriteRendererLocalSize(baseVisual, baseSize);
 
@@ -1744,6 +1750,11 @@ public sealed class StageBuilderWindow : EditorWindow
 
         if (blocker != null)
         {
+            if (floorLayer >= 0)
+            {
+                blocker.gameObject.layer = floorLayer;
+            }
+
             blocker.localPosition = Vector3.zero;
             blocker.localScale = new Vector3(baseSize.x, baseSize.y, blocker.localScale.z);
         }
@@ -1765,6 +1776,11 @@ public sealed class StageBuilderWindow : EditorWindow
 
         if (armVisual != null)
         {
+            if (floorLayer >= 0)
+            {
+                armVisual.gameObject.layer = floorLayer;
+            }
+
             float armLength = Mathf.Max(baseSize.x, baseSize.y);
             SetSpriteRendererLocalWidth(armVisual, armLength);
             armVisual.localPosition = Vector3.zero;

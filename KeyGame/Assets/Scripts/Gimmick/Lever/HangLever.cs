@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(SoundPlayer))]
 public sealed class HangLever : MonoBehaviour
 {
+    private const string FloorLayerName = "Floor";
+
     [Header("文字を引っかける時間")]
     [SerializeField]
     private float requiredHangDuration = 1f;
@@ -142,6 +144,12 @@ public sealed class HangLever : MonoBehaviour
             return;
         }
 
+        ApplyGroundLayer(m_BaseVisual.gameObject);
+        if (targetObject != null)
+        {
+            ApplyGroundLayer(targetObject);
+        }
+
         if (m_ArmVisual == null)
         {
             m_ArmVisual = m_ArmPivot.Find("ArmOffset/ArmVisual");
@@ -164,6 +172,7 @@ public sealed class HangLever : MonoBehaviour
         {
             return;
         }
+        ApplyGroundLayer(m_ArmVisual.gameObject);
 
         // レバー本体にも見た目に合わせたColliderを付ける
         PolygonCollider2D armCollider = m_ArmVisual.GetComponent<PolygonCollider2D>();
@@ -213,6 +222,22 @@ public sealed class HangLever : MonoBehaviour
             armTrigger = armTriggerTransform.gameObject.AddComponent<HangLeverArmTrigger>();
         }
         armTrigger.SetOwner(this);
+    }
+
+    private static void ApplyGroundLayer(GameObject target)
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        int floorLayer = LayerMask.NameToLayer(FloorLayerName);
+        if (floorLayer < 0)
+        {
+            return;
+        }
+
+        target.layer = floorLayer;
     }
 
     private static void SyncColliderToSprite(PolygonCollider2D collider2D, SpriteRenderer spriteRenderer)
