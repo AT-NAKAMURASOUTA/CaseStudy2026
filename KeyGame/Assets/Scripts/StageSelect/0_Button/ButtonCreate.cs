@@ -1,8 +1,11 @@
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.U2D;
+using UnityEngine.UI;
 
 /*  * ボタンやページを生成するスクリプト
  */
@@ -13,6 +16,16 @@ using UnityEditor;
 public class ButtonCreate : MonoBehaviour
 {
     // ===========================================
+    // 構造体
+    // ===========================================
+    [System.Serializable]
+    public class ButtonTextureData
+    {
+        public string Key;
+        public Sprite Sprite;
+    }
+
+    // ===========================================
     // メンバー変数
     // ===========================================
     [Header("ボタン設定")]
@@ -20,10 +33,14 @@ public class ButtonCreate : MonoBehaviour
     [SerializeField] private GameObject m_ButtonPrefab;
     [Tooltip("ボタンのデータ")]
     [SerializeField] private StageButtonData[] m_ButtonData;
-    
+
     [Header("ページ設定")]
     [Tooltip("ページのプレハブ")]
     [SerializeField] private GameObject m_PagePrefab;
+
+    [Header("ボタンテクスチャ設定")]
+    [Tooltip("ボタンのテクスチャ")]
+    [SerializeField] private List<ButtonTextureData> m_ButtonTextures;
 
     // ボタンの位置リスト
     private List<Vector2> m_ButtonPositions;
@@ -39,9 +56,15 @@ public class ButtonCreate : MonoBehaviour
     // ページ数を数える
     private int m_PageCount = 0;
     // ページのセンター
-    private Vector2 m_BookCenter= Vector2.zero;
+    private Vector2 m_BookCenter = Vector2.zero;
     // BookPageManager
     private BookPageManager m_BookPageManager;
+    // Dict<Character, Sprite>に変換したボタンテクスチャデータ
+    private Dictionary<char, Sprite> m_ButtonTextureDict = new Dictionary<char, Sprite>();
+    // ButtonTexture の位置
+    private Vector2[] m_ButtonTexturePos;
+    // ButtonTexture　のサイズ
+    private float m_ButtonTextureSize = 1.0f;
 
     // ===========================================
     // 作成
@@ -85,6 +108,33 @@ public class ButtonCreate : MonoBehaviour
             UnityEngine.Debug.LogError($"ボタンのデータ数が見開きの最大数を超えています。最大数: {m_ButtonMaxCount}");
             return;
         }
+
+        // ボタンテクスチャのDict変換
+        foreach (var data in m_ButtonTextures)
+        {
+            if (data.Key != default && data.Sprite != null)
+            {
+                char key = data.Key[0];
+
+                if (!m_ButtonTextureDict.ContainsKey(key))
+                {
+                    m_ButtonTextureDict.Add(key, data.Sprite);
+                }
+                else
+                {
+                    Debug.LogWarning($"同じKeyが複数設定されています。Key: {key}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("ボタンテクスチャデータのCharacterが空またはSpriteが設定されていません。");
+                return;
+            }
+        }
+        // ボタンテクスチャの位置をBookLayoutから取得
+        m_ButtonTexturePos = layout.GetButtonTextureLocalPositions();
+        // ボタンテクスチャのサイズをBookLayoutから取得
+        m_ButtonTextureSize = layout.GetButtonTextureSize();
 
         // ボタンの生成
         BookCreate();
@@ -148,7 +198,7 @@ public class ButtonCreate : MonoBehaviour
                 int index = y * (m_PageMaxCountX * 2) + x;
 
                 // データ数を超えたら終了
-                if (index >= buttonData.Count) 
+                if (index >= buttonData.Count)
                 {
                     Debug.LogWarning($"ステージ1データがインデックス以下だったためスキップしました。 Index : {index}");
                     continue;
@@ -164,6 +214,13 @@ public class ButtonCreate : MonoBehaviour
                 button.gameObject.name = $"Stage 1-{index + 1}_Button";
                 // ボタンのタグ設定
                 button.gameObject.tag = m_ButtonTag;
+                
+                TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                if (text != null)
+                {
+                    // テキストを空にする
+                    text.text = string.Empty;
+                }
 
                 // ボタンのデータを設定
                 Action_LoadTargetScene loadScene = button.GetComponent<Action_LoadTargetScene>();
@@ -181,19 +238,14 @@ public class ButtonCreate : MonoBehaviour
                 if (buttonData[index].Texture != null)
                 {
                     image.sprite = buttonData[index].Texture;
-                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                    if (text != null)
-                    {
-                        // テキストを空にする
-                        text.text = string.Empty;
-                    }
                 }
                 else
                 {
-                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                    text.text = $"Stage 1-{index + 1} Button";
                     Debug.LogWarning("ボタンにImageがアタッチされていません。");
                 }
+
+                // ボタンテキストの生成
+                CreateStageText(rect, 1, index + 1);
 
                 firstButtonData.Add(button);
             }
@@ -238,6 +290,14 @@ public class ButtonCreate : MonoBehaviour
                 // ボタンのタグ設定
                 button.gameObject.tag = m_ButtonTag;
 
+                // テキストを空にする
+                TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                if (text != null)
+                {
+                    // テキストを空にする
+                    text.text = string.Empty;
+                }
+
                 // ボタンのデータを設定
                 Action_LoadTargetScene loadScene = button.GetComponent<Action_LoadTargetScene>();
                 if (loadScene != null)
@@ -253,19 +313,14 @@ public class ButtonCreate : MonoBehaviour
                 if (buttonData[index].Texture != null)
                 {
                     image.sprite = buttonData[index].Texture;
-                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                    if (text != null)
-                    {
-                        // テキストを空にする
-                        text.text = string.Empty;
-                    }
                 }
                 else
                 {
-                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                    text.text = $"Stage {m_ButtonData.Length}-{index + 1} Button";
                     Debug.LogWarning("ボタンにImageがアタッチされていません。");
                 }
+
+                // ボタンテキストの生成
+                CreateStageText(rect, m_ButtonData.Length, index + 1);
 
                 // 最後のページのボタンデータを保存
                 lastButtonData.Add(button);
@@ -326,6 +381,14 @@ public class ButtonCreate : MonoBehaviour
                     // ボタンのタグ設定
                     button.gameObject.tag = m_ButtonTag;
 
+                    // テキストを空にする
+                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                    {
+                        // テキストを空にする
+                        text.text = string.Empty;
+                    }
+
                     // 親プレハブを設定
                     button.transform.SetParent(page.transform);
 
@@ -344,19 +407,14 @@ public class ButtonCreate : MonoBehaviour
                     if (buttonData[index].Texture != null)
                     {
                         image.sprite = buttonData[index].Texture;
-                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                        if (text != null)
-                        {
-                            // テキストを空にする
-                            text.text = string.Empty;
-                        }
                     }
                     else
                     {
-                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                        text.text = $"Stage {pageCount + 1}-{index + 1} Button";
                         Debug.LogWarning("ボタンにImageがアタッチされていません。");
                     }
+
+                    // ボタンテキストの生成
+                    CreateStageText(rect, pageCount + 1, index + 1);
 
                     buttons.Add(button);
                 }
@@ -401,6 +459,14 @@ public class ButtonCreate : MonoBehaviour
                     // ボタンのタグ設定
                     button.gameObject.tag = m_ButtonTag;
 
+                    // テキストを空にする
+                    TMP_Text text = button.GetComponentInChildren<TMP_Text>();
+                    if (text != null)
+                    {
+                        // テキストを空にする
+                        text.text = string.Empty;
+                    }
+
                     // 親プレハブを設定
                     button.transform.SetParent(page.transform);
 
@@ -419,19 +485,14 @@ public class ButtonCreate : MonoBehaviour
                     if (buttonData[index].Texture != null)
                     {
                         image.sprite = buttonData[index].Texture;
-                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                        if (text != null)
-                        {
-                            // テキストを空にする
-                            text.text = string.Empty;
-                        }
                     }
                     else
                     {
-                        TMP_Text text = button.GetComponentInChildren<TMP_Text>();
-                        text.text = $"Stage {pageCount + 2}-{index + 1} Button";
                         Debug.LogWarning("ボタンにImageがアタッチされていません。");
                     }
+
+                    // ボタンテキストの生成
+                    CreateStageText(rect, pageCount + 2, index + 1);
 
                     buttons.Add(button);
                 }
@@ -446,5 +507,65 @@ public class ButtonCreate : MonoBehaviour
 
         // マネージャーに登録
         m_BookPageManager.SetPages(pageArray.ToArray());
+    }
+
+    // ===========================================
+    // ステージテキストを生成する関数
+    // ===========================================
+    private void CreateStageText(RectTransform _parent, int _worldNumber, int _stageNumber)
+    {
+        // テキストグループを作成
+        GameObject group = new GameObject($"Stage {_worldNumber}-{_stageNumber}_Group");
+        RectTransform rect = group.AddComponent<RectTransform>();
+        rect.SetParent(_parent, false);
+        rect.localPosition = Vector3.zero;
+        rect.localRotation = Quaternion.identity;
+
+        // ステージテキストを作成
+        string stageText = $"{_worldNumber}-{_stageNumber}";
+        char[] chars = stageText.ToCharArray();
+
+        for (int i = 0; i < m_ButtonTexturePos.Length; i++)
+        {
+            // テクスチャを生成
+            CreateButtonTexture(rect, chars[i], m_ButtonTexturePos[i]);
+        }
+    }
+
+    // ===========================================
+    // Button Textureを生成する関数
+    // ===========================================
+    private void CreateButtonTexture(RectTransform _parent, char _key, Vector2 _position)
+    {
+        // オブジェクトを作成
+        GameObject obj = new GameObject($"{_key}");
+
+        // RectTransformとImageを追加
+        RectTransform rect = obj.AddComponent<RectTransform>();
+        rect.SetParent(_parent, false);
+        rect.anchoredPosition = _position;
+        rect.localScale = Vector3.one;
+        Image image = obj.AddComponent<Image>();
+
+        // Keyに対応するテクスチャを設定
+        if (m_ButtonTextureDict.TryGetValue(_key, out Sprite sprite))
+        {
+            image.sprite = sprite;
+
+            // テクスチャのサイズを取得
+            Vector2 baseSize = new Vector2(
+                sprite.textureRect.width,
+                sprite.textureRect.height);
+            // サイズをBookLayoutで設定したサイズに合わせる
+            Vector2 size = baseSize * m_ButtonTextureSize;
+
+            rect.sizeDelta = size;
+
+            Debug.Log($"テクスチャを生成しました。 Key : {_key}, Size : {size}");
+        }
+        else
+        {
+            Debug.LogWarning($"テクスチャが見つかりませんでした。 Key : {_key}");
+        }
     }
 }

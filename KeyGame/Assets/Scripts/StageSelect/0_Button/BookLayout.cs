@@ -5,6 +5,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 
 /*  * ボタンをの位置を計算するスクリプト
+ *  * ボタンテクスチャは 1-1 などのようにページ番号を表示する想定　(どちらも1桁想定)
  */
 
 public class BookLayout : MonoBehaviour
@@ -27,10 +28,20 @@ public class BookLayout : MonoBehaviour
 
     [Header("ボタン設定")]
     [Tooltip("ボタンサイズ")]
-    [SerializeField] private Vector2 m_ButtonSize = new Vector2(100, 50);
+    [SerializeField] private Vector2 m_ButtonSize = new Vector2(100f, 50f);
+    [Tooltip("ボタンのテクスチャ文字サイズ")]
+    [SerializeField] private float m_ButtonTextureSize = 1.0f;
+    [Tooltip("ボタンのテクスチャ文字間隔")]
+    [SerializeField] private Vector2 m_ButtonTextureSpacing = new Vector2(10f, 10f);
+    [Tooltip("ギズモで表示する基準ボタンテクスチャ")]
+    [SerializeField] private Sprite m_GizmoButtonTexture;
 
     // ボタンの位置リスト
     private System.Collections.Generic.List<Vector2> m_ButtonPositions = new();
+    // ボタンテクスチャの数
+    private int m_ButtonTextureCount = 3;
+    // ボタンテクスチャのローカル位置リスト
+    private Vector2[] m_ButtonTextureLocalPositions = new Vector2[3];
 
     enum PageSide
     {
@@ -73,6 +84,8 @@ public class BookLayout : MonoBehaviour
 
         // 配置順に応じて位置計算
         CalculateButtonPositionRight();
+        // テクスチャ位置計算
+        CalculateButtonTextureLocalPositions();
     }
 
     // ===========================================
@@ -154,6 +167,27 @@ public class BookLayout : MonoBehaviour
         }
     }
 
+
+    // ===========================================
+    // ボタンのテクスチャ位置を計算
+    // ===========================================
+    private void CalculateButtonTextureLocalPositions()
+    {
+        int count = m_ButtonTextureCount;
+        m_ButtonTextureLocalPositions = new Vector2[count];
+
+        float spacing = m_ButtonTextureSpacing.x;
+
+        float startX = -(spacing * (count - 1)) * 0.5f;
+        float y = 0f;
+
+        for (int i = 0; i < count; i++)
+        {
+            float x = startX + i * spacing;
+            m_ButtonTextureLocalPositions[i] = new Vector2(x, y);
+        }
+    }
+
     // ===========================================
     // ギズモ描画 (ボタン位置を可視化)
     // ===========================================
@@ -172,6 +206,9 @@ public class BookLayout : MonoBehaviour
 
         // ボタン位置描画
         DrawButtonPosition(rectTransform);
+
+        // ボタンテクスチャ位置描画
+        ButtonTextureGizmos(rectTransform);
     }
 
     // ===========================================
@@ -269,6 +306,40 @@ public class BookLayout : MonoBehaviour
     }
 
     // ===========================================
+    // ギズモ描画 (ボタンテクスチャ位置を可視化
+    // ===========================================
+    private void ButtonTextureGizmos(RectTransform rectTransform)
+    {
+        if (m_GizmoButtonTexture == null) return;
+        if (m_ButtonPositions == null || m_ButtonPositions.Count == 0) return;
+
+        Gizmos.color = Color.yellow;
+
+        // Spriteサイズ（ピクセル→UI単位）
+        Vector2 baseSize = new Vector2(
+            m_GizmoButtonTexture.textureRect.width / m_GizmoButtonTexture.pixelsPerUnit,
+            m_GizmoButtonTexture.textureRect.height / m_GizmoButtonTexture.pixelsPerUnit);
+        Vector2 size = baseSize * m_ButtonTextureSize;
+
+        // 0番を基準にする
+        Vector3 basePos = rectTransform.TransformPoint(m_ButtonPositions[0]);
+
+        for (int i = 0; i < m_ButtonTextureLocalPositions.Length; i++)
+        {
+            // ボタンの位置をワールド座標に変換
+            Vector3 textureWorldOffset = rectTransform.TransformVector(new Vector3(
+                            m_ButtonTextureLocalPositions[i].x,
+                            m_ButtonTextureLocalPositions[i].y,
+                            0));
+
+            // テクスチャのワールド位置
+            Vector3 pos = basePos+ textureWorldOffset;
+
+            Gizmos.DrawWireCube(pos, size);
+        }
+    }
+
+    // ===========================================
     // ゲッター
     // ===========================================
     // ボタンの位置リストを取得
@@ -300,5 +371,16 @@ public class BookLayout : MonoBehaviour
     public Vector2 GetCenterPosition()
     {
         return new Vector2(transform.position.x, transform.position.y);
+    }
+
+    // ボタンテクスチャのローカル位置リストを取得
+    public Vector2[] GetButtonTextureLocalPositions()
+    {
+        return m_ButtonTextureLocalPositions;
+    }
+    // ボタンテクスチャのサイズを取得
+    public float GetButtonTextureSize()
+    {
+        return m_ButtonTextureSize;
     }
 }

@@ -33,13 +33,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuScene.unity
     guid: 0b4d2f8c7a9147b7a3f01c5db70e522b
   - enabled: 1
-    path: Assets/Okada/okada_Stage1.unity
+    path: Assets/Scenes/world2/Stage2-6.unity
     guid: 7235b89e07ccaba4caa8b2d283bf1d4f
   - enabled: 1
     path: Assets/Okada/okada_Stage2.unity
     guid: 369210adf725f9c46b2b520b3d805bd7
   - enabled: 1
-    path: Assets/Okada/okada_Stage3.unity
+    path: Assets/Scenes/world2/Stage2-4.unity
     guid: d4cfaa5be9f96424faac7a894a917a59
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

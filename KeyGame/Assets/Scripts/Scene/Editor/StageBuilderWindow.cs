@@ -37,6 +37,7 @@ public sealed class StageBuilderWindow : EditorWindow
     {
         Ground,
         TriangleGround,
+        CameraBounds,
         Prefab,
         Erase,
         Off
@@ -61,10 +62,13 @@ public sealed class StageBuilderWindow : EditorWindow
     private Vector2 m_GroundEnd;
     private Vector2 m_AreaStart;
     private Vector2 m_AreaEnd;
+    private Vector2 m_CameraBoundsStart;
+    private Vector2 m_CameraBoundsEnd;
     private Vector2 m_PairTargetStart;
     private Vector2 m_PairTargetEnd;
     private bool m_IsDraggingGround;
     private bool m_IsDraggingArea;
+    private bool m_IsDraggingCameraBounds;
     private bool m_IsDraggingPairTarget;
     private readonly List<Vector2> m_TrianglePoints = new List<Vector2>(3);
     private float m_GridSize = 1f;
@@ -116,6 +120,7 @@ public sealed class StageBuilderWindow : EditorWindow
         DestroyCursorPreview();
         CancelPendingPairPlacement();
         CancelTriangleGround();
+        m_IsDraggingCameraBounds = false;
 
         if (m_SawBladePreviewTexture != null)
         {
@@ -246,6 +251,7 @@ public sealed class StageBuilderWindow : EditorWindow
     {
         CancelPendingPairPlacement();
         CancelTriangleGround();
+        m_IsDraggingCameraBounds = false;
         m_Tab = tab;
         if (m_Tab == BuilderTab.Field)
         {
@@ -285,6 +291,7 @@ public sealed class StageBuilderWindow : EditorWindow
         {
             CancelPendingPairPlacement();
             CancelTriangleGround();
+            m_IsDraggingCameraBounds = false;
             m_Mode = mode;
         }
 
@@ -314,6 +321,7 @@ public sealed class StageBuilderWindow : EditorWindow
 
         DrawGroundToolButton();
         DrawTriangleGroundToolButton();
+        DrawCameraBoundsToolButton();
 
         EditorGUILayout.Space(4f);
         m_DefaultGroundSize = DrawSizeField("Size", m_DefaultGroundSize);
@@ -333,6 +341,26 @@ public sealed class StageBuilderWindow : EditorWindow
         if (GUILayout.Button("Ground", selected ? m_SelectedButtonStyle : m_ButtonStyle, GUILayout.Height(34f)))
         {
             m_Mode = ToolMode.Ground;
+        }
+
+        GUI.backgroundColor = previousColor;
+    }
+
+    private void DrawCameraBoundsToolButton()
+    {
+        bool selected = m_Mode == ToolMode.CameraBounds;
+        Color previousColor = GUI.backgroundColor;
+        if (selected)
+        {
+            GUI.backgroundColor = new Color(1f, 0.85f, 0.35f);
+        }
+
+        if (GUILayout.Button("Camera Bounds", selected ? m_SelectedButtonStyle : m_ButtonStyle, GUILayout.Height(34f)))
+        {
+            CancelPendingPairPlacement();
+            CancelTriangleGround();
+            m_IsDraggingCameraBounds = false;
+            m_Mode = ToolMode.CameraBounds;
         }
 
         GUI.backgroundColor = previousColor;
@@ -787,6 +815,10 @@ public sealed class StageBuilderWindow : EditorWindow
         {
             HandleTriangleGroundInput(current, gridPoint);
         }
+        else if (m_Mode == ToolMode.CameraBounds)
+        {
+            HandleCameraBoundsInput(current, cellOrigin);
+        }
         else if (m_Mode == ToolMode.Prefab)
         {
             if (m_PendingOpenDoorObject != null)
@@ -882,6 +914,41 @@ public sealed class StageBuilderWindow : EditorWindow
 
         current.Use();
         SceneView.RepaintAll();
+    }
+
+    private void HandleCameraBoundsInput(Event current, Vector2 cellOrigin)
+    {
+        if (current.type == EventType.MouseDown && current.button == 0)
+        {
+            m_IsDraggingCameraBounds = true;
+            m_CameraBoundsStart = cellOrigin;
+            m_CameraBoundsEnd = cellOrigin;
+            current.Use();
+        }
+
+        if (m_IsDraggingCameraBounds && current.type == EventType.MouseDrag)
+        {
+            m_CameraBoundsEnd = cellOrigin;
+            current.Use();
+            SceneView.RepaintAll();
+        }
+
+        if (m_IsDraggingCameraBounds)
+        {
+            DrawCameraBoundsPreview(GetCellSelectionRect(m_CameraBoundsStart, m_CameraBoundsEnd));
+        }
+        else
+        {
+            DrawExistingCameraBounds();
+        }
+
+        if (m_IsDraggingCameraBounds && current.type == EventType.MouseUp && current.button == 0)
+        {
+            m_CameraBoundsEnd = cellOrigin;
+            ApplyCameraBounds(GetCellSelectionRect(m_CameraBoundsStart, m_CameraBoundsEnd));
+            m_IsDraggingCameraBounds = false;
+            current.Use();
+        }
     }
 
     private void HandlePrefabInput(Event current, Vector2 mouseWorld, Quaternion rotation, AttachSide attachSide)
@@ -1024,9 +1091,12 @@ public sealed class StageBuilderWindow : EditorWindow
 
     private void DrawSceneOverlay(Vector2 cellOrigin)
     {
-        Color color = m_Mode == ToolMode.Erase
-            ? new Color(1f, 0.35f, 0.25f, 0.8f)
-            : new Color(0.2f, 0.8f, 1f, 0.75f);
+        Color color = m_Mode switch
+        {
+            ToolMode.Erase => new Color(1f, 0.35f, 0.25f, 0.8f),
+            ToolMode.CameraBounds => new Color(1f, 0.78f, 0.18f, 0.9f),
+            _ => new Color(0.2f, 0.8f, 1f, 0.75f)
+        };
 
         Handles.color = color;
         Rect cellRect = new Rect(cellOrigin.x, cellOrigin.y, m_GridSize, m_GridSize);
@@ -1100,6 +1170,69 @@ public sealed class StageBuilderWindow : EditorWindow
     {
         Color outline = new Color(0.25f, 1f, 0.55f, 0.95f);
         DrawRect(rect, new Color(outline.r, outline.g, outline.b, 0.16f), outline);
+    }
+
+    private void DrawCameraBoundsPreview(Rect rect)
+    {
+        Color outline = new Color(1f, 0.78f, 0.18f, 0.95f);
+        DrawRect(rect, new Color(outline.r, outline.g, outline.b, 0.12f), outline);
+    }
+
+    private void DrawExistingCameraBounds()
+    {
+        if (!TryGetCameraBounds(out Rect rect))
+        {
+            return;
+        }
+
+        DrawCameraBoundsPreview(rect);
+    }
+
+    private void ApplyCameraBounds(Rect rect)
+    {
+        PlayerRespawn playerRespawn = FindFirstObjectByType<PlayerRespawn>();
+        if (playerRespawn == null)
+        {
+            Debug.LogWarning("PlayerRespawn was not found. Place a Player before setting camera bounds.");
+            return;
+        }
+
+        Undo.RecordObject(playerRespawn, "Set Camera Bounds");
+
+        SerializedObject serializedRespawn = new SerializedObject(playerRespawn);
+        serializedRespawn.FindProperty("useCameraBounds").boolValue = true;
+        serializedRespawn.FindProperty("cameraBoundsMin").vector2Value = rect.min;
+        serializedRespawn.FindProperty("cameraBoundsMax").vector2Value = rect.max;
+        serializedRespawn.ApplyModifiedProperties();
+
+        EditorUtility.SetDirty(playerRespawn);
+        EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
+    }
+
+    private bool TryGetCameraBounds(out Rect rect)
+    {
+        rect = default;
+
+        PlayerRespawn playerRespawn = FindFirstObjectByType<PlayerRespawn>();
+        if (playerRespawn == null)
+        {
+            return false;
+        }
+
+        SerializedObject serializedRespawn = new SerializedObject(playerRespawn);
+        SerializedProperty useBoundsProperty = serializedRespawn.FindProperty("useCameraBounds");
+        SerializedProperty minProperty = serializedRespawn.FindProperty("cameraBoundsMin");
+        SerializedProperty maxProperty = serializedRespawn.FindProperty("cameraBoundsMax");
+
+        if (useBoundsProperty == null || minProperty == null || maxProperty == null || !useBoundsProperty.boolValue)
+        {
+            return false;
+        }
+
+        Vector2 min = Vector2.Min(minProperty.vector2Value, maxProperty.vector2Value);
+        Vector2 max = Vector2.Max(minProperty.vector2Value, maxProperty.vector2Value);
+        rect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+        return true;
     }
 
     private void DrawCursorPrefabPreview(Vector2 cellOrigin, Vector2 placementPosition, Quaternion rotation, AttachSide attachSide)
@@ -1593,12 +1726,18 @@ public sealed class StageBuilderWindow : EditorWindow
         Transform blocker = leverObject.transform.Find("LeverBlocker");
         Transform armOffset = armPivot != null ? armPivot.Find("ArmOffset") : null;
         Transform armVisual = armOffset != null ? armOffset.Find("ArmVisual") : null;
+        int floorLayer = LayerMask.NameToLayer("Floor");
 
         leverObject.transform.position = new Vector3(baseCenter.x, baseCenter.y, leverObject.transform.position.z);
         leverObject.transform.localScale = Vector3.one;
 
         if (baseVisual != null)
         {
+            if (floorLayer >= 0)
+            {
+                baseVisual.gameObject.layer = floorLayer;
+            }
+
             baseVisual.localPosition = Vector3.zero;
             SetSpriteRendererLocalSize(baseVisual, baseSize);
 
@@ -1611,6 +1750,11 @@ public sealed class StageBuilderWindow : EditorWindow
 
         if (blocker != null)
         {
+            if (floorLayer >= 0)
+            {
+                blocker.gameObject.layer = floorLayer;
+            }
+
             blocker.localPosition = Vector3.zero;
             blocker.localScale = new Vector3(baseSize.x, baseSize.y, blocker.localScale.z);
         }
@@ -1632,6 +1776,11 @@ public sealed class StageBuilderWindow : EditorWindow
 
         if (armVisual != null)
         {
+            if (floorLayer >= 0)
+            {
+                armVisual.gameObject.layer = floorLayer;
+            }
+
             float armLength = Mathf.Max(baseSize.x, baseSize.y);
             SetSpriteRendererLocalWidth(armVisual, armLength);
             armVisual.localPosition = Vector3.zero;
@@ -2527,6 +2676,7 @@ public sealed class StageBuilderWindow : EditorWindow
         {
             ToolMode.Ground => "Ground Tool",
             ToolMode.TriangleGround => "Triangle Ground",
+            ToolMode.CameraBounds => "Camera Bounds",
             ToolMode.Prefab => IsAreaPrefab(m_SelectedPrefabName)
                 ? $"{m_SelectedPrefabName} Area"
                 : IsSequentialPairPrefab(m_SelectedPrefabName)
@@ -2555,6 +2705,7 @@ public sealed class StageBuilderWindow : EditorWindow
         {
             ToolMode.Ground => "Ground",
             ToolMode.TriangleGround => $"Triangle {Mathf.Min(m_TrianglePoints.Count + 1, 3)}/3",
+            ToolMode.CameraBounds => "Drag Camera Bounds",
             ToolMode.Prefab => IsAreaPrefab(m_SelectedPrefabName)
                 ? $"{m_SelectedPrefabName} Area"
                 : IsSequentialPairPrefab(m_SelectedPrefabName)

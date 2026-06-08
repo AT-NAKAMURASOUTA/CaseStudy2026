@@ -448,6 +448,13 @@ public sealed class TitleBookMenu : MonoBehaviour
     {
         m_IsTransitioning = true;
 
+        if (action == MenuAction.ShutDown)
+        {
+            yield return PlayShutdownSequence();
+            QuitGame();
+            yield break;
+        }
+
         yield return PlayBookOpen();
         yield return PlayEnterBook();
 
@@ -460,14 +467,90 @@ public sealed class TitleBookMenu : MonoBehaviour
             case MenuAction.Config:
                 SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.MENU);
                 break;
-            case MenuAction.ShutDown:
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
-                break;
         }
+    }
+
+    private IEnumerator PlayShutdownSequence()
+    {
+        MenuItem shutdownItem = FindMenuItem(MenuAction.ShutDown);
+        RectTransform shutdownButton = shutdownItem?.Root;
+        Vector3 buttonStartScale = shutdownButton != null ? shutdownButton.localScale : Vector3.one;
+
+        if (m_FadeImage != null)
+        {
+            m_FadeImage.color = new Color(0.02f, 0.012f, 0.006f, 0f);
+        }
+
+        yield return PlayShutdownButtonPress(shutdownButton, buttonStartScale);
+        yield return PlayShutdownLightsOut();
+    }
+
+    private IEnumerator PlayShutdownButtonPress(RectTransform shutdownButton, Vector3 buttonStartScale)
+    {
+        const float duration = 0.24f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float press = Mathf.Sin(EaseOutCubic(t) * Mathf.PI);
+
+            if (shutdownButton != null)
+            {
+                shutdownButton.localScale = buttonStartScale * Mathf.Lerp(1f, 0.9f, press);
+            }
+
+            if (m_FadeImage != null)
+            {
+                m_FadeImage.color = new Color(0.02f, 0.012f, 0.006f, Mathf.Lerp(0f, 0.08f, t));
+            }
+
+            yield return null;
+        }
+
+        if (shutdownButton != null)
+        {
+            shutdownButton.localScale = buttonStartScale;
+        }
+    }
+
+    private IEnumerator PlayShutdownLightsOut()
+    {
+        const float duration = 1.85f;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float uiT = EaseOutCubic(Mathf.Clamp01(t / 0.62f));
+            float fadeT = EaseInOutCubic(Mathf.Clamp01((t - 0.18f) / 0.82f));
+
+            SetCoverUiVisibility(Mathf.Lerp(1f, 0f, uiT));
+
+            if (m_FadeImage != null)
+            {
+                float alpha = Mathf.Lerp(0.04f, 1f, fadeT);
+                m_FadeImage.color = new Color(0.02f, 0.012f, 0.006f, alpha);
+            }
+
+            yield return null;
+        }
+
+        if (m_FadeImage != null)
+        {
+            m_FadeImage.color = new Color(0.02f, 0.012f, 0.006f, 1f);
+        }
+    }
+
+    private static void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     private IEnumerator PlayBookOpen()
@@ -509,6 +592,19 @@ public sealed class TitleBookMenu : MonoBehaviour
         m_CoverUiGroup.alpha = alpha;
         m_CoverUiGroup.blocksRaycasts = alpha > 0.01f && !m_IsTransitioning;
         m_CoverUiGroup.interactable = alpha > 0.01f && !m_IsTransitioning;
+    }
+
+    private MenuItem FindMenuItem(MenuAction action)
+    {
+        foreach (MenuItem item in m_MenuItems)
+        {
+            if (item != null && item.Action == action)
+            {
+                return item;
+            }
+        }
+
+        return null;
     }
 
     private IEnumerator PlayEnterBook()
