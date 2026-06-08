@@ -19,3 +19,9 @@ MonoBehaviour:
     NextScene: 10
   - Texture: {fileID: 0}
     NextScene: 11
+  - Texture: {fileID: 0}
+    NextScene: 12
+  - Texture: {fileID: 0}
+    NextScene: 13
+  - Texture: {fileID: 0}
+    NextScene: 14

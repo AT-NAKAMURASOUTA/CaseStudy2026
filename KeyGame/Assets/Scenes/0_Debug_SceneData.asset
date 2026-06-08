@@ -41,11 +41,20 @@ MonoBehaviour:
     sceneName: MenuScene
     scene: {fileID: 102900000, guid: 0b4d2f8c7a9147b7a3f01c5db70e522b, type: 3}
   - sceneType: 9
-    sceneName: okada_Stage1
-    scene: {fileID: 102900000, guid: 7235b89e07ccaba4caa8b2d283bf1d4f, type: 3}
+    sceneName: Stage2-1
+    scene: {fileID: 102900000, guid: 5bbe52be618ac8f4a80fd44ec30335b1, type: 3}
   - sceneType: 10
-    sceneName: okada_Stage2
-    scene: {fileID: 102900000, guid: 369210adf725f9c46b2b520b3d805bd7, type: 3}
+    sceneName: Stage2-2
+    scene: {fileID: 102900000, guid: 71483749274382c4abf56541242a57fe, type: 3}
   - sceneType: 11
-    sceneName: okada_Stage3
+    sceneName: Stage2-3
+    scene: {fileID: 102900000, guid: 5db97a7922adbe34d842f4daa07e7254, type: 3}
+  - sceneType: 12
+    sceneName: Stage2-4
     scene: {fileID: 102900000, guid: d4cfaa5be9f96424faac7a894a917a59, type: 3}
+  - sceneType: 13
+    sceneName: Stage2-5
+    scene: {fileID: 102900000, guid: 60c42851cbffc0a45ae1f2c8393e9f63, type: 3}
+  - sceneType: 14
+    sceneName: Stage2-6
+    scene: {fileID: 102900000, guid: 7235b89e07ccaba4caa8b2d283bf1d4f, type: 3}
