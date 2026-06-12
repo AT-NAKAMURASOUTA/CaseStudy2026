@@ -37,10 +37,10 @@ MonoBehaviour:
   - sceneType: 8
     sceneName: Stage1-6
     scene: {fileID: 102900000, guid: d0831071411c26d4b93cf7ebe5574089, type: 3}
-  - sceneType: 15
+  - sceneType: 21
     sceneName: MenuScene
     scene: {fileID: 102900000, guid: 0b4d2f8c7a9147b7a3f01c5db70e522b, type: 3}
-  - sceneType: 16
+  - sceneType: 22
     sceneName: ConfigScene
     scene: {fileID: 102900000, guid: f6a66bfa75d64e8f9f1f155eb918b71a, type: 3}
   - sceneType: 9
@@ -54,10 +54,13 @@ MonoBehaviour:
     scene: {fileID: 102900000, guid: 5db97a7922adbe34d842f4daa07e7254, type: 3}
   - sceneType: 12
     sceneName: Stage2-4
-    scene: {fileID: 102900000, guid: d4cfaa5be9f96424faac7a894a917a59, type: 3}
+    scene: {fileID: 102900000, guid: ec1aa93758923754ea46b73b9c396f69, type: 3}
   - sceneType: 13
     sceneName: Stage2-5
-    scene: {fileID: 102900000, guid: 60c42851cbffc0a45ae1f2c8393e9f63, type: 3}
+    scene: {fileID: 102900000, guid: 9946e2dbdaf89d14abc5c446f0d48761, type: 3}
   - sceneType: 14
     sceneName: Stage2-6
-    scene: {fileID: 102900000, guid: 7235b89e07ccaba4caa8b2d283bf1d4f, type: 3}
+    scene: {fileID: 102900000, guid: 50b37f02092e1524b909866daaab1fb8, type: 3}
+  - sceneType: 15
+    sceneName: Stage3-1
+    scene: {fileID: 102900000, guid: abd757623752fe544be4f40925a29268, type: 3}
