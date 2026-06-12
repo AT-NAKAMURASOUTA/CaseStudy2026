@@ -127,6 +127,14 @@ public sealed class AlphabetCuttable : MonoBehaviour
         fragmentRenderer.color = m_SpriteRenderer.color;
         fragmentRenderer.sharedMaterial = m_SpriteRenderer.sharedMaterial;
 
+        //カットされたスプライトの中心から端の距離を求める
+        float spriteWidth = fragmentRenderer.sprite.rect.width / fragmentRenderer.sprite.pixelsPerUnit;
+        float spriteHeight = fragmentRenderer.sprite.rect.height / fragmentRenderer.sprite.pixelsPerUnit;
+        //float worldWidth = spriteWidth * transform.lossyScale.x;
+        //float worldHeight = spriteHeight * transform.lossyScale.y;
+        Vector2 spriteSize = new Vector2(spriteWidth, spriteHeight) * 0.5f * directionSign;
+        spriteSize.y = 0.0f;
+
         // 左右の破片を別々の物理オブジェクトとして動かす
         PolygonCollider2D collider2D = fragmentObject.AddComponent<PolygonCollider2D>();
         collider2D.autoTiling = false;
@@ -134,16 +142,13 @@ public sealed class AlphabetCuttable : MonoBehaviour
         {
             collider2D.sharedMaterial = m_Collider2D.sharedMaterial;
         }
-        SetColliderToClippedPhysicsShape(collider2D, sourceSprite, fragmentSprite, localCenter, splitLocalX, keepLeftSide);
+        SetColliderToClippedPhysicsShape(collider2D, sourceSprite, fragmentSprite, spriteSize/*localCenter*/, splitLocalX, keepLeftSide);
 
         Rigidbody2D fragmentBody = fragmentObject.AddComponent<Rigidbody2D>();
         CopyRigidbodySettings(fragmentBody);
         fragmentBody.linearVelocity = m_Rigidbody2D != null ? m_Rigidbody2D.linearVelocity : Vector2.zero;
         fragmentBody.angularVelocity = directionSign * fragmentAngularVelocity;
         CopyAreaComponents(fragmentObject);
-
-        // 風の影響を受けるようにする
-        fragmentObject.AddComponent<AlphabetRigidbody>();
 
         // 切れた位置から外側へ飛ぶ向きを求める
         Vector2 outwardDirection = ((Vector2)fragmentObject.transform.position - worldCutPoint).normalized;
@@ -225,6 +230,7 @@ public sealed class AlphabetCuttable : MonoBehaviour
 
         List<Vector2[]> clippedPaths = new List<Vector2[]>();
         List<Vector2> sourcePath = new List<Vector2>();
+
         for (int i = 0; i < shapeCount; i++)
         {
             sourcePath.Clear();
@@ -240,6 +246,8 @@ public sealed class AlphabetCuttable : MonoBehaviour
             {
                 clippedPath[j] -= fragmentLocalCenter;
             }
+
+            Debug.Log("fragmentLocalCenter: " + fragmentLocalCenter);
 
             clippedPaths.Add(clippedPath.ToArray());
         }
