@@ -70,13 +70,13 @@ public sealed class StageMenuOpener : MonoBehaviour
             return;
         }
 
-        bool openedFromStageSelect = returnScene == SCENETYPE.STAGESELECT;
+        bool hidesStageButtons = returnScene == SCENETYPE.STAGESELECT || returnScene == SCENETYPE.CONFIG;
         GameObject restartButton = FindChild(menu.transform, "RestartStage_Button");
         GameObject stageSelectButton = FindChild(menu.transform, "StageSelect_Button");
         GameObject returnTitleButton = FindChild(menu.transform, "ReturnTitle_Button");
 
-        SetButtonVisible(restartButton, !openedFromStageSelect);
-        SetButtonVisible(stageSelectButton, !openedFromStageSelect);
+        SetButtonVisible(restartButton, !hidesStageButtons);
+        SetButtonVisible(stageSelectButton, !hidesStageButtons);
         SetButtonVisible(returnTitleButton, true);
         LayoutVisibleButtons(restartButton, stageSelectButton, returnTitleButton);
     }

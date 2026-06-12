@@ -465,7 +465,7 @@ public sealed class TitleBookMenu : MonoBehaviour
                 SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.STAGESELECT);
                 break;
             case MenuAction.Config:
-                SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.MENU);
+                SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.CONFIG);
                 break;
         }
     }
