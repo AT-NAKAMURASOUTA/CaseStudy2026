@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3810185512600080709}
   - component: {fileID: 2147600030197751753}
   m_Layer: 5
-  m_Name: BackGroundCanvas_3Stage
+  m_Name: BackGroundCanvas_4Stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
