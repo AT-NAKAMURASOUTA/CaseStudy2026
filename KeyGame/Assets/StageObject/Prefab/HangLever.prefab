@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9123617066149174017}
   - component: {fileID: 1953747551786384731}
   - component: {fileID: 1711642785623826593}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BaseVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2627902211260690918}
   - component: {fileID: 2288078735470211095}
   - component: {fileID: 5816276571767417928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 4059186301816942267}
   - component: {fileID: 1174041231430964954}
   - component: {fileID: 494773696287451032}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeverBlocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
