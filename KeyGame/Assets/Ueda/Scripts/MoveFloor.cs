@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class MoveFloor : MonoBehaviour
 {
-    [Header("移動するオブジェクトのタグ")]
-    [SerializeField]
-    private List<string> targetTags = new List<string>();
-
-    public List<string> tTags => targetTags;
-
     [Header("移動先の位置（複数の場合順番に移動する）")]
     [SerializeField]
     private List<Vector3> movePosition = new List<Vector3>();
@@ -174,50 +168,6 @@ public class MoveFloor : MonoBehaviour
         return isStop;
     }
 
-    //指定したTagのオブジェクトをくっついて移動するようにする
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (targetTags.Contains(collision.gameObject.tag))
-        {
-            collision.transform.SetParent(transform);
-
-            if (collision.transform.GetComponent<ParentOnParent>() == null)
-                collision.transform.AddComponent<ParentOnParent>();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (targetTags.Contains(collision.gameObject.tag))
-        {
-            if (!collision.gameObject.activeInHierarchy) return;
-
-            collision.transform.SetParent(null);
-
-            if (collision.transform.TryGetComponent<ParentOnParent>(out var pop))
-            {
-                Destroy(pop);
-            }
-        }
-    }
-
-    //つぶされるなどして、プレイヤーがめり込むとミス判定を出す
-    // Collisionの内側に小さめのTriggerを設置
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision == null)
-        {
-            return;
-        }
-        if (collision.TryGetComponent<PlayerRespawn>(out var playerRespawn))
-        {
-            playerRespawn.TriggerMiss();
-        }
-    }
-
-    //-------------------------------------------
-
     private void OnDrawGizmos()
     {
         if (movePosition.Count > 0)
@@ -227,47 +177,6 @@ public class MoveFloor : MonoBehaviour
             for (int i = 0; i < movePosition.Count - 1; i++)
             {
                 Gizmos.DrawLine(movePosition[i], movePosition[i + 1]);
-            }
-        }
-    }
-}
-
-public class ParentOnParent : MonoBehaviour
-{
-    private List<string> targetTags = new List<string>();
-    private Transform parentTf;
-    private void Awake()
-    {
-        if (transform.parent != null)
-        {
-            var mf = transform.parent.GetComponentInParent<MoveFloor>();
-            parentTf = transform.parent.transform;
-            targetTags = new List<string>(mf.tTags);
-        }
-    }
-
-    //指定したTagのオブジェクトをくっついて移動するようにする
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (targetTags.Contains(collision.gameObject.tag))
-        {
-            if (collision.transform.GetComponent<ParentOnParent>() == null)
-            {
-                collision.transform.SetParent(parentTf);
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (targetTags.Contains(collision.gameObject.tag))
-        {
-            if (!collision.gameObject.activeInHierarchy) return;
-
-            if (collision.transform.GetComponent<ParentOnParent>() == null)
-            {
-                if (!collision.gameObject.activeInHierarchy) return;
-                collision.transform.SetParent(null);
             }
         }
     }

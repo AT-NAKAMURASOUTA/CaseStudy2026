@@ -673,6 +673,7 @@ public sealed class StageBuilderWindow : EditorWindow
     {
         return prefabName switch
         {
+            "DoorObject" or "OpenDoor" => Vector2.one * m_GridSize,
             "SwitchObject" or "SwitchAndDoorObject" or "OpenDoorAndSwitchObject" => new Vector2(m_GridSize * 2f, m_GridSize * 0.5f),
             "HangLever" => new Vector2(m_GridSize, m_GridSize * 2f),
             "SawBlade" => Vector2.one * m_GridSize,
@@ -686,7 +687,7 @@ public sealed class StageBuilderWindow : EditorWindow
     {
         return prefabName switch
         {
-            "SwitchAndDoorObject" or "OpenDoorAndSwitchObject" => new Vector2(m_GridSize, m_GridSize * 4f),
+            "SwitchAndDoorObject" or "OpenDoorAndSwitchObject" => Vector2.one * m_GridSize,
             _ => Vector2.one * m_GridSize
         };
     }
@@ -796,7 +797,7 @@ public sealed class StageBuilderWindow : EditorWindow
         Vector2 mouseWorld = GetMouseWorldPosition(current.mousePosition);
         Vector2 cellOrigin = SnapToCellOrigin(mouseWorld);
         Vector2 gridPoint = SnapToGridPoint(mouseWorld);
-        AttachSide attachSide = GetPrefabAttachSide(cellOrigin);
+        AttachSide attachSide = GetPrefabAttachSide(mouseWorld, cellOrigin);
         Quaternion placementRotation = GetPrefabPlacementRotation(cellOrigin, attachSide);
         Vector2 placementPosition = GetPrefabPlacementPosition(cellOrigin, attachSide, placementRotation);
         DrawSceneOverlay(cellOrigin);
@@ -1860,11 +1861,22 @@ public sealed class StageBuilderWindow : EditorWindow
                 baseCollider.offset = Vector2.zero;
             }
 
+            SpriteRenderer baseRenderer = switchBase.GetComponent<SpriteRenderer>();
+            int baseSortingOrder = baseRenderer != null ? baseRenderer.sortingOrder : 0;
+
             Transform switchVisual = switchBase.Find("Switch");
             if (switchVisual != null)
             {
                 switchVisual.localPosition = new Vector3(0f, 0.75f, switchVisual.localPosition.z);
                 switchVisual.localScale = new Vector3(0.8f, 0.5f, switchVisual.localScale.z);
+
+                SpriteRenderer switchRenderer = switchVisual.GetComponent<SpriteRenderer>();
+                if (switchRenderer != null)
+                {
+                    switchRenderer.sortingLayerID = baseRenderer != null ? baseRenderer.sortingLayerID : switchRenderer.sortingLayerID;
+                    switchRenderer.sortingOrder = baseSortingOrder + 1;
+                    switchRenderer.color = new Color(1f, 0f, 0f, switchRenderer.color.a);
+                }
             }
 
             Transform switchCollision = switchBase.Find("SwitchCollision");
@@ -2408,7 +2420,7 @@ public sealed class StageBuilderWindow : EditorWindow
             Mathf.Round(value.y / m_GridSize) * m_GridSize);
     }
 
-    private AttachSide GetPrefabAttachSide(Vector2 cellOrigin)
+    private AttachSide GetPrefabAttachSide(Vector2 mouseWorld, Vector2 cellOrigin)
     {
         if (!ShouldUsePlacementAssist())
         {
@@ -2420,7 +2432,7 @@ public sealed class StageBuilderWindow : EditorWindow
             return GetHangLeverAttachSide(cellOrigin);
         }
 
-        return GetAttachSide(cellOrigin);
+        return GetSwitchAttachSide(mouseWorld, cellOrigin);
     }
 
     private Quaternion GetPrefabPlacementRotation(Vector2 cellOrigin, AttachSide attachSide)
@@ -2513,29 +2525,28 @@ public sealed class StageBuilderWindow : EditorWindow
         return m_SelectedPrefabName == "HangLever" || IsSwitchPrefab(m_SelectedPrefabName);
     }
 
-    private AttachSide GetAttachSide(Vector2 cellOrigin)
+    private AttachSide GetSwitchAttachSide(Vector2 mouseWorld, Vector2 cellOrigin)
     {
-        if (HasSolidNeighbor(cellOrigin + Vector2.down * m_GridSize))
+        AttachSide bestSide = AttachSide.Floor;
+        float bestDistance = float.PositiveInfinity;
+
+        TryUseSwitchAttachSide(AttachSide.Floor, HasSolidNeighbor(cellOrigin + Vector2.down * m_GridSize), Mathf.Abs(mouseWorld.y - cellOrigin.y), ref bestSide, ref bestDistance);
+        TryUseSwitchAttachSide(AttachSide.LeftWall, HasSolidNeighbor(cellOrigin + Vector2.left * m_GridSize), Mathf.Abs(mouseWorld.x - cellOrigin.x), ref bestSide, ref bestDistance);
+        TryUseSwitchAttachSide(AttachSide.RightWall, HasSolidNeighbor(cellOrigin + Vector2.right * m_GridSize), Mathf.Abs(mouseWorld.x - (cellOrigin.x + m_GridSize)), ref bestSide, ref bestDistance);
+        TryUseSwitchAttachSide(AttachSide.Ceiling, HasSolidNeighbor(cellOrigin + Vector2.up * m_GridSize), Mathf.Abs(mouseWorld.y - (cellOrigin.y + m_GridSize)), ref bestSide, ref bestDistance);
+
+        return float.IsPositiveInfinity(bestDistance) ? AttachSide.Floor : bestSide;
+    }
+
+    private static void TryUseSwitchAttachSide(AttachSide side, bool hasSupport, float distance, ref AttachSide bestSide, ref float bestDistance)
+    {
+        if (!hasSupport || distance >= bestDistance)
         {
-            return AttachSide.Floor;
+            return;
         }
 
-        if (HasSolidNeighbor(cellOrigin + Vector2.left * m_GridSize))
-        {
-            return AttachSide.LeftWall;
-        }
-
-        if (HasSolidNeighbor(cellOrigin + Vector2.right * m_GridSize))
-        {
-            return AttachSide.RightWall;
-        }
-
-        if (HasSolidNeighbor(cellOrigin + Vector2.up * m_GridSize))
-        {
-            return AttachSide.Ceiling;
-        }
-
-        return AttachSide.Floor;
+        bestSide = side;
+        bestDistance = distance;
     }
 
     private AttachSide GetHangLeverAttachSide(Vector2 cellOrigin)

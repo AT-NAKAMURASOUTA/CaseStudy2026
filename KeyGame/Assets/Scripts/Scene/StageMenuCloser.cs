@@ -18,14 +18,15 @@ public sealed class StageMenuCloser : MonoBehaviour
 
     private static void UpdateButtonVisibility()
     {
-        bool openedFromStageSelect = StageMenuState.RestartStage == SCENETYPE.STAGESELECT;
+        bool hidesStageButtons = StageMenuState.RestartStage == SCENETYPE.STAGESELECT
+            || StageMenuState.RestartStage == SCENETYPE.CONFIG;
 
         GameObject restartButton = FindButton(RestartStageButtonName);
         GameObject stageSelectButton = FindButton(StageSelectButtonName);
         GameObject returnTitleButton = FindButton(ReturnTitleButtonName);
 
-        SetButtonVisible(restartButton, !openedFromStageSelect);
-        SetButtonVisible(stageSelectButton, !openedFromStageSelect);
+        SetButtonVisible(restartButton, !hidesStageButtons);
+        SetButtonVisible(stageSelectButton, !hidesStageButtons);
         SetButtonVisible(returnTitleButton, true);
 
         LayoutVisibleButtons(restartButton, stageSelectButton, returnTitleButton);

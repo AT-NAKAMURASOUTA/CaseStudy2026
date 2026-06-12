@@ -40,6 +40,9 @@ MonoBehaviour:
   - sceneType: 15
     sceneName: MenuScene
     scene: {fileID: 102900000, guid: 0b4d2f8c7a9147b7a3f01c5db70e522b, type: 3}
+  - sceneType: 16
+    sceneName: ConfigScene
+    scene: {fileID: 102900000, guid: f6a66bfa75d64e8f9f1f155eb918b71a, type: 3}
   - sceneType: 9
     sceneName: Stage2-1
     scene: {fileID: 102900000, guid: 5bbe52be618ac8f4a80fd44ec30335b1, type: 3}

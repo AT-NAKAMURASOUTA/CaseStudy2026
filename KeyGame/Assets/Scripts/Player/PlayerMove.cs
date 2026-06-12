@@ -84,6 +84,7 @@ public sealed class PlayerMove : MonoBehaviour
     private int m_JumpCount;
     // 前フレームの地面接触状態
     private bool m_WasGrounded;
+    private Vector2 m_GroundNormal = Vector2.up;
     private bool m_IsJumpAnimating;
     private float m_JumpAnimationElapsed;
 
@@ -210,11 +211,12 @@ public sealed class PlayerMove : MonoBehaviour
             m_SpecialAreaAsset);
         
 
-        //移動                                      + 風エリアの補正 by 植田
-        m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
-
         // 着地判定処理
         bool isGrounded = CheckIsGrounded();
+        nowMoveSpeed = GetGroundedMoveVelocity(nowMoveSpeed, isGrounded);
+
+        //移動                                      + 風エリアの補正 by 植田
+        m_Rigidbody2D.linearVelocity = nowMoveSpeed + new Vector2(m_WindAreaMoveSpeedModifier, 0);
         if (isGrounded && !m_WasGrounded)
         {
             // 地面に接触している場合、跳躍回数をリセット
@@ -353,13 +355,57 @@ public sealed class PlayerMove : MonoBehaviour
             m_GroundLayer);
 
         // 当たっていない場合は地面にいないと判断
-        if (!hit.collider) { return false; }
+        if (!hit.collider)
+        {
+            m_GroundNormal = Vector2.up;
+            return false;
+        }
 
         // 当たっている場合、傾斜の角度を計算して、地面とみなすか判断
         float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+        bool isGround = slopeAngle <= m_CheckBoxAngle;
+        m_GroundNormal = isGround ? hit.normal : Vector2.up;
 
         // 傾斜が指定した角度以下なら地面とみなす
-        return slopeAngle <= m_CheckBoxAngle;
+        return isGround;
+    }
+
+    private Vector2 GetGroundedMoveVelocity(Vector2 velocity, bool isGrounded)
+    {
+        if (!isGrounded || m_JumpInput)
+        {
+            return velocity;
+        }
+
+        if (Mathf.Abs(m_MoveInput) <= 0.01f)
+        {
+            if (velocity.y > 0f)
+            {
+                velocity.y = 0f;
+            }
+
+            return velocity;
+        }
+
+        Vector2 normal = m_GroundNormal.sqrMagnitude > 0.001f ? m_GroundNormal.normalized : Vector2.up;
+        float slopeAngle = Vector2.Angle(normal, Vector2.up);
+        if (slopeAngle <= 0.01f || slopeAngle > m_CheckBoxAngle)
+        {
+            return velocity;
+        }
+
+        Vector2 tangent = new Vector2(normal.y, -normal.x);
+        if (Mathf.Sign(tangent.x) != Mathf.Sign(m_MoveInput))
+        {
+            tangent = -tangent;
+        }
+
+        if (Mathf.Abs(tangent.x) <= 0.001f)
+        {
+            return velocity;
+        }
+
+        return tangent * (velocity.x / tangent.x);
     }
 
     private void UpdateJumpAnimationPlayback(bool isGrounded)
