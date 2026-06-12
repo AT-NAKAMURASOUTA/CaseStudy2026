@@ -21,6 +21,12 @@ public enum SCENETYPE : int
     STAGE2_4,
     STAGE2_5,
     STAGE2_6,
+    STAGE3_1,
+    STAGE3_2,
+    STAGE3_3,
+    STAGE3_4,
+    STAGE3_5,
+    STAGE3_6,
 
     MENU,
     CONFIG,
