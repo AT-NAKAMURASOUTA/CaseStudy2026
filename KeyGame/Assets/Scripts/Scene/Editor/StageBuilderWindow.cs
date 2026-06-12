@@ -1874,7 +1874,7 @@ public sealed class StageBuilderWindow : EditorWindow
                 if (switchRenderer != null)
                 {
                     switchRenderer.sortingLayerID = baseRenderer != null ? baseRenderer.sortingLayerID : switchRenderer.sortingLayerID;
-                    switchRenderer.sortingOrder = baseSortingOrder + 1;
+                    switchRenderer.sortingOrder = baseSortingOrder - 1;
                     switchRenderer.color = new Color(1f, 0f, 0f, switchRenderer.color.a);
                 }
             }

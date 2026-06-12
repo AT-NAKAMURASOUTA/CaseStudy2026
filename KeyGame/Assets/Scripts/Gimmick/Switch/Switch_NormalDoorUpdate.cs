@@ -5,17 +5,25 @@ public class Switch_NormalDoorUpdate : MonoBehaviour
 
     /*
     １回すべてのボタンが押されたら永遠に扉が開く「扉Object」の処理
+
+    2026/6/12
+    スイッチが２つあり、その中でどちらかが押されていたら扉を消せるようにする処理を追加
     */
 
 
 
 
     //スイッチの当たり判定
-    SwitchOnFlag collisionData;
+    [Header("ここは、特定のグループが押されているかを判別したい時にアタッチ。")]
+    [SerializeField]SwitchOnFlag collisionData;
 
     void Start()
     {
-        collisionData = GetComponent<SwitchOnFlag>();
+        if(collisionData == null)
+        {
+            collisionData = GetComponent<SwitchOnFlag>();
+        }
+        
     }
 
     // Update is called once per frame
