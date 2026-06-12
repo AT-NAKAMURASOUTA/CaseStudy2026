@@ -39,6 +39,8 @@ public sealed class PlayerMove : MonoBehaviour
     [SerializeField] private Vector2 m_CheckBoxSize = new Vector2(0.1f, 0.1f);
     [Tooltip("地面との判定する斜辺の角度")]
     [SerializeField] private float m_CheckBoxAngle = 45f;
+    [SerializeField] private float m_GroundedJumpGraceTime = 0.12f;
+    [SerializeField] private float m_JumpGroundIgnoreTime = 0.12f;
 
     [Header("ジャンプアニメ調整")]
     [SerializeField] private float m_TakeoffAnimationDuration = 0.16f;
@@ -85,6 +87,8 @@ public sealed class PlayerMove : MonoBehaviour
     // 前フレームの地面接触状態
     private bool m_WasGrounded;
     private Vector2 m_GroundNormal = Vector2.up;
+    private float m_GroundedJumpGraceTimer;
+    private float m_JumpGroundIgnoreTimer;
     private bool m_IsJumpAnimating;
     private float m_JumpAnimationElapsed;
 
@@ -193,6 +197,7 @@ public sealed class PlayerMove : MonoBehaviour
         // 跳躍回数の初期化
         m_WasGrounded = CheckIsGrounded();
         m_JumpCount = m_WasGrounded ? m_MaxJumpCount : Mathf.Max(0, m_MaxJumpCount - 1);
+        m_GroundedJumpGraceTimer = m_WasGrounded ? m_GroundedJumpGraceTime : 0f;
     }
 
 
@@ -212,7 +217,12 @@ public sealed class PlayerMove : MonoBehaviour
         
 
         // 着地判定処理
-        bool isGrounded = CheckIsGrounded();
+        bool rawIsGrounded = CheckIsGrounded();
+        UpdateJumpGroundIgnoreTimer();
+        bool isGrounded = rawIsGrounded
+            && m_JumpGroundIgnoreTimer <= 0f
+            && !(m_IsJumpAnimating && m_Rigidbody2D.linearVelocity.y > 0.05f);
+        UpdateGroundedJumpGrace(rawIsGrounded);
         nowMoveSpeed = GetGroundedMoveVelocity(nowMoveSpeed, isGrounded);
 
         //移動                                      + 風エリアの補正 by 植田
@@ -233,13 +243,15 @@ public sealed class PlayerMove : MonoBehaviour
         // 跳躍処理
         if (m_JumpInput)
         {
-            if (m_JumpCount > 0)
+            if (CanJump())
             {
                 // ジャンプ処理
                 m_Rigidbody2D.linearVelocityY = m_JumpForce;
                 Debug.Log("Jump! JumpCount: " + m_JumpCount);
 
-                m_JumpCount--;
+                m_JumpCount = Mathf.Max(0, m_JumpCount - 1);
+                m_GroundedJumpGraceTimer = 0f;
+                m_JumpGroundIgnoreTimer = m_JumpGroundIgnoreTime;
                 m_IsJumpAnimating = true;
                 m_JumpAnimationElapsed = 0f;
 
@@ -328,6 +340,27 @@ public sealed class PlayerMove : MonoBehaviour
     // 入力情報受け取り
     // ------------------------------------------
     // 移動
+    private void UpdateGroundedJumpGrace(bool isGrounded)
+    {
+        if (isGrounded && !m_IsJumpAnimating)
+        {
+            m_GroundedJumpGraceTimer = m_GroundedJumpGraceTime;
+            return;
+        }
+
+        m_GroundedJumpGraceTimer = Mathf.Max(0f, m_GroundedJumpGraceTimer - Time.fixedDeltaTime);
+    }
+
+    private bool CanJump()
+    {
+        return m_JumpCount > 0 || m_GroundedJumpGraceTimer > 0f;
+    }
+
+    private void UpdateJumpGroundIgnoreTimer()
+    {
+        m_JumpGroundIgnoreTimer = Mathf.Max(0f, m_JumpGroundIgnoreTimer - Time.fixedDeltaTime);
+    }
+
     public void MoveInput(InputAction.CallbackContext context)
     {
         m_MoveInput = context.ReadValue<float>();
