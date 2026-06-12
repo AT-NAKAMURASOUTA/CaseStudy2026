@@ -30,7 +30,16 @@ public class Action_ZoomCamera: BaseAction
         Vector3 toTarget = transform.position - m_Camera.transform.position;
 
         // 最終位置
-        m_TargetPos = m_Camera.transform.position + toTarget * m_ApproachRate;
+        float targetZ =
+            Mathf.Lerp(
+                m_Camera.transform.position.z,
+                transform.position.z,
+                m_ApproachRate);
+
+        m_TargetPos = new Vector3(
+            transform.position.x,
+            transform.position.y,
+            targetZ);
     }
 
     // ===========================================
