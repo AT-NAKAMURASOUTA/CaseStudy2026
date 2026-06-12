@@ -79,6 +79,16 @@ public sealed class AlphabetThrowController : MonoBehaviour
     [SerializeField]
     private Color aimArrowColor = Color.yellow;
 
+    [Header("SE")]
+    [SerializeField]
+    private AudioClip sePickUp;
+    [SerializeField]
+    private AudioClip sePlace;
+    [SerializeField]
+    private AudioClip seThrow;
+    [SerializeField, Range(0f, 1f)]
+    private float seVolume = 1f;
+
     // メインカメラ
     private Camera _mainCamera;
 
@@ -111,12 +121,25 @@ public sealed class AlphabetThrowController : MonoBehaviour
     // 1 なら増加、-1 なら減少
     private float _aimAngleDirection = 1f;
 
+    // SE再生用
+    private AudioSource _audioSource;
+
     private void Awake()
     {
         // 最初に必要な参照を取っておく
         _mainCamera = Camera.main;
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _playerColliders = GetComponents<Collider2D>();
+
+        // AudioSourceを取得または追加
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+            // 2Dゲーム想定なので完全に2D再生（必要に応じて調整）
+            _audioSource.spatialBlend = 0f;
+        }
 
         // 狙い表示用のLineRendererを作る
         CreateAimRenderers();
@@ -311,6 +334,9 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
         // プレイヤーとぶつからないようにする
         IgnoreHeldLetterCollisionWithPlayer();
+
+        // 拾ったときのSE
+        PlaySE(sePickUp);
     }
 
     private void StartAiming()
@@ -381,6 +407,9 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 少し回転も付けて投げた感じを出す
         _heldLetter.AddTorque(-Mathf.Sign(aimDirection.x) * throwTorque, ForceMode2D.Impulse);
 
+        // 投げたときのSE
+        PlaySE(seThrow);
+
         // 投げ終わったので状態を戻す
         _heldLetter = null;
         _holdState = HoldState.None;
@@ -410,6 +439,9 @@ public sealed class AlphabetThrowController : MonoBehaviour
         RestoreHeldLetterCollisionWithPlayer();
         _heldLetter.linearVelocity = Vector2.zero;
         _heldLetter.angularVelocity = 0f;
+
+        // 置いたときのSE
+        PlaySE(sePlace);
 
         // 持っていない状態に戻す
         _heldLetter = null;
@@ -462,6 +494,13 @@ public sealed class AlphabetThrowController : MonoBehaviour
 
     private void UpdateFacingDirection()
     {
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            _facingSign = spriteRenderer.flipX ? -1f : 1f;
+            return;
+        }
+
         // ほぼ止まっているときは向きを変えない
         if (_playerRigidbody2D == null || Mathf.Abs(_playerRigidbody2D.linearVelocity.x) <= 0.01f)
         {
@@ -471,12 +510,6 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // 移動方向を今の向きとして記録する
         _facingSign = Mathf.Sign(_playerRigidbody2D.linearVelocity.x);
 
-        // 持つ方向をSpriteの反転に反映させる
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            _facingSign = spriteRenderer.flipX ? -1f : 1f;
-        }
     }
 
     private void IgnoreHeldLetterCollisionWithPlayer()
@@ -639,5 +672,15 @@ public sealed class AlphabetThrowController : MonoBehaviour
         // Sceneビューで拾える範囲が分かるように表示
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, pickupRadius);
+    }
+
+    private void PlaySE(AudioClip clip)
+    {
+        if (clip == null || _audioSource == null)
+        {
+            return;
+        }
+
+        _audioSource.PlayOneShot(clip, seVolume);
     }
 }

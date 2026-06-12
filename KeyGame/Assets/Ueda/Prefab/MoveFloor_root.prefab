@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8236922638534892123}
   - component: {fileID: 544387101360949923}
+  - component: {fileID: 1083478605209838345}
   - component: {fileID: 4413877094366561317}
   - component: {fileID: 2255696102792523801}
   m_Layer: 6
@@ -134,12 +135,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dded89273d04181419abf527eb4f6d4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movePosition: []
+  moveType: 0
+  moveSpeed: 6
+  moveTime: 6
+  waitTime: 1
+--- !u!114 &1083478605209838345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231020344072773179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d88dc868b4ef7140a2d0c4c898b811d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   targetTags:
   - Player
   - AlphabetTag
-  movePosition: []
-  moveTime: 6
-  waitTime: 1
 --- !u!61 &4413877094366561317
 BoxCollider2D:
   m_ObjectHideFlags: 0

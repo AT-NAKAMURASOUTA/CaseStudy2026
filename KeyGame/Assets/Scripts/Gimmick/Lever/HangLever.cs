@@ -5,6 +5,7 @@ using UnityEngine;
 public sealed class HangLever : MonoBehaviour
 {
     private const string FloorLayerName = "Floor";
+    private const string AlphabetTagName = "AlphabetTag";
 
     [Header("文字を引っかける時間")]
     [SerializeField]
@@ -308,12 +309,33 @@ public sealed class HangLever : MonoBehaviour
             cuttable = other.GetComponentInParent<AlphabetCuttable>();
         }
 
-        if (cuttable == null)
+        if (cuttable != null)
         {
-            return false;
+            alphabetId = cuttable.gameObject.GetInstanceID();
+            return true;
         }
 
-        alphabetId = cuttable.gameObject.GetInstanceID();
-        return true;
+        if (other.CompareTag(AlphabetTagName))
+        {
+            Rigidbody2D attachedBody = other.attachedRigidbody;
+            alphabetId = attachedBody != null
+                ? attachedBody.gameObject.GetInstanceID()
+                : other.gameObject.GetInstanceID();
+            return true;
+        }
+
+        Transform parent = other.transform.parent;
+        while (parent != null)
+        {
+            if (parent.CompareTag(AlphabetTagName))
+            {
+                alphabetId = parent.gameObject.GetInstanceID();
+                return true;
+            }
+
+            parent = parent.parent;
+        }
+
+        return false;
     }
 }

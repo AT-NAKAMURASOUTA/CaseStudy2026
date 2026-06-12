@@ -399,6 +399,10 @@ MonoBehaviour:
   aimArrowForwardOffset: 0.5
   aimArrowHeightOffset: 0
   aimArrowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  sePickUp: {fileID: 8300000, guid: c070c581ab324624eb14d86171eb14ac, type: 3}
+  sePlace: {fileID: 8300000, guid: 112b95534f44b824480d879a9ae6f9fe, type: 3}
+  seThrow: {fileID: 8300000, guid: 4821684e50095d74582f748576b8ccf5, type: 3}
+  seVolume: 1
 --- !u!114 &6354096494059707083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,6 +429,9 @@ MonoBehaviour:
   cameraFollowOffset: {x: 0, y: 3.5}
   cameraOrthographicSize: 14
   cameraZ: -20
+  useCameraBounds: 0
+  cameraBoundsMin: {x: -20, y: -10}
+  cameraBoundsMax: {x: 20, y: 10}
   cameraFollowSmoothTime: 0.05
   cameraFocusSmoothTime: 0.04
   cameraReturnToFollowSmoothTime: 0.08
