@@ -1,9 +1,21 @@
 using UnityEngine;
 
 [ExecuteAlways]
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public sealed class SawBlade : MonoBehaviour
 {
+    private const float BladeSpritePixelsPerUnit = 100f;
+    private const float BladeTextureSize = 256f;
+    private const int BladeTeethCount = 22;
+    private const int ColliderSamplesPerTooth = 8;
+    private const float BaseOuterRadiusRatio = 0.405f;
+    private const float ToothTipRadiusRatio = 0.458f;
+    private const float ToothStartRatio = 0.12f;
+    private const float ToothPeakRatio = 0.34f;
+    private const float ToothEndRatio = 0.84f;
+    private const float ShoulderRadiusRatio = 0.432f;
+    private const float ValleyRadiusRatio = 0.39f;
+
     [Header("刃の回転速度")]
     [SerializeField]
     private float rotationSpeed = 240f;
@@ -31,30 +43,31 @@ public sealed class SawBlade : MonoBehaviour
     private Transform m_BladeVisualRoot;
     private SpriteRenderer m_BladeRenderer;
     private SpriteRenderer m_HubRenderer;
-    private CircleCollider2D m_SolidCollider;
-    private CircleCollider2D m_TriggerCollider;
+    private PolygonCollider2D m_SolidCollider;
+    private PolygonCollider2D m_TriggerCollider;
+    private float m_EffectiveBladeRadius;
 
     private void Reset()
     {
-        SetupColliders();
         EnsureVisuals();
+        SetupColliders();
     }
 
     private void Awake()
     {
-        SetupColliders();
         EnsureVisuals();
+        SetupColliders();
     }
 
     private void OnEnable()
     {
-        SetupColliders();
         EnsureVisuals();
+        SetupColliders();
     }
 
     private void OnValidate()
     {
-        SetupColliders();
+        SetupColliders(false);
     }
 
     private void Update()
@@ -66,6 +79,7 @@ public sealed class SawBlade : MonoBehaviour
 
         float delta = Application.isPlaying ? Time.deltaTime : Time.unscaledDeltaTime;
         m_BladeVisualRoot.Rotate(0f, 0f, -rotationSpeed * delta);
+        UpdateColliderShape();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -105,21 +119,26 @@ public sealed class SawBlade : MonoBehaviour
         }
         radial.Normalize();
 
-        Vector2 cutPoint = bladeCenter + radial * bladeRadius;
+        Vector2 cutPoint = GetWorldBladeSurfacePoint(radial);
 
         // 時計回り回転に合わせた接線方向
         Vector2 tangential = new Vector2(radial.y, -radial.x);
         cuttable.Cut(cutPoint, tangential);
     }
 
-    private void SetupColliders()
+    private void SetupColliders(bool allowCreate = true)
     {
-        CircleCollider2D[] circleColliders = GetComponents<CircleCollider2D>();
+        foreach (CircleCollider2D circleCollider in GetComponents<CircleCollider2D>())
+        {
+            circleCollider.enabled = false;
+        }
+
+        PolygonCollider2D[] polygonColliders = GetComponents<PolygonCollider2D>();
         m_SolidCollider = null;
         m_TriggerCollider = null;
 
         // 既存のCircleCollider2Dから通常判定用とTrigger用を探す
-        foreach (CircleCollider2D collider2D in circleColliders)
+        foreach (PolygonCollider2D collider2D in polygonColliders)
         {
             if (collider2D.isTrigger && m_TriggerCollider == null)
             {
@@ -134,20 +153,34 @@ public sealed class SawBlade : MonoBehaviour
         }
 
         // 通常の当たり判定用Collider
+        m_EffectiveBladeRadius = GetBladeVisualLocalRadius();
+
         if (m_SolidCollider == null)
         {
-            m_SolidCollider = gameObject.AddComponent<CircleCollider2D>();
+            if (!allowCreate)
+            {
+                return;
+            }
+
+            m_SolidCollider = gameObject.AddComponent<PolygonCollider2D>();
         }
         m_SolidCollider.isTrigger = false;
-        m_SolidCollider.radius = bladeRadius;
+        m_SolidCollider.pathCount = 1;
 
         // 接触検知用のTriggerCollider
         if (m_TriggerCollider == null)
         {
-            m_TriggerCollider = gameObject.AddComponent<CircleCollider2D>();
+            if (!allowCreate)
+            {
+                UpdateColliderShape();
+                return;
+            }
+
+            m_TriggerCollider = gameObject.AddComponent<PolygonCollider2D>();
         }
         m_TriggerCollider.isTrigger = true;
-        m_TriggerCollider.radius = bladeRadius;
+        m_TriggerCollider.pathCount = 1;
+        UpdateColliderShape();
     }
 
     private void EnsureVisuals()
@@ -183,6 +216,116 @@ public sealed class SawBlade : MonoBehaviour
         hub.localScale = new Vector3(bladeRadius * 0.78f, bladeRadius * 0.78f, 1f);
         m_HubRenderer.sprite = WhiteSprite.Value;
         m_HubRenderer.color = hubColor;
+    }
+
+    private float GetBladeVisualLocalRadius()
+    {
+        if (m_BladeRenderer == null || m_BladeRenderer.sprite == null)
+        {
+            return bladeRadius;
+        }
+
+        Transform core = m_BladeRenderer.transform;
+        Vector3 rootScale = m_BladeVisualRoot != null ? m_BladeVisualRoot.localScale : Vector3.one;
+        Vector3 coreScale = core != null ? core.localScale : Vector3.one;
+        Bounds spriteBounds = m_BladeRenderer.sprite.bounds;
+        float xRadius = spriteBounds.extents.x * Mathf.Abs(rootScale.x * coreScale.x);
+        float yRadius = spriteBounds.extents.y * Mathf.Abs(rootScale.y * coreScale.y);
+
+        return Mathf.Max(0.01f, xRadius, yRadius);
+    }
+
+    private float GetWorldBladeRadius()
+    {
+        float localRadius = m_EffectiveBladeRadius > 0f ? m_EffectiveBladeRadius : GetBladeVisualLocalRadius();
+        Vector3 scale = transform.lossyScale;
+        return localRadius * Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.y));
+    }
+
+    private Vector2 GetWorldBladeSurfacePoint(Vector2 worldDirection)
+    {
+        Vector2 localDirection = transform.InverseTransformDirection(worldDirection).normalized;
+        if (localDirection.sqrMagnitude <= 0.0001f)
+        {
+            localDirection = Vector2.right;
+        }
+
+        float localAngle = Mathf.Atan2(localDirection.y, localDirection.x);
+        float visualAngle = GetBladeVisualRotationRadians();
+        float localRadius = GetBladeRadiusAtAngle(localAngle - visualAngle) * visualScale;
+        Vector3 localPoint = new Vector3(localDirection.x * localRadius, localDirection.y * localRadius, 0f);
+        return transform.TransformPoint(localPoint);
+    }
+
+    private void UpdateColliderShape()
+    {
+        if (m_SolidCollider == null && m_TriggerCollider == null)
+        {
+            return;
+        }
+
+        Vector2[] path = BuildBladeColliderPath(GetBladeVisualRotationRadians());
+        if (m_SolidCollider != null)
+        {
+            m_SolidCollider.SetPath(0, path);
+        }
+
+        if (m_TriggerCollider != null)
+        {
+            m_TriggerCollider.SetPath(0, path);
+        }
+    }
+
+    private Vector2[] BuildBladeColliderPath(float rotationRadians)
+    {
+        int pointCount = BladeTeethCount * ColliderSamplesPerTooth;
+        Vector2[] points = new Vector2[pointCount];
+
+        for (int i = 0; i < pointCount; i++)
+        {
+            float angle = (Mathf.PI * 2f * i / pointCount) + rotationRadians;
+            float radius = GetBladeRadiusAtAngle(angle - rotationRadians) * visualScale;
+            points[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+        }
+
+        return points;
+    }
+
+    private float GetBladeRadiusAtAngle(float angle)
+    {
+        float normalizedAngle = Mathf.Repeat(angle, Mathf.PI * 2f);
+        float toothSpan = Mathf.PI * 2f / BladeTeethCount;
+        float localRatio = (normalizedAngle - Mathf.Floor(normalizedAngle / toothSpan) * toothSpan) / toothSpan;
+
+        float baseOuterRadius = BladeTextureSize * BaseOuterRadiusRatio / BladeSpritePixelsPerUnit;
+        float toothTipRadius = BladeTextureSize * ToothTipRadiusRatio / BladeSpritePixelsPerUnit;
+        float shoulderRadius = BladeTextureSize * ShoulderRadiusRatio / BladeSpritePixelsPerUnit;
+        float valleyRadius = BladeTextureSize * ValleyRadiusRatio / BladeSpritePixelsPerUnit;
+
+        if (localRatio < ToothStartRatio)
+        {
+            return Mathf.Lerp(valleyRadius, baseOuterRadius, localRatio / ToothStartRatio);
+        }
+
+        if (localRatio < ToothPeakRatio)
+        {
+            float t = Mathf.InverseLerp(ToothStartRatio, ToothPeakRatio, localRatio);
+            return Mathf.Lerp(baseOuterRadius, toothTipRadius, t);
+        }
+
+        if (localRatio < ToothEndRatio)
+        {
+            float t = Mathf.InverseLerp(ToothPeakRatio, ToothEndRatio, localRatio);
+            return Mathf.Lerp(toothTipRadius, shoulderRadius, t);
+        }
+
+        float endT = Mathf.InverseLerp(ToothEndRatio, 1f, localRatio);
+        return Mathf.Lerp(shoulderRadius, valleyRadius, endT);
+    }
+
+    private float GetBladeVisualRotationRadians()
+    {
+        return m_BladeVisualRoot != null ? m_BladeVisualRoot.localEulerAngles.z * Mathf.Deg2Rad : 0f;
     }
 
     private Transform GetOrCreateChild(string childName)
@@ -265,22 +408,22 @@ public sealed class SawBlade : MonoBehaviour
                 return s_BladeSprite;
             }
 
-            const int size = 256;
+            const int size = (int)BladeTextureSize;
             Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
             texture.filterMode = FilterMode.Bilinear;
             texture.wrapMode = TextureWrapMode.Clamp;
 
             Vector2 center = new Vector2(size * 0.5f, size * 0.5f);
-            float baseOuterRadius = size * 0.405f;
+            float baseOuterRadius = size * BaseOuterRadiusRatio;
             float innerRadius = 0f;
-            float toothTipRadius = size * 0.458f;
-            int teethCount = 22;
+            float toothTipRadius = size * ToothTipRadiusRatio;
+            int teethCount = BladeTeethCount;
             float toothSpan = Mathf.PI * 2f / teethCount;
-            float toothStartRatio = 0.12f;
-            float toothPeakRatio = 0.34f;
-            float toothEndRatio = 0.84f;
-            float shoulderRadius = size * 0.432f;
-            float valleyRadius = size * 0.39f;
+            float toothStartRatio = ToothStartRatio;
+            float toothPeakRatio = ToothPeakRatio;
+            float toothEndRatio = ToothEndRatio;
+            float shoulderRadius = size * ShoulderRadiusRatio;
+            float valleyRadius = size * ValleyRadiusRatio;
 
             for (int y = 0; y < size; y++)
             {
@@ -342,7 +485,7 @@ public sealed class SawBlade : MonoBehaviour
                 texture,
                 new Rect(0f, 0f, size, size),
                 new Vector2(0.5f, 0.5f),
-                100f,
+                BladeSpritePixelsPerUnit,
                 0,
                 SpriteMeshType.Tight);
 
