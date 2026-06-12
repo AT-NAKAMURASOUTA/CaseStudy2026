@@ -44,7 +44,7 @@ public sealed class ActionsManager : MonoBehaviour
         await ActionCall(m_Cts.Token);
 
         // フラグ更新
-        m_IsGoal = true;
+        m_IsGoal = false;
     }
 
 
