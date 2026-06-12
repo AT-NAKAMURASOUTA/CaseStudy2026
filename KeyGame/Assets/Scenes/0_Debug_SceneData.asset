@@ -71,11 +71,11 @@ MonoBehaviour:
     sceneName: Stage3-3
     scene: {fileID: 102900000, guid: 0741a1fcf79589e439a9b629219f5db1, type: 3}
   - sceneType: 18
-    sceneName: Level3-4
-    scene: {fileID: 102900000, guid: b4eaae2403fb4fb4eb4be770b343ff04, type: 3}
+    sceneName: Stage3-4
+    scene: {fileID: 102900000, guid: d4cfaa5be9f96424faac7a894a917a59, type: 3}
   - sceneType: 19
-    sceneName: Level3-5
-    scene: {fileID: 102900000, guid: 79328cec1f6b75b46b55b41ecfbf9710, type: 3}
+    sceneName: Stage3-5
+    scene: {fileID: 102900000, guid: 60c42851cbffc0a45ae1f2c8393e9f63, type: 3}
   - sceneType: 20
-    sceneName: Level3-6
-    scene: {fileID: 102900000, guid: 2daa1f1040ef0f448848eb11775d22f8, type: 3}
+    sceneName: Stage3-6
+    scene: {fileID: 102900000, guid: 7235b89e07ccaba4caa8b2d283bf1d4f, type: 3}
