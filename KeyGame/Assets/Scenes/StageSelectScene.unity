@@ -2126,6 +2126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_MenuPrefab: {fileID: 814949705127981127, guid: f22634433fcbaec4182264f3af9a8ac4, type: 3}
   m_IsGuideActiveAtStart: 0
+  m_CanvasGroup: {fileID: 626606823}
 --- !u!1 &627700341
 GameObject:
   m_ObjectHideFlags: 0

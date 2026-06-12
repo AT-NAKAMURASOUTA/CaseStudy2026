@@ -12,6 +12,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject m_MenuPrefab;
     // Guide を最初に表示するか
     [SerializeField] private bool m_IsGuideActiveAtStart = false;
+    // Group
+    [SerializeField] CanvasGroup m_CanvasGroup;
 
     // PlayerInput
     private PlayerInput m_PlayerInput;
@@ -52,15 +54,39 @@ public class MenuManager : MonoBehaviour
         if (m_IsMenuActive)
         {
             // メニューがアクティブなときはPlayerInputのMoveとJumpを無効にする
-            m_PlayerInput.actions["Move"].Disable();
-            m_PlayerInput.actions["Jump"].Disable();
+            DisableInputSystem("Move");
+            DisableInputSystem("Jump");
+            DisableInputSystem("NextPage");
+            DisableInputSystem("PreviousPage");
+            if(m_CanvasGroup != null)
+            {
+                m_CanvasGroup.interactable = false;
+                m_CanvasGroup.blocksRaycasts = false;
+            }
         }
         else
         {
             // メニューが非アクティブなときはPlayerInputのMoveとJumpを有効にする
-            m_PlayerInput.actions["Move"].Enable();
-            m_PlayerInput.actions["Jump"].Enable();
+            EnableInputSystem("Move");
+            EnableInputSystem("Jump");
+            EnableInputSystem("NextPage");
+            EnableInputSystem("PreviousPage");
+            if(m_CanvasGroup != null)
+            {
+                m_CanvasGroup.interactable = true;
+                m_CanvasGroup.blocksRaycasts = true;
+            }
         }
+    }
+
+    void DisableInputSystem(string actionName)
+    {
+        m_PlayerInput.actions[actionName].Disable();
+    }
+
+    void EnableInputSystem(string actionName)
+    {
+        m_PlayerInput.actions[actionName].Enable();
     }
 
     // ===========================================
