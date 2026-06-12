@@ -21,6 +21,7 @@ public class SwitchDownUpdate : MonoBehaviour
     {
         //ボタンと本体との差分を求める
         diffPos = transform.position - onTransform.position;
+        SyncSortingOrderBehindBase();
     }
 
     // Update is called once per frame
@@ -43,5 +44,21 @@ public class SwitchDownUpdate : MonoBehaviour
             //ボタン部分の初期位置に移動させる
             transform.position = onTransform.position + diffPos;
         }
+    }
+
+    private void SyncSortingOrderBehindBase()
+    {
+        SpriteRenderer switchRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer baseRenderer = transform.parent != null
+            ? transform.parent.GetComponent<SpriteRenderer>()
+            : null;
+
+        if (switchRenderer == null || baseRenderer == null)
+        {
+            return;
+        }
+
+        switchRenderer.sortingLayerID = baseRenderer.sortingLayerID;
+        switchRenderer.sortingOrder = baseRenderer.sortingOrder - 1;
     }
 }
