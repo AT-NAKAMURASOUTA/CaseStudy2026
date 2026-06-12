@@ -15,3 +15,13 @@ MonoBehaviour:
   stageDataList:
   - Texture: {fileID: 0}
     NextScene: 15
+  - Texture: {fileID: 0}
+    NextScene: 15
+  - Texture: {fileID: 0}
+    NextScene: 17
+  - Texture: {fileID: 0}
+    NextScene: 18
+  - Texture: {fileID: 0}
+    NextScene: 19
+  - Texture: {fileID: 0}
+    NextScene: 20
