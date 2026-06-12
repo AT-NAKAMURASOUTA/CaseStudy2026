@@ -25,6 +25,15 @@ public class Action_ZoomCamera: BaseAction
     {
         // カメラの取得
         m_Camera = Camera.main;
+    }
+
+    // ===========================================
+    // アクション実行
+    // ===========================================
+    public override async UniTask Execute(CancellationToken token)
+    {
+        // 開始状態を取得
+        Vector3 startPos = m_Camera.transform.position;
 
         // カメラからターゲットのベクトルを計算
         Vector3 toTarget = transform.position - m_Camera.transform.position;
@@ -40,15 +49,6 @@ public class Action_ZoomCamera: BaseAction
             transform.position.x,
             transform.position.y,
             targetZ);
-    }
-
-    // ===========================================
-    // アクション実行
-    // ===========================================
-    public override async UniTask Execute(CancellationToken token)
-    {
-        // 開始状態を取得
-        Vector3 startPos = m_Camera.transform.position;
 
         Debug.Log($"Zoom Start: Position={startPos}");
         // 時間
