@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour
 {
     // メニューキャンバス
     [SerializeField] private GameObject m_MenuPrefab;
+    // Guide を最初に表示するか
+    [SerializeField] private bool m_IsGuideActiveAtStart = false;
 
     // PlayerInput
     private PlayerInput m_PlayerInput;
@@ -31,7 +33,7 @@ public class MenuManager : MonoBehaviour
         m_Menu = Instantiate(m_MenuPrefab);
         m_Menu.SetActive(false);
         m_MenuCanvasGroup = m_Menu.GetComponent<CanvasGroup>();
-        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGidePrefab(this);
+        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart);
 
         // PlayerInputのイベントに関数を登録
         m_PlayerInput.actions["Menu"].performed += _ => Menu();

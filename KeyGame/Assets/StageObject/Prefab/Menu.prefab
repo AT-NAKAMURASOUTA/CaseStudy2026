@@ -2008,4 +2008,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e56097726d1f446b0d9673be5f5a70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GidePrefab: {fileID: 4362536330144887569, guid: a6e5bd7fd1557db48a221ae5f9f46d17, type: 3}
+  m_GuidePrefab: {fileID: 4362536330144887569, guid: a6e5bd7fd1557db48a221ae5f9f46d17, type: 3}

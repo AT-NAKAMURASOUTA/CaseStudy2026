@@ -5,24 +5,33 @@ using UnityEngine;
 
 public class Action_GuideActive : BaseAction
 {
-    [SerializeField] private GameObject m_GidePrefab;
-    private GameObject m_Gide;
+    [SerializeField] private GameObject m_GuidePrefab;
+    private GameObject m_Guide;
     private Action_GuideInactive m_Action;
 
-    public void CreateGidePrefab(MenuManager _manager)
+    public void CreateGuidePrefab(MenuManager _manager, bool _isGuideActiveAtStart)
     {
         // メニューを作成
-        m_Gide = Instantiate(m_GidePrefab);
-        m_Action = m_Gide.GetComponentInChildren<Action_GuideInactive>();
-        m_Action.Init(_manager, m_Gide);
-        m_Gide.SetActive(false);
+        m_Guide = Instantiate(m_GuidePrefab);
+        m_Action = m_Guide.GetComponentInChildren<Action_GuideInactive>();
+        m_Action.Init(_manager, m_Guide);
+
+        if (!_isGuideActiveAtStart)
+        {
+            m_Guide.SetActive(false);
+        }
+        else
+        {
+            m_Guide.SetActive(true);
+            m_Action.GuideActive();
+        }
 
         Debug.Log("ガイドプレハブを作成");
     }
 
     public override UniTask Execute(CancellationToken token)
     {
-        m_Gide.SetActive(true);
+        m_Guide.SetActive(true);
         m_Action.GuideActive();
 
         Debug.Log("ガイドを表示");
