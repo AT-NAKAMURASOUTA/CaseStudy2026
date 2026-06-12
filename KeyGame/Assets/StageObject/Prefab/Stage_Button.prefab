@@ -152,7 +152,9 @@ GameObject:
   - component: {fileID: 5618821380885449889}
   - component: {fileID: -8958247677947041097}
   - component: {fileID: 8020681266424650838}
+  - component: {fileID: 631527546154095282}
   - component: {fileID: 6244637442425818094}
+  - component: {fileID: 4385335242224151418}
   m_Layer: 5
   m_Name: Stage_Button
   m_TagString: Untagged
@@ -275,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GoalActions:
-  - {fileID: 6244637442425818094}
+  - {fileID: 631527546154095282}
   - {fileID: 5618821380885449889}
 --- !u!114 &5618821380885449889
 MonoBehaviour:
@@ -403,6 +405,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SelectSound: {fileID: 8300000, guid: f46fe1588a27e564bbb2b7b201e4124c, type: 3}
   m_DecisionSound: {fileID: 8300000, guid: 479a6ebea6cff884aa0014fdd8a2ce11, type: 3}
+--- !u!114 &631527546154095282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009817353091970093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c72eedeb144648d4085b2102f19e3029, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_GoalActions:
+  - {fileID: 6244637442425818094}
+  - {fileID: 4385335242224151418}
 --- !u!114 &6244637442425818094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,3 +433,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectSound: {fileID: 8300000, guid: d5a892e2743a4624ab9b52e7c798441d, type: 3}
+--- !u!114 &4385335242224151418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7009817353091970093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c6bec838c54f740a616b7c95942c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ZoomTime: 2.5
+  m_ApproachRate: 0.6
