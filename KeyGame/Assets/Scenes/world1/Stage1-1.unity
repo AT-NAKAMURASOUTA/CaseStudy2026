@@ -1571,6 +1571,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: useCameraBounds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: cameraBoundsMax.x
+      value: 83
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: cameraBoundsMax.y
+      value: 51
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: cameraBoundsMin.x
+      value: -23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: cameraBoundsMin.y
+      value: -20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
