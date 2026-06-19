@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 /*
@@ -31,6 +32,8 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler
     private Button m_Button;
     // キャンバスグループ
     private CanvasGroup m_CGroup;
+    // PlayerInput取得
+    private PlayerInput m_PlayerInput = null;
 
     // ======================================
     // 初期化
@@ -48,6 +51,13 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler
         if (m_CGroup == null)
         {
             Debug.LogWarning("CanvasGroupが設定されていません。");
+        }
+
+        // PlayerInputコンポーネントを取得
+        m_PlayerInput = GetComponentInParent<PlayerInput>();
+        if (m_PlayerInput == null)
+        {
+            Debug.LogWarning("PlayerInputコンポーネントが見つかりませんでした。");
         }
 
         m_Button = GetComponent<Button>();
@@ -101,6 +111,12 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler
             m_CGroup.interactable = false;
             // ボタンを押したときにキャンバスグループのレイキャストを無効にする
             m_CGroup.blocksRaycasts = false;
+        }
+
+        // ボタンを押したときにMenu アクションを無効にする
+        if (m_PlayerInput != null)
+        {
+            m_PlayerInput.actions["Menu"].Disable();
         }
 
         // 音を鳴らす
