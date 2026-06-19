@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class FloorStick : MonoBehaviour
 {
+    [Header("くっつくかどうか")]
+    [SerializeField]
+    private bool isStick = true;
+
     [Header("移動するオブジェクトのタグ")]
     [SerializeField]
     private List<string> targetTags = new List<string>();
@@ -13,6 +17,7 @@ public class FloorStick : MonoBehaviour
     //指定したTagのオブジェクトをくっついて移動するようにする
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (!isStick) return;
         if (targetTags.Contains(collision.gameObject.tag))
         {
             foreach (ContactPoint2D contact in collision.contacts)
@@ -32,6 +37,7 @@ public class FloorStick : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
+        if (!isStick) return;
         if (targetTags.Contains(collision.gameObject.tag))
         {
             if (!collision.gameObject.activeInHierarchy) return;
@@ -50,6 +56,7 @@ public class FloorStick : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!isStick) return;
         if (collision == null)
         {
             return;

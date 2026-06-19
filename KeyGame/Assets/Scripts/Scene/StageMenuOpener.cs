@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 public sealed class StageMenuOpener : MonoBehaviour
@@ -45,12 +47,23 @@ public sealed class StageMenuOpener : MonoBehaviour
 
         if (m_MenuInstance == null)
         {
+            EnsureEventSystem();
             m_MenuInstance = Instantiate(m_MenuPrefab);
             ConfigureOverlayMenu(m_MenuInstance, returnScene);
         }
 
         m_MenuInstance.SetActive(m_IsOverlayMenuActive);
         SetSourceInteraction(!m_IsOverlayMenuActive);
+    }
+
+    private static void EnsureEventSystem()
+    {
+        if (Object.FindFirstObjectByType<EventSystem>() != null)
+        {
+            return;
+        }
+
+        new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
     }
 
     private void SetSourceInteraction(bool enabled)
