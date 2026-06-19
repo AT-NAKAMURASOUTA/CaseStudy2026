@@ -3592,6 +3592,10 @@ MonoBehaviour:
   aimArrowForwardOffset: 0.5
   aimArrowHeightOffset: 0
   aimArrowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  sePickUp: {fileID: 0}
+  sePlace: {fileID: 0}
+  seThrow: {fileID: 0}
+  seVolume: 1
 --- !u!95 &953353712
 Animator:
   serializedVersion: 7
@@ -3824,6 +3828,8 @@ MonoBehaviour:
   m_CheckPos: {x: 0, y: -0.97, z: 0}
   m_CheckBoxSize: {x: 0.95, y: 0.1}
   m_CheckBoxAngle: 60
+  m_GroundedJumpGraceTime: 0.12
+  m_JumpGroundIgnoreTime: 0.12
   m_TakeoffAnimationDuration: 0.16
   m_TakeoffAnimationEndNormalizedTime: 0.22
   m_AirborneAnimationNormalizedTime: 0.58
