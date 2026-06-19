@@ -139,6 +139,24 @@ public class ButtonCreate : MonoBehaviour
         // ボタンの生成
         BookCreate();
 
+        // ステージごとにまとめる
+        StageData[] sceneData = new StageData[m_ButtonData.Length];
+        for (int i = 0; i < m_ButtonData.Length; i++)
+        {
+            sceneData[i] = new StageData();
+
+            sceneData[i].SceneIndex = i;
+            List<SCENETYPE> types = new List<SCENETYPE>();
+
+            for (int j = 0; j < m_ButtonData[i].stageDataList.Count; j++)
+            {
+                types.Add(m_ButtonData[i].stageDataList[j].NextScene);
+            }
+
+            sceneData[i].SceneTypes = types.ToArray();
+        }
+        m_BookPageManager.SetSceneData(sceneData);
+
 #if UNITY_EDITOR
         // 変更前を一時的に保存
         Undo.RecordObject(m_BookPageManager, "Update Book Page Manager");

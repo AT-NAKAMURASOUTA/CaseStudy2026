@@ -113,6 +113,7 @@ public class SceneTransitionManager : MonoBehaviour
         m_IsTransitioning = true;
 
         // 現在のシーンを設定
+        OldSceneData.SetOldScene(m_CurrentSceneType);
         m_CurrentSceneType = _nextScene;
 
         // シーン文字列を取得

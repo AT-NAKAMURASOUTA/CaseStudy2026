@@ -1,10 +1,20 @@
+using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 /*  * Book のページ管理をするスクリプト
  */
+
+[System.Serializable]
+public class StageData
+{
+    public int SceneIndex = 0;
+    public SCENETYPE[] SceneTypes;
+}
 
 [RequireComponent(typeof(PlayerInput))]
 public class BookPageManager : MonoBehaviour
@@ -30,6 +40,8 @@ public class BookPageManager : MonoBehaviour
     [SerializeField, HideInInspector] private GameObject[] m_FirstButton;
     // BaseBookの最後のボタン
     [SerializeField, HideInInspector] private GameObject[] m_LastButton;
+    // ステージごとのシーン保持
+    [SerializeField, HideInInspector] private StageData[] m_StageData;
 
     // ステージ表示
     private StageView[] m_StageViews;
@@ -44,16 +56,43 @@ public class BookPageManager : MonoBehaviour
     // ===========================================
     // 初期化
     // ===========================================
-    void Start()
+    async void Start()
     {
+        // 1フレーム待つ
+        await UniTask.Yield();
+
         m_PlayerInput = GetComponent<PlayerInput>();
 
         // 入力イベントの登録
         m_PlayerInput.actions["NextPage"].performed += ctx => NextPage();
         m_PlayerInput.actions["PreviousPage"].performed += ctx => PreviousPage();
 
-        // 変数初期化
+        // 前のシーンタイプを取得
+        if (m_StageData == null)
+        {
+            Debug.LogError("ステージデータが登録されていません");
+            return;
+        }
+
+        // 現在のページを計算
         m_CurrentStageIndex = 0;
+        SCENETYPE oldScene = OldSceneData.GetOldScene();
+        bool IsFind = false;
+        for (int i = 0; i < m_StageData.Length; i++)
+        {
+            for (int j = 0; j < m_StageData[i].SceneTypes.Length; j++)
+            {
+                if (oldScene == m_StageData[i].SceneTypes[j])
+                {
+                    m_CurrentStageIndex = m_StageData[i].SceneIndex;
+                    IsFind = true;
+                    break;
+                }
+            }
+            if (IsFind) break;
+        }
+
+        // 変数初期化
         m_MaxCurrentStagePage = m_Pages.Length + 1;
         m_IsPlaying = false;
 
@@ -61,7 +100,7 @@ public class BookPageManager : MonoBehaviour
         CreateStageView();
 
         // Page に終了関数登録
-        foreach(var page in m_Pages)
+        foreach (var page in m_Pages)
         {
             Debug.Log("ページ数 : " + m_Pages.Length);
             Debug.Log($"ページ名 : {page.gameObject.name}");
@@ -87,6 +126,16 @@ public class BookPageManager : MonoBehaviour
             foreach (var button in m_StageViews[i].buttons)
             {
                 Debug.Log($"ボタン名 : {button.gameObject.name}");
+            }
+        }
+
+        // 初期化
+        for (int i = 0; i < m_CurrentStageIndex; i++)
+        {
+            // ステージを表示
+            foreach (var page in m_StageViews[i].pages)
+            {
+                page.SetInitPageSide(PageSide.Left);
             }
         }
 
@@ -291,5 +340,9 @@ public class BookPageManager : MonoBehaviour
     public void SetLastButtons(GameObject[] _lastButtons)
     {
         m_LastButton = _lastButtons;
+    }
+    public void SetSceneData(StageData[] _data)
+    {
+      m_StageData = _data;  
     }
 }

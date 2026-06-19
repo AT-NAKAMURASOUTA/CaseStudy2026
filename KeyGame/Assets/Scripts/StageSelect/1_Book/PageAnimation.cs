@@ -1,23 +1,22 @@
 using System;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 /*  * PageAnimationのスクリプト
  */
 
+[System.Serializable]
+public enum PageSide
+{
+    Right,
+    Left
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class PageAnimation : MonoBehaviour
 {
-    // ========================================
-    // 列挙型
-    // ========================================
-    enum PageSide
-    {
-        Right,
-        Left
-    }
-
     // ========================================
     // Stateパターンの実装
     // ========================================
@@ -64,7 +63,7 @@ public class PageAnimation : MonoBehaviour
         {
             // 時間を更新
             t += Time.deltaTime;
-            ;
+
             // 進行度を計算
             float progress = Mathf.Clamp01(t / 1.0f / page.m_AnimationSpeed);
 
@@ -378,6 +377,27 @@ public class PageAnimation : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    // =========================================
+    // 初期化に呼ぶ初期化ページ
+    // ==========================================
+    public void SetInitPageSide(PageSide _side)
+    {
+        // ページのスプライトを切り替える
+        if (_side == PageSide.Right)
+        {
+            m_Image.sprite = m_RightPageSprite;
+            m_CurrentPageSide = PageSide.Right;
+            m_RectTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            m_Image.sprite = m_LeftPageSprite;
+            m_CurrentPageSide = PageSide.Left;
+            m_RectTransform.localRotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+        }
+    }
+
 
     // =========================================
     // アニメーション終了フラグ
