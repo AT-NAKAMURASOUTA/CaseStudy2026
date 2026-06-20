@@ -64,6 +64,8 @@ public class GenerateAlphabet : MonoBehaviour
 
     private float facingDirection = 1f;
 
+    private int layer = 10;//アルファベットのレンダーレイヤー
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -122,6 +124,7 @@ public class GenerateAlphabet : MonoBehaviour
         go.layer = Mathf.RoundToInt(Mathf.Log(alphabetLayer.value, 2));//レイヤーを設定
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
+        spriteRenderer.sortingOrder = layer;
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
