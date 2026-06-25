@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -63,13 +64,13 @@ public class BookPageManager : MonoBehaviour
         public async UniTask Enter(BookPageManager book)
         {
             Debug.Log("ワールドセレクトモード");
+            book.m_Canvas.gameObject.SetActive(true);
 
             if (book.m_Camera.transform.position != book.m_CameraWorldModePos)
             {
                 await book.ZoomCamera(CancellationToken.None, book.m_CameraWorldModePos);
             }
         }
-        public void Exit(BookPageManager page) { }
 
         public void Update(BookPageManager book, PageFlipMode _mode)
         {
@@ -123,6 +124,10 @@ public class BookPageManager : MonoBehaviour
                 book.m_CurrentStageIndex--;
             }
         }
+        public void Exit(BookPageManager page) 
+        { 
+            page.m_Canvas.gameObject.SetActive(false);
+        }
     }
 
     // ===========================================
@@ -135,6 +140,7 @@ public class BookPageManager : MonoBehaviour
         public async UniTask Enter(BookPageManager book)
         {
             Debug.Log("ステージセレクトモード");
+            book.m_CanvasGroup.blocksRaycasts = false;
 
             if (book.m_Camera.transform.position != book.m_CameraStageModePos)
             {
@@ -165,9 +171,10 @@ public class BookPageManager : MonoBehaviour
                 }
             }
         }
-        public void Exit(BookPageManager page)
+        public void Exit(BookPageManager book)
         {
             // セレクト解除
+            book.m_CanvasGroup.blocksRaycasts = true;
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
@@ -183,6 +190,9 @@ public class BookPageManager : MonoBehaviour
     [SerializeField] private float m_ZoomTime;
     [Tooltip("イーズアウトの強さ")]
     [SerializeField] private float m_EaseOutPower = 3f;
+    [Header("操作UI")]
+    [Tooltip("表示キャンバス")]
+    [SerializeField] private Canvas m_Canvas;
 
     // 全てのページ
     [SerializeField, HideInInspector] private PageAnimation[] m_Pages;
@@ -210,6 +220,8 @@ public class BookPageManager : MonoBehaviour
     private Camera m_Camera;
     private Vector3 m_CameraWorldModePos;
     private bool m_IsZooming = false;
+    // キャンバスグループ
+    private CanvasGroup m_CanvasGroup;
 
     // ===========================================
     // 初期化
@@ -223,6 +235,7 @@ public class BookPageManager : MonoBehaviour
         m_CameraWorldModePos = m_Camera.transform.position;
         m_IsZooming = false;
 
+        m_CanvasGroup = GetComponent<CanvasGroup>();
         m_PlayerInput = GetComponent<PlayerInput>();
 
         // 入力イベントの登録
