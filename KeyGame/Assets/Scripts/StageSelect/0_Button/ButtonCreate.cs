@@ -139,6 +139,24 @@ public class ButtonCreate : MonoBehaviour
         // ボタンの生成
         BookCreate();
 
+        // ステージごとにまとめる
+        StageData[] sceneData = new StageData[m_ButtonData.Length];
+        for (int i = 0; i < m_ButtonData.Length; i++)
+        {
+            sceneData[i] = new StageData();
+
+            sceneData[i].SceneIndex = i;
+            List<SCENETYPE> types = new List<SCENETYPE>();
+
+            for (int j = 0; j < m_ButtonData[i].stageDataList.Count; j++)
+            {
+                types.Add(m_ButtonData[i].stageDataList[j].NextScene);
+            }
+
+            sceneData[i].SceneTypes = types.ToArray();
+        }
+        m_BookPageManager.SetSceneData(sceneData);
+
 #if UNITY_EDITOR
         // 変更前を一時的に保存
         Undo.RecordObject(m_BookPageManager, "Update Book Page Manager");
@@ -187,7 +205,7 @@ public class ButtonCreate : MonoBehaviour
         // FirstStage のデータを取得
         List<ButtonData> buttonData = m_ButtonData[0].stageDataList;
         // ButtonData
-        List<GameObject> firstButtonData = new List<GameObject>();
+        List<Button> firstButtonData = new List<Button>();
 
         // FirstButton の生成
         for (int x = 0; x < m_PageMaxCountX; x++)
@@ -241,13 +259,14 @@ public class ButtonCreate : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("ボタンにImageがアタッチされていません。");
+                    // Debug.LogWarning("ボタンにImageがアタッチされていません。");
                 }
 
                 // ボタンテキストの生成
                 CreateStageText(rect, 1, index + 1);
 
-                firstButtonData.Add(button);
+                Button buttonSc = button.GetComponent<Button>();
+                firstButtonData.Add(buttonSc);
             }
         }
 
@@ -262,7 +281,7 @@ public class ButtonCreate : MonoBehaviour
     {
         // 最後のページのデータを取得
         List<ButtonData> buttonData = m_ButtonData[m_ButtonData.Length - 1].stageDataList;
-        List<GameObject> lastButtonData = new List<GameObject>();
+        List<Button> lastButtonData = new List<Button>();
 
         // LastButton の生成
         for (int x = 0; x < m_PageMaxCountX; x++)
@@ -316,14 +335,15 @@ public class ButtonCreate : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("ボタンにImageがアタッチされていません。");
+                    // Debug.LogWarning("ボタンにImageがアタッチされていません。");
                 }
 
                 // ボタンテキストの生成
                 CreateStageText(rect, m_ButtonData.Length, index + 1);
 
                 // 最後のページのボタンデータを保存
-                lastButtonData.Add(button);
+                Button buttonSc = button.GetComponent<Button>();
+                lastButtonData.Add(buttonSc);
             }
         }
 
@@ -343,7 +363,7 @@ public class ButtonCreate : MonoBehaviour
         {
             // ページのデータを取得
             List<ButtonData> buttonData = m_ButtonData[pageCount].stageDataList;
-            List<GameObject> buttons = new List<GameObject>();
+            List<Button> buttons = new List<Button>();
             // 片ページのボタン数
             int OnePageNumber = m_PageMaxCountX * m_PageMaxCountY;
 
@@ -410,13 +430,14 @@ public class ButtonCreate : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("ボタンにImageがアタッチされていません。");
+                        // Debug.LogWarning("ボタンにImageがアタッチされていません。");
                     }
 
                     // ボタンテキストの生成
                     CreateStageText(rect, pageCount + 1, index + 1);
 
-                    buttons.Add(button);
+                    Button buttonSc = button.GetComponent<Button>();
+                    buttons.Add(buttonSc);
                 }
             }
 
@@ -488,13 +509,14 @@ public class ButtonCreate : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("ボタンにImageがアタッチされていません。");
+                        // Debug.LogWarning("ボタンにImageがアタッチされていません。");
                     }
 
                     // ボタンテキストの生成
                     CreateStageText(rect, pageCount + 2, index + 1);
 
-                    buttons.Add(button);
+                    Button buttonSc = button.GetComponent<Button>();
+                    buttons.Add(buttonSc);
                 }
             }
 
@@ -561,7 +583,7 @@ public class ButtonCreate : MonoBehaviour
 
             rect.sizeDelta = size;
 
-            Debug.Log($"テクスチャを生成しました。 Key : {_key}, Size : {size}");
+            // Debug.Log($"テクスチャを生成しました。 Key : {_key}, Size : {size}");
         }
         else
         {

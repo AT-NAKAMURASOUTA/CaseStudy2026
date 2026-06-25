@@ -1,23 +1,22 @@
 using System;
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 /*  * PageAnimationのスクリプト
  */
 
+[System.Serializable]
+public enum PageSide
+{
+    Right,
+    Left
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class PageAnimation : MonoBehaviour
 {
-    // ========================================
-    // 列挙型
-    // ========================================
-    enum PageSide
-    {
-        Right,
-        Left
-    }
-
     // ========================================
     // Stateパターンの実装
     // ========================================
@@ -64,7 +63,7 @@ public class PageAnimation : MonoBehaviour
         {
             // 時間を更新
             t += Time.deltaTime;
-            ;
+
             // 進行度を計算
             float progress = Mathf.Clamp01(t / 1.0f / page.m_AnimationSpeed);
 
@@ -88,11 +87,11 @@ public class PageAnimation : MonoBehaviour
                 // 表のボタンを無効化、裏のボタンを有効化
                 for (int i = 0; i < page.m_FrontButton.Length; i++)
                 {
-                    page.m_FrontButton[i].SetActive(false);
+                    page.m_FrontButton[i].gameObject.SetActive(false);
                 }
                 for (int i = 0; i < page.m_BackButton.Length; i++)
                 {
-                    page.m_BackButton[i].SetActive(true);
+                    page.m_BackButton[i].gameObject.SetActive(true);
                 }
             }
             // 180度到達
@@ -153,11 +152,11 @@ public class PageAnimation : MonoBehaviour
                 // 表のボタンを有効化、裏のボタンを無効化
                 for (int i = 0; i < page.m_FrontButton.Length; i++)
                 {
-                    page.m_FrontButton[i].SetActive(true);
+                    page.m_FrontButton[i].gameObject.SetActive(true);
                 }
                 for (int i = 0; i < page.m_BackButton.Length; i++)
                 {
-                    page.m_BackButton[i].SetActive(false);
+                    page.m_BackButton[i].gameObject.SetActive(false);
                 }
             }
             // 180度到達
@@ -197,9 +196,9 @@ public class PageAnimation : MonoBehaviour
 
     // 非公開のメンバー変数
     // 表にあるボタンオブジェクト
-    [SerializeField, HideInInspector] private GameObject[] m_FrontButton;
+    [SerializeField, HideInInspector] private Button[] m_FrontButton;
     // 裏にあるボタンオブジェクト
-    [SerializeField, HideInInspector] private GameObject[] m_BackButton;
+    [SerializeField, HideInInspector] private Button[] m_BackButton;
     // 本の中心位置
     [SerializeField, HideInInspector] private float m_BookCenterX = 0;
 
@@ -267,7 +266,7 @@ public class PageAnimation : MonoBehaviour
         for (int i = 0; i < m_BackButton.Length; i++)
         {
             m_BackButton[i].transform.localRotation = Quaternion.Euler(0, 180, 0);
-            m_BackButton[i].SetActive(false);
+            m_BackButton[i].gameObject.SetActive(false);
         }
     }
 
@@ -310,14 +309,14 @@ public class PageAnimation : MonoBehaviour
     // ========================================
     // 右ページあるボタンのセッター (表ボタン)
     // ========================================
-    public void SetFrontButtons(GameObject[] _frontButtons)
+    public void SetFrontButtons(Button[] _frontButtons)
     {
         m_FrontButton = _frontButtons;
     }
     // =========================================
     // 左ページあるボタンのセッター (裏ボタン)
     // =========================================
-    public void SetBackButtons(GameObject[] _backButtons)
+    public void SetBackButtons(Button[] _backButtons)
     {
         m_BackButton = _backButtons;
     }
@@ -353,14 +352,14 @@ public class PageAnimation : MonoBehaviour
             {
                 for (int i = 0; m_BackButton.Length > i; i++)
                 {
-                    m_BackButton[i].SetActive(true);
+                    m_BackButton[i].gameObject.SetActive(true);
                 }
             }
             else
             {
                 for (int i = 0; m_FrontButton.Length > i; i++)
                 {
-                    m_FrontButton[i].SetActive(true);
+                    m_FrontButton[i].gameObject.SetActive(true);
                 }
             }
         }
@@ -368,11 +367,11 @@ public class PageAnimation : MonoBehaviour
         {
             for (int i = 0; m_FrontButton.Length > i; i++)
             {
-                m_FrontButton[i].SetActive(false);
+                m_FrontButton[i].gameObject.SetActive(false);
             }
             for (int i = 0; m_BackButton.Length > i; i++)
             {
-                m_BackButton[i].SetActive(false);
+                m_BackButton[i].gameObject.SetActive(false);
             }
 
             gameObject.SetActive(false);
@@ -380,10 +379,43 @@ public class PageAnimation : MonoBehaviour
     }
 
     // =========================================
+    // 初期化に呼ぶ初期化ページ
+    // ==========================================
+    public void SetInitPageSide(PageSide _side)
+    {
+        // ページのスプライトを切り替える
+        if (_side == PageSide.Right)
+        {
+            m_Image.sprite = m_RightPageSprite;
+            m_CurrentPageSide = PageSide.Right;
+            m_RectTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            m_Image.sprite = m_LeftPageSprite;
+            m_CurrentPageSide = PageSide.Left;
+            m_RectTransform.localRotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
+        }
+    }
+
+
+    // =========================================
     // アニメーション終了フラグ
     // =========================================
     public bool GetAnimation()
     {
         return m_IsAnimationEnd;
+    }
+
+    // =========================================
+    // ページのボタンを渡す
+    // =========================================
+    public Button[] GetFrontButtons()
+    {
+        return m_FrontButton;
+    }
+    public Button[] GetBackButton()
+    {
+        return m_BackButton;
     }
 }
