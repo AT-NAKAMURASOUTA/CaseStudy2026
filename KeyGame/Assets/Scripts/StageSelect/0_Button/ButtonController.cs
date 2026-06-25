@@ -11,7 +11,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(Button))]
 [RequireComponent(typeof(ActionsManager))]
-public class ButtonController : MonoBehaviour, IPointerEnterHandler
+public class ButtonController : MonoBehaviour, IPointerEnterHandler, ISelectHandler
 {
     // ======================================
     // メンバー変数
@@ -87,17 +87,35 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler
 
         // 自分の処理を登録
         m_Button.onClick.AddListener(OnClick);
+    }
 
+    // ======================================
+    // 選択音を鳴らす
+    // ======================================
+    public void PlaySelect()
+    {
+        Debug.Log("選択サウンド再生");
+        m_AudioSource.PlayOneShot(m_SelectSound);
     }
 
     // ======================================
     // カーソルがボタンに乗ったときの処理
     // ======================================
+    public void OnSelect(BaseEventData eventData)
+    {    
+        // マウスクリック中は鳴らさない
+        if (Input.GetMouseButtonDown(0)) { return; }
+        Debug.Log("セレクト呼び出し");
+        PlaySelect();
+    }
+    // =======================================
+    //  マウス選択用
+    // ========================================
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("選択サウンド再生");
-        m_AudioSource.PlayOneShot(m_SelectSound);
+        PlaySelect();
     }
+
     // ======================================
     // ボタンが押されたときの処理
     // ======================================
