@@ -36,7 +36,6 @@ public class MenuManager : MonoBehaviour
         m_Menu.SetActive(false);
         m_MenuCanvasGroup = m_Menu.GetComponent<CanvasGroup>();
         m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart);
-
         // PlayerInputのイベントに関数を登録
         m_PlayerInput.actions["Menu"].performed += _ => Menu();
     }

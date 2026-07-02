@@ -1,9 +1,6 @@
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -64,7 +61,6 @@ public class BookPageManager : MonoBehaviour
         public async UniTask Enter(BookPageManager book)
         {
             Debug.Log("ワールドセレクトモード");
-            book.m_Canvas.gameObject.SetActive(true);
 
             if (book.m_Camera.transform.position != book.m_CameraWorldModePos)
             {
@@ -126,7 +122,6 @@ public class BookPageManager : MonoBehaviour
         }
         public void Exit(BookPageManager page) 
         { 
-            page.m_Canvas.gameObject.SetActive(false);
         }
     }
 
@@ -190,9 +185,6 @@ public class BookPageManager : MonoBehaviour
     [SerializeField] private float m_ZoomTime;
     [Tooltip("イーズアウトの強さ")]
     [SerializeField] private float m_EaseOutPower = 3f;
-    [Header("操作UI")]
-    [Tooltip("表示キャンバス")]
-    [SerializeField] private Canvas m_Canvas;
 
     // 全てのページ
     [SerializeField, HideInInspector] private PageAnimation[] m_Pages;
@@ -307,6 +299,7 @@ public class BookPageManager : MonoBehaviour
         AllInactiveStage();
         // 最初のステージを表示
         ActiveStage(m_CurrentStageIndex);
+        VisualizeUI();
     }
 
     // ===========================================
