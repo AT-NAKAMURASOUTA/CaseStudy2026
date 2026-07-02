@@ -8,6 +8,8 @@ public class Action_GuideActive : BaseAction
     [SerializeField] private GameObject m_GuidePrefab;
     private GameObject m_Guide;
     private Action_GuideInactive m_Action;
+    // ガイドを表示時にメニューの操作を制御するためのキャンバスグループ
+    private CanvasGroup m_CanvasGroup;
 
     public void CreateGuidePrefab(MenuManager _manager, bool _isGuideActiveAtStart)
     {

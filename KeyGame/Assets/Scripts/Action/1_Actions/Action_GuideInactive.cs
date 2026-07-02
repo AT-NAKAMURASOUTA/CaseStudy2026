@@ -21,6 +21,7 @@ public class Action_GuideInactive : BaseAction
     {
         // ガイドを表示する処理
         m_MenuManager.SetCanOperateMenu(false);
+        m_MenuManager.DeactivateMenuButton();
         m_GuideCanvasGroup.interactable = true;
         m_GuideCanvasGroup.blocksRaycasts = true;
 
