@@ -14,6 +14,8 @@ public class Action_ZoomCamera: BaseAction
     [Tooltip("ズーム補間率")]
     [SerializeField, Range(0f, 1f)]
     private float m_ApproachRate = 0.8f;
+    [Tooltip("イーズアウトの強さ")]
+    [SerializeField] private float m_EaseOutPower = 3f;
 
     private Camera m_Camera; 
     private Vector3 m_TargetPos;
@@ -63,6 +65,8 @@ public class Action_ZoomCamera: BaseAction
 
             // 0~1の範囲で補間値を計算
             float t = Mathf.Clamp01(elapsed / m_ZoomTime);
+            // イーズアウトの適用
+            t = 1f - Mathf.Pow(1f - t, m_EaseOutPower);
 
             // カメラのサイズと位置を補間して更新
             m_Camera.transform.position =

@@ -204,9 +204,36 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "WorldSelect",
+                    "type": "Button",
+                    "id": "175bdb4e-e2bd-410e-9033-27c469da389c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StageSelect",
+                    "type": "Button",
+                    "id": "e6823177-ea3b-4bff-9366-23c9123e2812",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Menu",
                     "type": "Button",
                     "id": "329ee637-93d8-458f-9e45-f9d2edb2b29b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Decision",
+                    "type": "Button",
+                    "id": "efdc6348-908e-4536-bb76-dcd9759ab598",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -662,6 +689,39 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92048ccc-43e3-468c-9eda-0402658e55aa",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "WorldSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad2ed4da-aff8-43e4-b2a6-a7baa1eae012",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "StageSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c39553e1-9327-4d26-a97c-904703af9534",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Decision",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

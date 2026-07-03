@@ -58,6 +58,8 @@ public class MenuManager : MonoBehaviour
             DisableInputSystem("Jump");
             DisableInputSystem("NextPage");
             DisableInputSystem("PreviousPage");
+            DisableInputSystem("WorldSelect");
+            DisableInputSystem("StageSelect");
             if(m_CanvasGroup != null)
             {
                 m_CanvasGroup.interactable = false;
@@ -71,7 +73,9 @@ public class MenuManager : MonoBehaviour
             EnableInputSystem("Jump");
             EnableInputSystem("NextPage");
             EnableInputSystem("PreviousPage");
-            if(m_CanvasGroup != null)
+            EnableInputSystem("WorldSelect");
+            EnableInputSystem("StageSelect");
+            if (m_CanvasGroup != null)
             {
                 m_CanvasGroup.interactable = true;
                 m_CanvasGroup.blocksRaycasts = true;
