@@ -158,6 +158,7 @@ public class PageAnimation : MonoBehaviour
                 {
                     page.m_BackButton[i].gameObject.SetActive(false);
                 }
+
             }
             // 180度到達
             if (progress >= 1f)
@@ -194,6 +195,10 @@ public class PageAnimation : MonoBehaviour
     [Header("SE設定")]
     [SerializeField] private AudioClip m_FlipSE;
 
+    [Header("イラストのルート設定")]
+    [SerializeField] private GameObject m_FrontRoot;
+    [SerializeField] private GameObject m_BackRoot;
+
     // 非公開のメンバー変数
     // 表にあるボタンオブジェクト
     [SerializeField, HideInInspector] private Button[] m_FrontButton;
@@ -214,6 +219,11 @@ public class PageAnimation : MonoBehaviour
     private bool m_IsAnimationEnd = false;
     // AudioSourceコンポーネント
     private AudioSource m_AudioSource;
+
+#if UNITY_EDITOR
+    [SerializeField]
+    private PageSide m_PreviewSide = PageSide.Right;
+#endif
 
     // ========================================
     // 初期化 (Awake)
@@ -298,11 +308,15 @@ public class PageAnimation : MonoBehaviour
         {
             m_Image.sprite = m_RightPageSprite;
             m_CurrentPageSide = PageSide.Right;
+            m_FrontRoot.SetActive(true);
+            m_BackRoot.SetActive(false);
         }
         else
         {
             m_Image.sprite = m_LeftPageSprite;
             m_CurrentPageSide = PageSide.Left;
+            m_FrontRoot.SetActive(false);
+            m_BackRoot.SetActive(true);
         }
     }
 
@@ -388,12 +402,16 @@ public class PageAnimation : MonoBehaviour
         {
             m_Image.sprite = m_RightPageSprite;
             m_CurrentPageSide = PageSide.Right;
+            m_FrontRoot.SetActive(true);
+            m_BackRoot.SetActive(false);
             m_RectTransform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
         }
         else
         {
             m_Image.sprite = m_LeftPageSprite;
             m_CurrentPageSide = PageSide.Left;
+            m_FrontRoot.SetActive(false);
+            m_BackRoot.SetActive(true);
             m_RectTransform.localRotation = Quaternion.Euler(0.0f, 180.0f, 0.0f);
         }
     }
@@ -418,4 +436,61 @@ public class PageAnimation : MonoBehaviour
     {
         return m_BackButton;
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (Application.isPlaying)
+            return;
+
+        PreviewPage(m_PreviewSide);
+    }
+    private void PreviewPage(PageSide side)
+    {
+        if (m_RectTransform == null)
+            m_RectTransform = GetComponent<RectTransform>();
+
+        if (m_Image == null)
+            m_Image = GetComponent<Image>();
+
+        SetPageSprite(side);
+
+        if (side == PageSide.Right)
+        {
+            m_RectTransform.localRotation = Quaternion.identity;
+            m_FrontRoot.SetActive(true);
+            m_BackRoot.SetActive(false);
+
+            foreach (var button in m_FrontButton)
+            {
+                if (button != null)
+                    button.gameObject.SetActive(true);
+            }
+
+            foreach (var button in m_BackButton)
+            {
+                if (button != null)
+                    button.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            m_RectTransform.localRotation = Quaternion.Euler(0, 180, 0);
+            m_FrontRoot.SetActive(false);
+            m_BackRoot.SetActive(true);
+
+            foreach (var button in m_FrontButton)
+            {
+                if (button != null)
+                    button.gameObject.SetActive(false);
+            }
+
+            foreach (var button in m_BackButton)
+            {
+                if (button != null)
+                    button.gameObject.SetActive(true);
+            }
+        }
+    }
+#endif
 }
