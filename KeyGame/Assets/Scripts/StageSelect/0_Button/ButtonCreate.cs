@@ -35,8 +35,10 @@ public class ButtonCreate : MonoBehaviour
     [SerializeField] private StageButtonData[] m_ButtonData;
 
     [Header("ページ設定")]
-    [Tooltip("ページのプレハブ")]
+    [Tooltip("デフォルトのページのプレハブ")]
     [SerializeField] private GameObject m_PagePrefab;
+    [Tooltip("ステージページプレハブ配列")]
+    [SerializeField] private GameObject[] m_PagePrefabs;
 
     [Header("ボタンテクスチャ設定")]
     [Tooltip("ボタンのテクスチャ")]
@@ -368,7 +370,18 @@ public class ButtonCreate : MonoBehaviour
             int OnePageNumber = m_PageMaxCountX * m_PageMaxCountY;
 
             // ページ作成
-            GameObject page = Instantiate(m_PagePrefab, transform);
+            GameObject page;
+
+            if (m_PagePrefabs.Length <= pageCount || m_PagePrefabs[pageCount] == null)
+            {
+                page = Instantiate(m_PagePrefab, transform);
+                Debug.Log($"{pageCount + 1}ページ目 : ページのプレハブが設定されていないため、デフォルトのページを生成しました。");
+            }
+            else
+            {
+                page = Instantiate(m_PagePrefabs[pageCount], transform);
+            }
+            // page = Instantiate(m_PagePrefab, transform);
             PageAnimation pageAnimation = page.GetComponent<PageAnimation>();
             pageAnimation.Init(m_BookCenter.x);
             page.gameObject.name = $"Page_{pageCount + 1}";
