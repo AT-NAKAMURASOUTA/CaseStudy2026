@@ -49,5 +49,6 @@ public class Action_GuideActive : BaseAction
     {
         m_PlayerInput.actions["Move"].Enable();
         m_PlayerInput.actions["Jump"].Enable();
+        m_Action.m_OnInitialGuideHidden.RemoveListener(InitialGuideHidden);
     }
 }
