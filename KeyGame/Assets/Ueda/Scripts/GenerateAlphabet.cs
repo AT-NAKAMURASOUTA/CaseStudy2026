@@ -122,6 +122,7 @@ public class GenerateAlphabet : MonoBehaviour
         go.layer = Mathf.RoundToInt(Mathf.Log(alphabetLayer.value, 2));//レイヤーを設定
         var spriteRenderer = go.AddComponent<SpriteRenderer>();
         spriteRenderer.sprite = alphabetSprites[alphabetIndex];
+        spriteRenderer.sortingOrder = 6;
         go.AddComponent<PolygonCollider2D>();
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
