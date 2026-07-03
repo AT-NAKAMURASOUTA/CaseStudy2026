@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GuideButton",
+                    "type": "Button",
+                    "id": "f3cfcbed-4d83-4509-aeca-1e39854f214e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -166,6 +175,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "MenuDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c65b83c0-c7a4-4346-a19a-3eadb312d4f7",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6779c450-b498-497f-9915-567bef8183fc",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "872d562f-67f7-426d-8cd1-24bddf63f2f3",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "554fe4f0-ad22-45d4-a0a5-25c1af23c2d9",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -350,6 +403,15 @@
                     "name": "DownUp",
                     "type": "Button",
                     "id": "4939849c-db5d-48b9-a4c6-989a23c615e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GuideButton",
+                    "type": "Button",
+                    "id": "62f18d4c-3b82-4720-a211-fae83b7ff448",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -882,6 +944,50 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "DownUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6d69522-93c6-4643-90c5-2ee0b6a80e05",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "697660fa-0966-4460-ba09-2f5ca06f92d4",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a07a3b58-adfe-425d-a9b9-4388e0abc494",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90efaf6c-b483-40c7-a4c3-bfb1e5d320c2",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "GuideButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

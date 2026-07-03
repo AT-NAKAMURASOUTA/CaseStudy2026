@@ -26,12 +26,14 @@ public class MenuButtonManager : MonoBehaviour
         m_PlayerInput.actions["MenuPrevious"].performed += OnMenuPrevious;
         m_PlayerInput.actions["MenuUp"].performed += OnMenuUp;
         m_PlayerInput.actions["MenuDown"].performed += OnMenuDown;
+        Debug.Log("MenuButtonManagerの初期化");
     }
     private void OnEnable()
     {
         if (m_PlayerInput == null) return;
 
         ActiveOperation();
+        m_Buttons[m_CurrentRow].Buttons[m_CurrentColumn].Select();
     }
 
     private void OnDisable()

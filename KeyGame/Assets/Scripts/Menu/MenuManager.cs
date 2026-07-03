@@ -42,7 +42,7 @@ public class MenuManager : MonoBehaviour
             return;
         }
         m_MenuButtonManager.Init(m_PlayerInput);
-        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart);
+        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart,m_PlayerInput);
 
         m_Menu.SetActive(false);
 
