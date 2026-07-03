@@ -86,7 +86,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 9
   m_Sprite: {fileID: 1162489618, guid: 0ed1146af587c374f848a8b67a6aa9d7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -146,6 +146,8 @@ MonoBehaviour:
   m_CheckPos: {x: 0, y: -0.97, z: 0}
   m_CheckBoxSize: {x: 0.95, y: 0.1}
   m_CheckBoxAngle: 60
+  m_GroundedJumpGraceTime: 0.12
+  m_JumpGroundIgnoreTime: 0.12
   m_TakeoffAnimationDuration: 0.16
   m_TakeoffAnimationEndNormalizedTime: 0.22
   m_AirborneAnimationNormalizedTime: 0.58
@@ -558,3 +560,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MenuPrefab: {fileID: 814949705127981127, guid: bb96d78ee5cd93f40a5397b027f97278, type: 3}
+  m_IsGuideActiveAtStart: 0
+  m_CanvasGroup: {fileID: 0}
