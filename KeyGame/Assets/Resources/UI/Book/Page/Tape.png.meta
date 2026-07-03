@@ -1,0 +1,962 @@
+fileFormatVersion: 2
+guid: ca3f3159662bd5448ababad30f748b92
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3854604344034334135
+    second: Tape_0
+  - first:
+      213: -6429597883128707536
+    second: Tape_1
+  - first:
+      213: 2287853657248269205
+    second: Tape_2
+  - first:
+      213: 3018558960817439162
+    second: Tape_3
+  - first:
+      213: 6823308938845533220
+    second: Tape_4
+  - first:
+      213: 6663628221254981967
+    second: Tape_5
+  - first:
+      213: -1991514474127429595
+    second: Tape_6
+  - first:
+      213: -3860810544108876543
+    second: Tape_7
+  - first:
+      213: -5810546245236350984
+    second: Tape_8
+  - first:
+      213: -3609814687490074335
+    second: Tape_9
+  - first:
+      213: 4499223928435685414
+    second: Tape_10
+  - first:
+      213: 8163218322065212294
+    second: Tape_11
+  - first:
+      213: -1324648555087467360
+    second: Tape_12
+  - first:
+      213: -6319853914243824986
+    second: Tape_13
+  - first:
+      213: -2445711367842014126
+    second: Tape_14
+  - first:
+      213: -3653112580231320241
+    second: Tape_15
+  - first:
+      213: 1933821267564454858
+    second: Tape_16
+  - first:
+      213: -5064073506603126380
+    second: Tape_17
+  - first:
+      213: 5813065507176101341
+    second: Tape_18
+  - first:
+      213: 2042516302357615615
+    second: Tape_19
+  - first:
+      213: 2023539204934007180
+    second: Tape_20
+  - first:
+      213: -8937947485310878194
+    second: Tape_21
+  - first:
+      213: 4704748286451591700
+    second: Tape_22
+  - first:
+      213: -324435185804997623
+    second: Tape_23
+  - first:
+      213: -3037599850426877888
+    second: Tape_24
+  - first:
+      213: -2544004983905933641
+    second: Tape_25
+  - first:
+      213: -5640072380094382373
+    second: Tape_26
+  - first:
+      213: -3207382213207468040
+    second: Tape_27
+  - first:
+      213: -7847467238590082132
+    second: Tape_28
+  - first:
+      213: -1154178716634302683
+    second: Tape_29
+  - first:
+      213: -3320098960861653487
+    second: Tape_30
+  - first:
+      213: 5597563388768848362
+    second: Tape_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Tape_0
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 896
+        width: 633
+        height: 221
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b518d37a3e4e7530800000000000000
+      internalID: 3854604344034334135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_1
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 823
+        width: 523
+        height: 259
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 036828f6aca75c6a0800000000000000
+      internalID: -6429597883128707536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_2
+      rect:
+        serializedVersion: 2
+        x: 1308
+        y: 1037
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5938c5a97c610cf10800000000000000
+      internalID: 2287853657248269205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_3
+      rect:
+        serializedVersion: 2
+        x: 1318
+        y: 993
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab18811c16314e920800000000000000
+      internalID: 3018558960817439162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_4
+      rect:
+        serializedVersion: 2
+        x: 1321
+        y: 975
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 424b2a4145341be50800000000000000
+      internalID: 6823308938845533220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_5
+      rect:
+        serializedVersion: 2
+        x: 1324
+        y: 970
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f49db23df86f97c50800000000000000
+      internalID: 6663628221254981967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_6
+      rect:
+        serializedVersion: 2
+        x: 1319
+        y: 952
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 520f5942328bc54e0800000000000000
+      internalID: -1991514474127429595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_7
+      rect:
+        serializedVersion: 2
+        x: 793
+        y: 936
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10dce4df345ab6ac0800000000000000
+      internalID: -3860810544108876543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_8
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 914
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ff15bdb9facc5fa0800000000000000
+      internalID: -5810546245236350984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_9
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 909
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1299a27daac57edc0800000000000000
+      internalID: -3609814687490074335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_10
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 899
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 628b8533354707e30800000000000000
+      internalID: 4499223928435685414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_11
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 819
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68348a630d3994170800000000000000
+      internalID: 8163218322065212294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_12
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 618
+        width: 506
+        height: 245
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ace6cd4827ed9de0800000000000000
+      internalID: -1324648555087467360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_13
+      rect:
+        serializedVersion: 2
+        x: 1095
+        y: 809
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a28229595e5b48a0800000000000000
+      internalID: -6319853914243824986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_14
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 784
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25c54a808761f0ed0800000000000000
+      internalID: -2445711367842014126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_15
+      rect:
+        serializedVersion: 2
+        x: 1097
+        y: 798
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4d2dca96798d4dc0800000000000000
+      internalID: -3653112580231320241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_16
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 769
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac36640723056da10800000000000000
+      internalID: 1933821267564454858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_17
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 748
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4913472f9fbc8b9b0800000000000000
+      internalID: -5064073506603126380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_18
+      rect:
+        serializedVersion: 2
+        x: 1083
+        y: 730
+        width: 17
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5be43a7482ca050800000000000000
+      internalID: 5813065507176101341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_19
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 491
+        width: 767
+        height: 204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff358f951c9785c10800000000000000
+      internalID: 2042516302357615615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_20
+      rect:
+        serializedVersion: 2
+        x: 1585
+        y: 613
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c89fa2b8f2e051c10800000000000000
+      internalID: 2023539204934007180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_21
+      rect:
+        serializedVersion: 2
+        x: 1594
+        y: 629
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0ef2fc0e1806f380800000000000000
+      internalID: -8937947485310878194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_22
+      rect:
+        serializedVersion: 2
+        x: 846
+        y: 546
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a2393c3af9a4140800000000000000
+      internalID: 4704748286451591700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_23
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 60
+        width: 604
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90c847ddaef5f7bf0800000000000000
+      internalID: -324435185804997623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_24
+      rect:
+        serializedVersion: 2
+        x: 963
+        y: 33
+        width: 254
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 048b689a70748d5d0800000000000000
+      internalID: -3037599850426877888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_25
+      rect:
+        serializedVersion: 2
+        x: 1294
+        y: 92
+        width: 163
+        height: 413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b6a67322f0e1bcd0800000000000000
+      internalID: -2544004983905933641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_26
+      rect:
+        serializedVersion: 2
+        x: 1301
+        y: 97
+        width: 19
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bde7bfc7d007ab1b0800000000000000
+      internalID: -5640072380094382373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_27
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 87
+        width: 62
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f7dcdaded61d73d0800000000000000
+      internalID: -3207382213207468040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_28
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 81
+        width: 34
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca39259cf12381390800000000000000
+      internalID: -7847467238590082132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_29
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 20
+        width: 62
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52732b382988bffe0800000000000000
+      internalID: -1154178716634302683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_30
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 40
+        width: 32
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11692b2f593ace1d0800000000000000
+      internalID: -3320098960861653487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tape_31
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 11
+        width: 22
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae98c43be3a8ead40800000000000000
+      internalID: 5597563388768848362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Tape_0: 3854604344034334135
+      Tape_1: -6429597883128707536
+      Tape_10: 4499223928435685414
+      Tape_11: 8163218322065212294
+      Tape_12: -1324648555087467360
+      Tape_13: -6319853914243824986
+      Tape_14: -2445711367842014126
+      Tape_15: -3653112580231320241
+      Tape_16: 1933821267564454858
+      Tape_17: -5064073506603126380
+      Tape_18: 5813065507176101341
+      Tape_19: 2042516302357615615
+      Tape_2: 2287853657248269205
+      Tape_20: 2023539204934007180
+      Tape_21: -8937947485310878194
+      Tape_22: 4704748286451591700
+      Tape_23: -324435185804997623
+      Tape_24: -3037599850426877888
+      Tape_25: -2544004983905933641
+      Tape_26: -5640072380094382373
+      Tape_27: -3207382213207468040
+      Tape_28: -7847467238590082132
+      Tape_29: -1154178716634302683
+      Tape_3: 3018558960817439162
+      Tape_30: -3320098960861653487
+      Tape_31: 5597563388768848362
+      Tape_4: 6823308938845533220
+      Tape_5: 6663628221254981967
+      Tape_6: -1991514474127429595
+      Tape_7: -3860810544108876543
+      Tape_8: -5810546245236350984
+      Tape_9: -3609814687490074335
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

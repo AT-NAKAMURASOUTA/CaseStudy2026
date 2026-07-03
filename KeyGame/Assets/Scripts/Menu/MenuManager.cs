@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
     private bool m_IsMenuActive = false;
     // メニューを操作するかのフラグ
     private bool m_CanOperateMenu = true;
+    MenuButtonManager m_MenuButtonManager;
 
     // 初期化
     void Start()
@@ -33,9 +34,17 @@ public class MenuManager : MonoBehaviour
 
         // メニューを作成
         m_Menu = Instantiate(m_MenuPrefab);
-        m_Menu.SetActive(false);
         m_MenuCanvasGroup = m_Menu.GetComponent<CanvasGroup>();
-        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart);
+        m_MenuButtonManager = m_Menu.GetComponentInChildren<MenuButtonManager>();
+        if (m_MenuButtonManager == null)
+        {
+            Debug.LogError("MenuButtonManagerが見つかりません。");
+            return;
+        }
+        m_MenuButtonManager.Init(m_PlayerInput);
+        m_Menu.GetComponentInChildren<Action_GuideActive>().CreateGuidePrefab(this, m_IsGuideActiveAtStart,m_PlayerInput);
+
+        m_Menu.SetActive(false);
 
         // PlayerInputのイベントに関数を登録
         m_PlayerInput.actions["Menu"].performed += _ => Menu();
@@ -60,7 +69,8 @@ public class MenuManager : MonoBehaviour
             DisableInputSystem("PreviousPage");
             DisableInputSystem("WorldSelect");
             DisableInputSystem("StageSelect");
-            if(m_CanvasGroup != null)
+            DisableInputSystem("Decision");
+            if (m_CanvasGroup != null)
             {
                 m_CanvasGroup.interactable = false;
                 m_CanvasGroup.blocksRaycasts = false;
@@ -75,6 +85,7 @@ public class MenuManager : MonoBehaviour
             EnableInputSystem("PreviousPage");
             EnableInputSystem("WorldSelect");
             EnableInputSystem("StageSelect");
+            EnableInputSystem("Decision");
             if (m_CanvasGroup != null)
             {
                 m_CanvasGroup.interactable = true;
@@ -106,7 +117,20 @@ public class MenuManager : MonoBehaviour
     // ===========================================
     public void ActivateMenuButton()
     {
+        m_MenuButtonManager.ActiveOperation();
+
         m_MenuCanvasGroup.interactable = true;
         m_MenuCanvasGroup.blocksRaycasts = true;
+    }
+
+    // ===========================================
+    // メニューを無効化する
+    // ===========================================
+    public void DeactivateMenuButton()
+    {
+        m_MenuButtonManager.FalseOperation();   
+
+        m_MenuCanvasGroup.interactable = false;
+        m_MenuCanvasGroup.blocksRaycasts = false;
     }
 }

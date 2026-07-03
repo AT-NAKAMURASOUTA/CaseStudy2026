@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -69,7 +67,6 @@ public class BookPageManager : MonoBehaviour
                 await book.ZoomCamera(CancellationToken.None, book.m_CameraWorldModePos);
             }
         }
-        public void Exit(BookPageManager page) { }
 
         public void Update(BookPageManager book, PageFlipMode _mode)
         {
@@ -123,6 +120,9 @@ public class BookPageManager : MonoBehaviour
                 book.m_CurrentStageIndex--;
             }
         }
+        public void Exit(BookPageManager page) 
+        { 
+        }
     }
 
     // ===========================================
@@ -135,6 +135,7 @@ public class BookPageManager : MonoBehaviour
         public async UniTask Enter(BookPageManager book)
         {
             Debug.Log("ステージセレクトモード");
+            book.m_CanvasGroup.blocksRaycasts = false;
 
             if (book.m_Camera.transform.position != book.m_CameraStageModePos)
             {
@@ -165,9 +166,10 @@ public class BookPageManager : MonoBehaviour
                 }
             }
         }
-        public void Exit(BookPageManager page)
+        public void Exit(BookPageManager book)
         {
             // セレクト解除
+            book.m_CanvasGroup.blocksRaycasts = true;
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
@@ -210,6 +212,8 @@ public class BookPageManager : MonoBehaviour
     private Camera m_Camera;
     private Vector3 m_CameraWorldModePos;
     private bool m_IsZooming = false;
+    // キャンバスグループ
+    private CanvasGroup m_CanvasGroup;
 
     // ===========================================
     // 初期化
@@ -223,6 +227,7 @@ public class BookPageManager : MonoBehaviour
         m_CameraWorldModePos = m_Camera.transform.position;
         m_IsZooming = false;
 
+        m_CanvasGroup = GetComponent<CanvasGroup>();
         m_PlayerInput = GetComponent<PlayerInput>();
 
         // 入力イベントの登録
@@ -294,6 +299,7 @@ public class BookPageManager : MonoBehaviour
         AllInactiveStage();
         // 最初のステージを表示
         ActiveStage(m_CurrentStageIndex);
+        VisualizeUI();
     }
 
     // ===========================================
