@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Action_GuideInactive : BaseAction
 {
+    [HideInInspector]
     public UnityEvent m_OnInitialGuideHidden;
 
     // メニューマネージャー
