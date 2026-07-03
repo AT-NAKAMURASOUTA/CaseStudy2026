@@ -15,6 +15,7 @@ public sealed class ActionsManager : MonoBehaviour
     // ------------------------------------------
     // アクション処理のリスト
     [SerializeField] private List<BaseAction> m_GoalActions;
+    [SerializeField] private bool m_PlayDefaultGoalClearEffect = true;
     // キャンセルトークン
     private CancellationTokenSource m_Cts;
     // アクション実行フラグ
@@ -41,6 +42,11 @@ public sealed class ActionsManager : MonoBehaviour
         m_Cts = new CancellationTokenSource();
 
         // ゴール処理の呼び出し
+        if (ShouldPlayDefaultGoalClearEffect())
+        {
+            await GoalClearEffectPlayer.PlayAsync(transform, m_Cts.Token);
+        }
+
         await ActionCall(m_Cts.Token);
 
         // フラグ更新
@@ -74,6 +80,13 @@ public sealed class ActionsManager : MonoBehaviour
     public bool IsGoal()
     {
         return m_IsGoal;
+    }
+
+    private bool ShouldPlayDefaultGoalClearEffect()
+    {
+        return m_PlayDefaultGoalClearEffect
+            && TryGetComponent<Check_Collision>(out _)
+            && gameObject.name.Contains("Goal");
     }
 
 }
