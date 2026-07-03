@@ -276,7 +276,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1358063624530633094, guid: 07b9d07b307c83a49945648b5917c38b, type: 3}
+  m_Sprite: {fileID: -2394831807738870370, guid: 6700984dabd313e488837368177d8db1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -852,7 +852,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GoalActions:
   - {fileID: 98306927132288551}
-  m_PlayDefaultGoalClearEffect: 1
 --- !u!114 &5815730299561526425
 MonoBehaviour:
   m_ObjectHideFlags: 0
