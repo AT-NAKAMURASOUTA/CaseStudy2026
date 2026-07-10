@@ -52,6 +52,11 @@ public sealed class TitleBookMenu : MonoBehaviour
         new Vector2(150f, -106f),
         new Vector2(352f, -106f)
     };
+    [Header("Opening")]
+    [SerializeField] private Sprite[] m_OpeningImages;
+    [SerializeField] private float m_OpeningFadeDuration = 0.25f;
+
+    private Image m_OpeningImage;
 
     private static Sprite s_WhiteSprite;
 
@@ -169,6 +174,7 @@ public sealed class TitleBookMenu : MonoBehaviour
         CreateBackground(root);
         CreateBook(root);
         CreateFade(root);
+        CreateOpeningImage(root);
         SelectItem(0);
     }
 
@@ -215,9 +221,15 @@ public sealed class TitleBookMenu : MonoBehaviour
 
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            ActivateSelected();
+            int clickedIndex = GetPointerMenuItemIndex(Mouse.current.position.ReadValue());
+            if (clickedIndex >= 0)
+            {
+                SelectAndActivate(clickedIndex);
+                return;
+            }
         }
-        else if (Keyboard.current == null)
+
+        if (Keyboard.current == null)
         {
             return;
         }
@@ -411,10 +423,45 @@ public sealed class TitleBookMenu : MonoBehaviour
         m_FadeImage.transform.SetAsLastSibling();
     }
 
+    /// <summary>
+    /// オープニング表示用のImageを作成
+    /// </summary>
+    private void CreateOpeningImage(RectTransform root)
+    {
+        m_OpeningImage = CreateImage(
+            "OpeningImage",
+            root,
+            new Color(1f, 1f, 1f, 0f),
+            Vector2.zero,
+            new Vector2(1920f, 1080f));
+
+        m_OpeningImage.preserveAspect = true;
+        m_OpeningImage.raycastTarget = false;
+        m_OpeningImage.transform.SetAsLastSibling();
+    }
     private void SelectAndActivate(int index)
     {
         SelectItem(index);
         ActivateSelected();
+    }
+
+    private int GetPointerMenuItemIndex(Vector2 screenPosition)
+    {
+        for (int i = 0; i < m_MenuItems.Length; i++)
+        {
+            MenuItem item = m_MenuItems[i];
+            if (item?.Root == null)
+            {
+                continue;
+            }
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(item.Root, screenPosition, null))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     private void SelectItem(int index)
@@ -461,6 +508,9 @@ public sealed class TitleBookMenu : MonoBehaviour
         switch (action)
         {
             case MenuAction.NewGame:
+                yield return PlayOpening();
+                SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.STAGESELECT);
+                break;
             case MenuAction.DataLoad:
                 SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.STAGESELECT);
                 break;
@@ -468,6 +518,80 @@ public sealed class TitleBookMenu : MonoBehaviour
                 SceneTransitionManager.GetInstance().SceneTransition(SCENETYPE.CONFIG);
                 break;
         }
+    }
+
+    /// <summary>
+    /// オープニング画像をクリックで順番に表示する
+    /// </summary>
+    private IEnumerator PlayOpening()
+    {
+        if (m_OpeningImages == null || m_OpeningImages.Length == 0)
+        {
+            Debug.LogWarning("Opening Images に画像が設定されていません。");
+            yield break;
+        }
+
+        if (m_OpeningImage == null)
+        {
+            yield break;
+        }
+
+        foreach (Sprite openingSprite in m_OpeningImages)
+        {
+            if (openingSprite == null)
+            {
+                continue;
+            }
+
+            m_OpeningImage.sprite = openingSprite;
+
+            // フェードイン
+            yield return FadeOpeningImage(0f, 1f);
+
+            // クリック、Enter、Spaceで次の画像へ
+            yield return new WaitUntil(() =>
+            {
+                bool mouseClick =
+                    Mouse.current != null &&
+                    Mouse.current.leftButton.wasPressedThisFrame;
+
+                bool keyPressed =
+                    Keyboard.current != null &&
+                    (
+                        Keyboard.current.enterKey.wasPressedThisFrame ||
+                        Keyboard.current.spaceKey.wasPressedThisFrame
+                    );
+
+                return mouseClick || keyPressed;
+            });
+
+            // フェードアウト
+            yield return FadeOpeningImage(1f, 0f);
+        }
+
+        m_OpeningImage.sprite = null;
+    }
+
+    /// <summary>
+    /// オープニング画像をフェードさせる
+    /// </summary>
+    private IEnumerator FadeOpeningImage(float from, float to)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < m_OpeningFadeDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / m_OpeningFadeDuration);
+            float alpha = Mathf.Lerp(from, to, t);
+
+            m_OpeningImage.color = new Color(1f, 1f, 1f, alpha);
+
+            yield return null;
+        }
+
+        m_OpeningImage.color = new Color(1f, 1f, 1f, to);
     }
 
     private IEnumerator PlayShutdownSequence()
