@@ -221,9 +221,15 @@ public sealed class TitleBookMenu : MonoBehaviour
 
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            ActivateSelected();
+            int clickedIndex = GetPointerMenuItemIndex(Mouse.current.position.ReadValue());
+            if (clickedIndex >= 0)
+            {
+                SelectAndActivate(clickedIndex);
+                return;
+            }
         }
-        else if (Keyboard.current == null)
+
+        if (Keyboard.current == null)
         {
             return;
         }
@@ -437,6 +443,25 @@ public sealed class TitleBookMenu : MonoBehaviour
     {
         SelectItem(index);
         ActivateSelected();
+    }
+
+    private int GetPointerMenuItemIndex(Vector2 screenPosition)
+    {
+        for (int i = 0; i < m_MenuItems.Length; i++)
+        {
+            MenuItem item = m_MenuItems[i];
+            if (item?.Root == null)
+            {
+                continue;
+            }
+
+            if (RectTransformUtility.RectangleContainsScreenPoint(item.Root, screenPosition, null))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     private void SelectItem(int index)
