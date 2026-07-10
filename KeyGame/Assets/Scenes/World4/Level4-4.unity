@@ -1327,6 +1327,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6287280165300553306, guid: f2008183619b23549b72f4e348d184ea, type: 3}
+      propertyPath: alphabetCountText
+      value: 
+      objectReference: {fileID: 1254324725}
     - target: {fileID: 6354096494059707083, guid: f2008183619b23549b72f4e348d184ea, type: 3}
       propertyPath: cameraFollowOffset.y
       value: 2.5
@@ -4528,7 +4532,7 @@ GameObject:
   - component: {fileID: 1254324726}
   - component: {fileID: 1254324725}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AlphabetCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4582,8 +4586,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4600,8 +4604,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
