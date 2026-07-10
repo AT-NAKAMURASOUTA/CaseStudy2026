@@ -16,7 +16,7 @@ public class LowGravity : MonoBehaviour
         // 未設定なら BGMManager から探す
         if (m_BGMSource == null)
         {
-            GameObject bgmManager = GameObject.Find("BGMManager");
+            GameObject bgmManager = GameObject.FindGameObjectWithTag("BgmManagerTag");
 
             if (bgmManager != null)
                 m_BGMSource = bgmManager.GetComponent<AudioSource>();
