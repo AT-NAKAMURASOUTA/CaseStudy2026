@@ -129,6 +129,7 @@ public class GenerateAlphabet : MonoBehaviour
         go.AddComponent<Rigidbody2D>();
         go.AddComponent<AlphabetSpecialAreaInUpdate>().SetScriptableObject(specialAreaData);//特殊エリアの処理
         go.AddComponent<AlphabetRigidbody>();
+        go.AddComponent<AlphabetCollisionControl>();
         var outline = go.AddComponent<AlphabetOutLine>();
         outline.outLinProperty = outLinProperty;
         var destroyOnFall = go.AddComponent<DestroyOnFall>();
