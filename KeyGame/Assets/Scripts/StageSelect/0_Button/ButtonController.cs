@@ -23,7 +23,6 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, ISelectHand
     [Tooltip("決定音")]
     [SerializeField] private AudioClip m_DecisionSound;
 
-
     // 音を鳴らすためのAudioSource
     private AudioSource m_AudioSource;
     // アクション管理マネージャー
@@ -34,6 +33,7 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, ISelectHand
     private CanvasGroup m_CGroup;
     // PlayerInput取得
     private PlayerInput m_PlayerInput = null;
+    private bool m_IsClicked = false;
 
     // ======================================
     // 初期化
@@ -121,6 +121,10 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, ISelectHand
     // ======================================
     public async void OnClick()
     {
+        if (m_IsClicked) {
+            return;
+        }
+
         Debug.Log("決定サウンド再生");
 
         if(m_CGroup != null)
@@ -130,6 +134,8 @@ public class ButtonController : MonoBehaviour, IPointerEnterHandler, ISelectHand
             // ボタンを押したときにキャンバスグループのレイキャストを無効にする
             m_CGroup.blocksRaycasts = false;
         }
+
+        m_IsClicked = true;
 
         // ボタンを押したときにMenu アクションを無効にする
         if (m_PlayerInput != null)
