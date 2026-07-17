@@ -46,6 +46,13 @@ public class FloorStick : MonoBehaviour
 
             if (collision.transform.TryGetComponent<ParentOnParent>(out var pop))
             {
+                var coltr = collision.transform;
+
+                for (int i = 0; i < coltr.childCount; ++i)
+                {
+                    coltr.GetChild(i).SetParent(null);
+                }
+
                 Destroy(pop);
             }
         }
@@ -71,12 +78,20 @@ public class FloorStick : MonoBehaviour
 public class ParentOnParent : MonoBehaviour
 {
     private List<string> targetTags = new List<string>();
+    public List<string> tTags => targetTags;
+
     private Transform parentTf;
     private void Awake()
     {
         if (transform.parent != null)
         {
             var mf = transform.parent.GetComponentInParent<FloorStick>();
+            if (mf == null) mf = transform.parent.GetComponentInParent<FloorStick>();
+            if (mf == null)
+            {
+                Destroy(this);
+                return;
+            }
             parentTf = transform.parent.transform;
             targetTags = new List<string>(mf.tTags);
         }
@@ -89,7 +104,7 @@ public class ParentOnParent : MonoBehaviour
         {
             if (collision.transform.GetComponent<ParentOnParent>() == null)
             {
-                collision.transform.SetParent(parentTf);
+                collision.transform.SetParent(this.transform/*parentTf*/);
             }
         }
     }
@@ -104,7 +119,13 @@ public class ParentOnParent : MonoBehaviour
             {
                 if (!collision.gameObject.activeInHierarchy) return;
                 collision.transform.SetParent(null);
+                if (collision.transform.tag == "Player") collision.transform.rotation = Quaternion.identity;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        transform.SetParent(null);
     }
 }

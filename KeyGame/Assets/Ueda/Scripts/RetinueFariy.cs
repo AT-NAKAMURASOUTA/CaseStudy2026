@@ -30,14 +30,19 @@ public class RetinueFariy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        targetSprite = target.GetComponent<SpriteRenderer>();
+        if (target != null) targetSprite = target.GetComponent<SpriteRenderer>();
         mySprite = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (target == null) return;
+        Debug.Log(target);
+        if (target == null)
+        {
+            TargetEmptyPosition();
+            return;
+        }
 
         Vector2 dist = distance;
         if (targetSprite != null)
@@ -58,5 +63,16 @@ public class RetinueFariy : MonoBehaviour
         transform.localScale = sca;
 
         this.transform.position = Vector2.Lerp(transform.position, targetPosition, followSpeed);
+    }
+
+    private void TargetEmptyPosition()
+    {
+        // ふよふよの計算
+        floatTimer += Time.fixedDeltaTime * floatSpeed;
+        float floatOffset = Mathf.Sin(floatTimer) * floatWidth;
+
+        this.transform.Translate(new Vector3(0.0f, floatOffset));
+
+        Debug.Log(transform.position);
     }
 }
